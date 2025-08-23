@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,14 +42,15 @@
             padding: 0 20px;
         }
 
-        /* Header */
+        /* Modern header with improved navigation */
         header {
-            background: var(--background);
+            background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         nav {
@@ -73,18 +74,22 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            transition: all 0.3s ease;
         }
 
         .nav-links a {
             color: var(--foreground);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
             color: var(--primary);
+            background: var(--secondary);
         }
 
         .mobile-menu {
@@ -93,6 +98,38 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .mobile-menu:hover {
+            background: var(--secondary);
+        }
+
+        /* Language selector */
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
         }
 
         /* Main Content */
@@ -190,37 +227,76 @@
         }
 
         .method-signature {
-            background: #1f2937;
-            color: #f9fafb;
-            padding: 1rem;
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 1.5rem;
             border-radius: var(--radius);
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
             font-size: 0.9rem;
+            line-height: 1.6;
             margin-bottom: 1rem;
+            border: 1px solid #334155;
+            position: relative;
+            overflow-x: auto;
         }
 
+        .method-signature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        /* Improved code block formatting with syntax highlighting */
         .code-block {
-            background: #1f2937;
-            color: #f9fafb;
+            background: #1e293b;
+            color: #f1f5f9;
             padding: 1.5rem;
             border-radius: var(--radius);
             overflow-x: auto;
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
             margin: 1rem 0;
+            border: 1px solid #334155;
+            position: relative;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
         .code-block .comment {
-            color: #9ca3af;
+            color: #94a3b8;
+            font-style: italic;
         }
 
         .code-block .keyword {
-            color: #8b5cf6;
+            color: #c084fc;
+            font-weight: 600;
         }
 
         .code-block .string {
-            color: #10b981;
+            color: #34d399;
+        }
+
+        .code-block .function {
+            color: #60a5fa;
+        }
+
+        .code-block .number {
+            color: #fbbf24;
         }
 
         .parameters {
@@ -259,7 +335,16 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Mobile Responsive */
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Enhanced mobile responsive design */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -267,14 +352,23 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--background);
+                background: rgba(255, 255, 255, 0.98);
                 flex-direction: column;
                 padding: 1rem;
                 border-top: 1px solid var(--border);
+                backdrop-filter: blur(20px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
             }
 
             .nav-links.active {
                 display: flex;
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
 
             .mobile-menu {
@@ -294,63 +388,150 @@
             .content h1 {
                 font-size: 2rem;
             }
+
+            .language-selector {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <a href="index.html" class="logo">
-                ⚡ NEONPAY
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="quick-start.html">Quick Start</a></li>
-                <li><a href="api-docs.html" class="active">API Docs</a></li>
-                <li><a href="examples.html">Examples</a></li>
-                <li><a href="libraries.html">Libraries</a></li>
-            </ul>
-            <button class="mobile-menu" id="mobileMenu">☰</button>
-        </nav>
-    </header>
+    <!-- Replace header with navbar container -->
+    <div id="navbar-container"></div>
 
     <div class="container">
         <div class="main-content">
             <aside class="sidebar">
-                <h3>Core Classes</h3>
-                <ul>
-                    <li><a href="#neonpay-class">NeonPay</a></li>
-                    <li><a href="#payment-stage">PaymentStage</a></li>
-                    <li><a href="#payment-result">PaymentResult</a></li>
-                </ul>
+                <!-- English Content -->
+                <div class="lang-content active" data-lang="en">
+                    <h3>Core Classes</h3>
+                    <ul>
+                        <li><a href="#neonpay-class">NeonPay</a></li>
+                        <li><a href="#payment-stage">PaymentStage</a></li>
+                        <li><a href="#payment-result">PaymentResult</a></li>
+                    </ul>
 
-                <h3>Methods</h3>
-                <ul>
-                    <li><a href="#create-for-library">create_for_*</a></li>
-                    <li><a href="#create-stage">create_stage</a></li>
-                    <li><a href="#send-payment">send_payment</a></li>
-                    <li><a href="#payment-handler">payment_handler</a></li>
-                </ul>
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#create-for-library">create_for_*</a></li>
+                        <li><a href="#create-stage">create_stage</a></li>
+                        <li><a href="#send-payment">send_payment</a></li>
+                        <li><a href="#payment-handler">payment_handler</a></li>
+                    </ul>
 
-                <h3>Utilities</h3>
-                <ul>
-                    <li><a href="#validation">Validation</a></li>
-                    <li><a href="#logging">Logging</a></li>
-                    <li><a href="#middleware">Middleware</a></li>
-                </ul>
+                    <h3>Utilities</h3>
+                    <ul>
+                        <li><a href="#validation">Validation</a></li>
+                        <li><a href="#logging">Logging</a></li>
+                        <li><a href="#middleware">Middleware</a></li>
+                    </ul>
+                </div>
+
+                <!-- Russian Content -->
+                <div class="lang-content" data-lang="ru">
+                    <h3>Основные классы</h3>
+                    <ul>
+                        <li><a href="#neonpay-class">NeonPay</a></li>
+                        <li><a href="#payment-stage">PaymentStage</a></li>
+                        <li><a href="#payment-result">PaymentResult</a></li>
+                    </ul>
+
+                    <h3>Методы</h3>
+                    <ul>
+                        <li><a href="#create-for-library">create_for_*</a></li>
+                        <li><a href="#create-stage">create_stage</a></li>
+                        <li><a href="#send-payment">send_payment</a></li>
+                        <li><a href="#payment-handler">payment_handler</a></li>
+                    </ul>
+
+                    <h3>Утилиты</h3>
+                    <ul>
+                        <li><a href="#validation">Валидация</a></li>
+                        <li><a href="#logging">Логирование</a></li>
+                        <li><a href="#middleware">Middleware</a></li>
+                    </ul>
+                </div>
+
+                <!-- Azerbaijani Content -->
+                <div class="lang-content" data-lang="az">
+                    <h3>Əsas siniflər</h3>
+                    <ul>
+                        <li><a href="#neonpay-class">NeonPay</a></li>
+                        <li><a href="#payment-stage">PaymentStage</a></li>
+                        <li><a href="#payment-result">PaymentResult</a></li>
+                    </ul>
+
+                    <h3>Metodlar</h3>
+                    <ul>
+                        <li><a href="#create-for-library">create_for_*</a></li>
+                        <li><a href="#create-stage">create_stage</a></li>
+                        <li><a href="#send-payment">send_payment</a></li>
+                        <li><a href="#payment-handler">payment_handler</a></li>
+                    </ul>
+
+                    <h3>Yardımçı alətlər</h3>
+                    <ul>
+                        <li><a href="#validation">Doğrulama</a></li>
+                        <li><a href="#logging">Qeydiyyat</a></li>
+                        <li><a href="#middleware">Middleware</a></li>
+                    </ul>
+                </div>
             </aside>
 
             <main class="content">
-                <h1>API Documentation</h1>
-                <p>Complete reference for all NEONPAY classes, methods, and utilities.</p>
+                <!-- English Content -->
+                <div class="lang-content active" data-lang="en">
+                    <h1>API Documentation</h1>
+                    <p>Complete reference for all NEONPAY classes, methods, and utilities.</p>
+                </div>
+
+                <!-- Russian Content -->
+                <div class="lang-content" data-lang="ru">
+                    <h1>API Документация</h1>
+                    <p>Полный справочник по всем классам, методам и утилитам NEONPAY.</p>
+                </div>
+
+                <!-- Azerbaijani Content -->
+                <div class="lang-content" data-lang="az">
+                    <h1>API Sənədləri</h1>
+                    <p>Bütün NEONPAY sinifləri, metodları və yardımçı alətləri üçün tam məlumat.</p>
+                </div>
 
                 <section id="neonpay-class">
-                    <h2>NeonPay Class</h2>
-                    <p>The main class for handling Telegram bot payments.</p>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>NeonPay Class</h2>
+                        <p>The main class for handling Telegram bot payments.</p>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Класс NeonPay</h2>
+                        <p>Основной класс для обработки платежей Telegram ботов.</p>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>NeonPay Sinifi</h2>
+                        <p>Telegram bot ödənişlərini idarə etmək üçün əsas sinif.</p>
+                    </div>
 
                     <div class="method-card">
-                        <h4>Factory Methods</h4>
-                        <div class="method-signature">
-@classmethod
+                        <!-- English Content -->
+                        <div class="lang-content active" data-lang="en">
+                            <h4>Factory Methods</h4>
+                        </div>
+                        <!-- Russian Content -->
+                        <div class="lang-content" data-lang="ru">
+                            <h4>Фабричные методы</h4>
+                        </div>
+                        <!-- Azerbaijani Content -->
+                        <div class="lang-content" data-lang="az">
+                            <h4>Fabrik metodları</h4>
+                        </div>
+
+                        <div class="method-signature">@classmethod
 def create_for_aiogram(cls, bot: Bot) -> NeonPay
 @classmethod  
 def create_for_pyrogram(cls, client: Client) -> NeonPay
@@ -359,37 +540,85 @@ def create_for_ptb(cls, application: Application) -> NeonPay
 @classmethod
 def create_for_telebot(cls, bot: TeleBot) -> NeonPay
 @classmethod
-def create_for_raw_api(cls, bot_token: str) -> NeonPay
+def create_for_raw_api(cls, bot_token: str) -> NeonPay</div>
+
+                        <!-- English Content -->
+                        <div class="lang-content active" data-lang="en">
+                            <p>Create a NeonPay instance for your specific bot library.</p>
                         </div>
-                        <p>Create a NeonPay instance for your specific bot library.</p>
+                        <!-- Russian Content -->
+                        <div class="lang-content" data-lang="ru">
+                            <p>Создайте экземпляр NeonPay для вашей конкретной библиотеки ботов.</p>
+                        </div>
+                        <!-- Azerbaijani Content -->
+                        <div class="lang-content" data-lang="az">
+                            <p>Xüsusi bot kitabxananız üçün NeonPay nümunəsi yaradın.</p>
+                        </div>
 
                         <div class="parameters">
                             <div class="parameter">
                                 <span class="parameter-name">bot/client/application</span>
                                 <span class="parameter-type">Bot instance from your library</span>
-                                <p>Your bot instance from the respective library.</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Your bot instance from the respective library.</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Ваш экземпляр бота из соответствующей библиотеки.</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Müvafiq kitabxanadan bot nümunəniz.</p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="returns">
-                            <h4>Returns</h4>
-                            <p><strong>NeonPay:</strong> Configured NeonPay instance</p>
+                            <!-- English Content -->
+                            <div class="lang-content active" data-lang="en">
+                                <h4>Returns</h4>
+                                <p><strong>NeonPay:</strong> Configured NeonPay instance</p>
+                            </div>
+                            <!-- Russian Content -->
+                            <div class="lang-content" data-lang="ru">
+                                <h4>Возвращает</h4>
+                                <p><strong>NeonPay:</strong> Настроенный экземпляр NeonPay</p>
+                            </div>
+                            <!-- Azerbaijani Content -->
+                            <div class="lang-content" data-lang="az">
+                                <h4>Qaytarır</h4>
+                                <p><strong>NeonPay:</strong> Konfiqurasiya edilmiş NeonPay nümunəsi</p>
+                            </div>
                         </div>
 
-                        <div class="code-block">
-<span class="comment"># Aiogram example</span>
+                        <div class="code-block"><span class="comment"># Aiogram example</span>
 <span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
 bot = Bot(<span class="string">"YOUR_TOKEN"</span>)
-neonpay = NeonPay.create_for_aiogram(bot)
-                        </div>
+neonpay = NeonPay.create_for_aiogram(bot)</div>
                     </div>
                 </section>
 
                 <section id="payment-stage">
-                    <h2>PaymentStage Class</h2>
-                    <p>Represents a payment stage with product information.</p>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>PaymentStage Class</h2>
+                        <p>Represents a payment stage with product information.</p>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Класс PaymentStage</h2>
+                        <p>Представляет этап платежа с информацией о продукте.</p>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>PaymentStage Sinifi</h2>
+                        <p>Məhsul məlumatları ilə ödəniş etapını təmsil edir.</p>
+                    </div>
 
                     <div class="method-card">
                         <h4>Constructor</h4>
@@ -407,35 +636,105 @@ PaymentStage(
                             <div class="parameter">
                                 <span class="parameter-name">title</span>
                                 <span class="parameter-type">str</span>
-                                <p>Product or service title</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Product or service title</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Название продукта или услуги</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Məhsul və ya xidmət başlığı</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">description</span>
                                 <span class="parameter-type">str</span>
-                                <p>Detailed description of the product</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Detailed description of the product</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Подробное описание продукта</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Məhsulun təfərrüatlı təsviri</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">price</span>
                                 <span class="parameter-type">int</span>
-                                <p>Price in Telegram Stars (XTR)</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Price in Telegram Stars (XTR)</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Цена в Telegram Stars (XTR)</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Telegram Stars (XTR) dərəcəsi</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">logo_url</span>
                                 <span class="parameter-type">Optional[str]</span>
-                                <p>URL to product logo/image</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>URL to product logo/image</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>URL до логотипа/изображения продукта</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Məhsul logotipinin və ya şəklin URL-u</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">callback</span>
                                 <span class="parameter-type">Optional[Callable]</span>
-                                <p>Function to call when payment is successful</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Function to call when payment is successful</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Функция для вызова при успешном платеже</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Ödəniş müvəffəqiyyəti zamanı çağırılacaq funksiya</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <section id="payment-result">
-                    <h2>PaymentResult Class</h2>
-                    <p>Contains information about a completed payment.</p>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>PaymentResult Class</h2>
+                        <p>Contains information about a completed payment.</p>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Класс PaymentResult</h2>
+                        <p>Содержит информацию о завершенном платеже.</p>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>PaymentResult Sinifi</h2>
+                        <p>Tamamlanmış ödəniş haqqında məlumatları saxlayır.</p>
+                    </div>
 
                     <div class="method-card">
                         <h4>Properties</h4>
@@ -443,34 +742,103 @@ PaymentStage(
                             <div class="parameter">
                                 <span class="parameter-name">user_id</span>
                                 <span class="parameter-type">int</span>
-                                <p>Telegram user ID who made the payment</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Telegram user ID who made the payment</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>ID пользователя Telegram, который совершил платеж</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Ödəniş edən Telegram istifadəçisi ID-si</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">amount</span>
                                 <span class="parameter-type">int</span>
-                                <p>Payment amount in Telegram Stars</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Payment amount in Telegram Stars (XTR)</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Сумма платежа в Telegram Stars (XTR)</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Telegram Stars (XTR) dərəcəsi</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">stage</span>
                                 <span class="parameter-type">PaymentStage</span>
-                                <p>The payment stage that was purchased</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>The payment stage that was purchased</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Этап платежа, который был приобретен</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Alınan ödəniş etapı</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">message</span>
                                 <span class="parameter-type">Message</span>
-                                <p>Original message object from the bot library</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Original message object from the bot library</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Оригинальный объект сообщения из библиотеки ботов</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Bot kitabxanasından orijinal mesaj nümunəsi</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">payment_id</span>
                                 <span class="parameter-type">str</span>
-                                <p>Unique payment identifier</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Unique payment identifier</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Уникальный идентификатор платежа</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Unikal ödəniş identifikatoru</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <section id="create-stage">
-                    <h2>create_stage Method</h2>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>create_stage Method</h2>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Метод create_stage</h2>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>create_stage Metodu</h2>
+                    </div>
+
                     <div class="method-card">
                         <div class="method-signature">
 def create_stage(
@@ -482,7 +850,18 @@ def create_stage(
     callback: Optional[Callable] = None
 ) -> PaymentStage
                         </div>
-                        <p>Create a new payment stage.</p>
+                        <!-- English Content -->
+                        <div class="lang-content active" data-lang="en">
+                            <p>Create a new payment stage.</p>
+                        </div>
+                        <!-- Russian Content -->
+                        <div class="lang-content" data-lang="ru">
+                            <p>Создайте новый этап платежа.</p>
+                        </div>
+                        <!-- Azerbaijani Content -->
+                        <div class="lang-content" data-lang="az">
+                            <p>Yeni bir ödəniş etapı yaradın.</p>
+                        </div>
 
                         <div class="code-block">
 stage = neonpay.create_stage(
@@ -496,7 +875,21 @@ stage = neonpay.create_stage(
                 </section>
 
                 <section id="send-payment">
-                    <h2>send_payment Method</h2>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>send_payment Method</h2>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Метод send_payment</h2>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>send_payment Metodu</h2>
+                    </div>
+
                     <div class="method-card">
                         <div class="method-signature">
 async def send_payment(
@@ -505,18 +898,51 @@ async def send_payment(
     stage: PaymentStage
 ) -> None
                         </div>
-                        <p>Send a payment invoice to the user.</p>
+                        <!-- English Content -->
+                        <div class="lang-content active" data-lang="en">
+                            <p>Send a payment invoice to the user.</p>
+                        </div>
+                        <!-- Russian Content -->
+                        <div class="lang-content" data-lang="ru">
+                            <p>Отправьте счет на оплату пользователю.</p>
+                        </div>
+                        <!-- Azerbaijani Content -->
+                        <div class="lang-content" data-lang="az">
+                            <p>İstifadəçiyə bir ödəniş fakturası göndərin.</p>
+                        </div>
 
                         <div class="parameters">
                             <div class="parameter">
                                 <span class="parameter-name">chat_id</span>
                                 <span class="parameter-type">int</span>
-                                <p>Telegram chat ID to send the invoice to</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Telegram chat ID to send the invoice to</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>ID чата Telegram, куда отправить счет</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>İnvoysu göndəriləcək Telegram söhbəti ID-si</p>
+                                </div>
                             </div>
                             <div class="parameter">
                                 <span class="parameter-name">stage</span>
                                 <span class="parameter-type">PaymentStage</span>
-                                <p>Payment stage to send</p>
+                                <!-- English Content -->
+                                <div class="lang-content active" data-lang="en">
+                                    <p>Payment stage to send</p>
+                                </div>
+                                <!-- Russian Content -->
+                                <div class="lang-content" data-lang="ru">
+                                    <p>Этап платежа для отправки</p>
+                                </div>
+                                <!-- Azerbaijani Content -->
+                                <div class="lang-content" data-lang="az">
+                                    <p>Göndəriləcək ödəniş etapı</p>
+                                </div>
                             </div>
                         </div>
 
@@ -528,12 +954,37 @@ async def send_payment(
                 </section>
 
                 <section id="payment-handler">
-                    <h2>payment_handler Decorator</h2>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>payment_handler Decorator</h2>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Декоратор payment_handler</h2>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>payment_handler Dekoratoru</h2>
+                    </div>
+
                     <div class="method-card">
                         <div class="method-signature">
 def payment_handler(self, stage: PaymentStage)
                         </div>
-                        <p>Decorator to handle payments for a specific stage.</p>
+                        <!-- English Content -->
+                        <div class="lang-content active" data-lang="en">
+                            <p>Decorator to handle payments for a specific stage.</p>
+                        </div>
+                        <!-- Russian Content -->
+                        <div class="lang-content" data-lang="ru">
+                            <p>Декоратор для обработки платежей для конкретного этапа.</p>
+                        </div>
+                        <!-- Azerbaijani Content -->
+                        <div class="lang-content" data-lang="az">
+                            <p>Xüsusi bir etap üçün ödənişləri idarə etmək üçün dekorator.</p>
+                        </div>
 
                         <div class="code-block">
 @neonpay.payment_handler(premium_stage)
@@ -550,8 +1001,23 @@ def payment_handler(self, stage: PaymentStage)
                 </section>
 
                 <section id="validation">
-                    <h2>Validation Utilities</h2>
-                    <p>Built-in validation for payment data.</p>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>Validation Utilities</h2>
+                        <p>Built-in validation for payment data.</p>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Утилиты для валидации</h2>
+                        <p>Встроенные утилиты для валидации данных платежа.</p>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>Doğrulama Yardımçıları</h2>
+                        <p>Ödəniş məlumatları üçün qoşulmuş doğrulama.</p>
+                    </div>
 
                     <div class="method-card">
                         <h4>PaymentValidator</h4>
@@ -569,8 +1035,23 @@ is_valid_price = validator.validate_price(100)  <span class="comment"># True for
                 </section>
 
                 <section id="logging">
-                    <h2>Logging</h2>
-                    <p>Built-in logging for payment operations.</p>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>Logging</h2>
+                        <p>Built-in logging for payment operations.</p>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Логирование</h2>
+                        <p>Встроенное логирование для операций с платежами.</p>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>Qeydiyyat</h2>
+                        <p>Ödəniş əməliyyətləri üçün qoşulmuş qeydiyyat.</p>
+                    </div>
 
                     <div class="method-card">
                         <h4>NeonPayLogger</h4>
@@ -586,8 +1067,23 @@ logger.log_payment_received(payment_result)
                 </section>
 
                 <section id="middleware">
-                    <h2>Middleware System</h2>
-                    <p>Extend NEONPAY functionality with middleware.</p>
+                    <!-- English Content -->
+                    <div class="lang-content active" data-lang="en">
+                        <h2>Middleware System</h2>
+                        <p>Extend NEONPAY functionality with middleware.</p>
+                    </div>
+
+                    <!-- Russian Content -->
+                    <div class="lang-content" data-lang="ru">
+                        <h2>Система middleware</h2>
+                        <p>Расширьте функциональность NEONPAY с помощью middleware.</p>
+                    </div>
+
+                    <!-- Azerbaijani Content -->
+                    <div class="lang-content" data-lang="az">
+                        <h2>Middleware Sistemi</h2>
+                        <p>NEONPAY funksionallığını middleware ilə genişlət.</p>
+                    </div>
 
                     <div class="method-card">
                         <h4>Creating Middleware</h4>
@@ -611,12 +1107,102 @@ neonpay.add_middleware(LoggingMiddleware())
     </div>
 
     <script>
-        // Mobile menu toggle
+        <!-- Load navbar from external file -->
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navbar-container').innerHTML = html;
+                
+                // Execute the script tags from navbar.html
+                const scripts = document.getElementById('navbar-container').querySelectorAll('script');
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.textContent = script.textContent;
+                    document.body.appendChild(newScript);
+                });
+            })
+            .catch(error => console.error('Error loading navbar:', error));
+
+        // Function to apply translations based on language
+        window.applyTranslations = function(lang, translations) {
+            // Hide all language content
+            const allLangContent = document.querySelectorAll('.lang-content');
+            allLangContent.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show content for selected language
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => {
+                content.classList.add('active');
+            });
+
+            // Update HTML lang attribute
+            document.getElementById('html-root').setAttribute('lang', lang);
+            
+            // Save language preference
+            localStorage.setItem('preferred-language', lang);
+        };
+
+        // Load saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (window.applyTranslations) {
+                window.applyTranslations(savedLang, {});
+            }
+        });
+
         const mobileMenu = document.getElementById('mobileMenu');
         const navLinks = document.getElementById('navLinks');
 
         mobileMenu.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+        });
+
+        // Auto-hide navigation when clicking on a link
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Hide navigation when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const langContents = document.querySelectorAll('.lang-content');
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+
+        function switchLanguage(lang) {
+            // Update active language button
+            langButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update content visibility
+            langContents.forEach(content => {
+                content.classList.toggle('active', content.dataset.lang === lang);
+            });
+
+            // Update navigation text
+            navLinksItems.forEach(link => {
+                if (link.dataset[lang]) {
+                    link.textContent = link.dataset[lang];
+                }
+            });
+
+            // Update HTML lang attribute
+            document.getElementById('html-root').setAttribute('lang', lang === 'en' ? 'en' : lang === 'ru' ? 'ru' : 'az');
+        }
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchLanguage(btn.dataset.lang);
+            });
         });
 
         // Sidebar navigation

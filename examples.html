@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Examples - NEONPAY</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --background: #ffffff;
@@ -44,12 +45,13 @@
 
         /* Header */
         header {
-            background: var(--background);
+            background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         nav {
@@ -73,18 +75,22 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            transition: all 0.3s ease;
         }
 
         .nav-links a {
             color: var(--foreground);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
             color: var(--primary);
+            background: var(--secondary);
         }
 
         .mobile-menu {
@@ -93,6 +99,38 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .mobile-menu:hover {
+            background: var(--secondary);
+        }
+
+        /* Language selector */
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
         }
 
         /* Main Content */
@@ -167,32 +205,54 @@
             font-weight: 500;
         }
 
+        /* Improved code block styling with better formatting */
         .code-block {
-            background: #1f2937;
-            color: #f9fafb;
+            background: #1e293b;
+            color: #f1f5f9;
             padding: 1.5rem;
             overflow-x: auto;
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
             font-size: 0.85rem;
-            line-height: 1.5;
+            line-height: 1.6;
             max-height: 400px;
             overflow-y: auto;
+            white-space: pre;
+            tab-size: 4;
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
         .code-block .comment {
-            color: #9ca3af;
+            color: #64748b;
+            font-style: italic;
         }
 
         .code-block .keyword {
-            color: #8b5cf6;
+            color: #c084fc;
+            font-weight: 600;
         }
 
         .code-block .string {
-            color: #10b981;
+            color: #34d399;
         }
 
         .code-block .function {
             color: #60a5fa;
+            font-weight: 500;
+        }
+
+        .code-block .number {
+            color: #fbbf24;
         }
 
         .use-cases {
@@ -234,6 +294,15 @@
             margin-bottom: 0;
         }
 
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -242,14 +311,23 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--background);
+                background: rgba(255, 255, 255, 0.98);
                 flex-direction: column;
                 padding: 1rem;
                 border-top: 1px solid var(--border);
+                backdrop-filter: blur(20px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
             }
 
             .nav-links.active {
                 display: flex;
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
 
             .mobile-menu {
@@ -267,43 +345,56 @@
             .use-cases-grid {
                 grid-template-columns: 1fr;
             }
+
+            .language-selector {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <a href="index.html" class="logo">
-                ⚡ NEONPAY
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="quick-start.html">Quick Start</a></li>
-                <li><a href="api-docs.html">API Docs</a></li>
-                <li><a href="examples.html" class="active">Examples</a></li>
-                <li><a href="libraries.html">Libraries</a></li>
-            </ul>
-            <button class="mobile-menu" id="mobileMenu">☰</button>
-        </nav>
-    </header>
+    <!-- Updated to use unified navbar from navbar.html -->
+    <div id="navbar-container"></div>
 
     <div class="container">
         <div class="main-content">
             <div class="content">
-                <h1>Code Examples</h1>
-                <p>Real-world examples showing how to integrate NEONPAY into your Telegram bots.</p>
+                <!-- Updated multilingual content structure to match other pages -->
+                <div class="lang-content active" data-lang="en">
+                    <h1>Code Examples</h1>
+                    <p>Real-world examples showing how to integrate NEONPAY into your Telegram bots.</p>
+                </div>
+                <div class="lang-content" data-lang="ru">
+                    <h1>Примеры кода</h1>
+                    <p>Реальные примеры, показывающие, как интегрировать NEONPAY в ваших Telegram ботов.</p>
+                </div>
+                <div class="lang-content" data-lang="az">
+                    <h1>Kod nümunələri</h1>
+                    <p>NEONPAY-ı Telegram botlarınıza necə inteqrasiya etməyi göstərən real nümunələr.</p>
+                </div>
 
                 <div class="examples-grid">
                     <div class="example-card">
                         <div class="example-header">
-                            <div class="example-title">Simple Premium Access</div>
-                            <div class="example-description">Basic premium subscription with Aiogram</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="example-title">Simple Premium Access</div>
+                                <div class="example-description">Basic premium subscription with Aiogram</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="example-title">Простой премиум доступ</div>
+                                <div class="example-description">Базовая премиум подписка с Aiogram</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="example-title">Sadə premium giriş</div>
+                                <div class="example-description">Aiogram ilə əsas premium abunəlik</div>
+                            </div>
                             <div class="example-tags">
                                 <span class="tag">Aiogram</span>
                                 <span class="tag">Premium</span>
                             </div>
                         </div>
-                        <div class="code-block">
-<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot, Dispatcher, Router
+                        <div class="code-block"><span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot, Dispatcher, Router
 <span class="keyword">from</span> aiogram.types <span class="keyword">import</span> Message
 <span class="keyword">from</span> aiogram.filters <span class="keyword">import</span> Command
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
@@ -319,7 +410,7 @@ neonpay = NeonPay.create_for_aiogram(bot)
 premium_stage = neonpay.create_stage(
     title=<span class="string">"Premium Access"</span>,
     description=<span class="string">"Unlock all premium features"</span>,
-    price=100,  <span class="comment"># 100 XTR</span>
+    price=<span class="number">100</span>,  <span class="comment"># 100 XTR</span>
     logo_url=<span class="string">"https://example.com/premium.png"</span>
 )
 
@@ -335,21 +426,29 @@ premium_stage = neonpay.create_stage(
         <span class="string">"🎉 Premium activated! Welcome to Premium!"</span>
     )
 
-dp.include_router(router)
-                        </div>
+dp.include_router(router)</div>
                     </div>
 
                     <div class="example-card">
                         <div class="example-header">
-                            <div class="example-title">Digital Store</div>
-                            <div class="example-description">Multiple products with Pyrogram</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="example-title">Digital Store</div>
+                                <div class="example-description">Multiple products with Pyrogram</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="example-title">Цифровой магазин</div>
+                                <div class="example-description">Несколько продуктов с Pyrogram</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="example-title">Rəqəmsal mağaza</div>
+                                <div class="example-description">Pyrogram ilə çoxlu məhsullar</div>
+                            </div>
                             <div class="example-tags">
                                 <span class="tag">Pyrogram</span>
                                 <span class="tag">Store</span>
                             </div>
                         </div>
-                        <div class="code-block">
-<span class="keyword">from</span> pyrogram <span class="keyword">import</span> Client, filters
+                        <div class="code-block"><span class="keyword">from</span> pyrogram <span class="keyword">import</span> Client, filters
 <span class="keyword">from</span> pyrogram.types <span class="keyword">import</span> Message, InlineKeyboardMarkup, InlineKeyboardButton
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
@@ -361,17 +460,17 @@ products = {
     <span class="string">"ebook"</span>: neonpay.create_stage(
         title=<span class="string">"Python E-Book"</span>,
         description=<span class="string">"Complete Python programming guide"</span>,
-        price=50
+        price=<span class="number">50</span>
     ),
     <span class="string">"course"</span>: neonpay.create_stage(
         title=<span class="string">"Video Course"</span>,
         description=<span class="string">"10-hour Python video course"</span>,
-        price=200
+        price=<span class="number">200</span>
     ),
     <span class="string">"template"</span>: neonpay.create_stage(
         title=<span class="string">"Bot Template"</span>,
         description=<span class="string">"Ready-to-use Telegram bot template"</span>,
-        price=75
+        price=<span class="number">75</span>
     )
 }
 
@@ -382,34 +481,29 @@ products = {
         [InlineKeyboardButton(<span class="string">"🎥 Course (200 XTR)"</span>, callback_data=<span class="string">"buy_course"</span>)],
         [InlineKeyboardButton(<span class="string">"🤖 Template (75 XTR)"</span>, callback_data=<span class="string">"buy_template"</span>)]
     ])
-    <span class="keyword">await</span> message.reply(<span class="string">"🛍️ Welcome to our store!"</span>, reply_markup=keyboard)
-
-@app.on_callback_query(filters.regex(<span class="string">r"buy_(\w+)"</span>))
-<span class="keyword">async def</span> <span class="function">handle_purchase</span>(client, callback_query):
-    product_key = callback_query.data.split(<span class="string">"_"</span>)[1]
-    stage = products[product_key]
-    <span class="keyword">await</span> neonpay.send_payment(callback_query.message.chat.id, stage)
-
-@neonpay.payment_handler(products[<span class="string">"ebook"</span>])
-<span class="keyword">async def</span> <span class="function">deliver_ebook</span>(payment_result):
-    <span class="keyword">await</span> payment_result.message.answer_document(
-        document=<span class="string">"ebook.pdf"</span>,
-        caption=<span class="string">"📚 Here's your Python E-Book! Enjoy learning!"</span>
-    )
-                        </div>
+    <span class="keyword">await</span> message.reply(<span class="string">"🛍️ Welcome to our store!"</span>, reply_markup=keyboard)</div>
                     </div>
 
                     <div class="example-card">
                         <div class="example-header">
-                            <div class="example-title">Subscription System</div>
-                            <div class="example-description">Monthly subscriptions with python-telegram-bot</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="example-title">Subscription System</div>
+                                <div class="example-description">Monthly subscriptions with python-telegram-bot</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="example-title">Система подписок</div>
+                                <div class="example-description">Месячные подписки с python-telegram-bot</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="example-title">Abunəlik sistemi</div>
+                                <div class="example-description">python-telegram-bot ilə aylıq abunəliklər</div>
+                            </div>
                             <div class="example-tags">
                                 <span class="tag">PTB</span>
                                 <span class="tag">Subscription</span>
                             </div>
                         </div>
-                        <div class="code-block">
-<span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application, CommandHandler, CallbackQueryHandler
+                        <div class="code-block"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application, CommandHandler, CallbackQueryHandler
 <span class="keyword">from</span> telegram <span class="keyword">import</span> Update, InlineKeyboardMarkup, InlineKeyboardButton
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 <span class="keyword">import</span> datetime
@@ -422,57 +516,36 @@ plans = {
     <span class="string">"monthly"</span>: neonpay.create_stage(
         title=<span class="string">"Monthly Premium"</span>,
         description=<span class="string">"Premium access for 1 month"</span>,
-        price=300
+        price=<span class="number">300</span>
     ),
     <span class="string">"yearly"</span>: neonpay.create_stage(
         title=<span class="string">"Yearly Premium"</span>,
         description=<span class="string">"Premium access for 1 year (2 months free!)"</span>,
-        price=3000
+        price=<span class="number">3000</span>
     )
-}
-
-<span class="keyword">async def</span> <span class="function">subscribe_command</span>(update: Update, context):
-    keyboard = InlineKeyboardMarkup([
-        [InlineKeyboardButton(<span class="string">"📅 Monthly (300 XTR)"</span>, callback_data=<span class="string">"sub_monthly"</span>)],
-        [InlineKeyboardButton(<span class="string">"📆 Yearly (3000 XTR)"</span>, callback_data=<span class="string">"sub_yearly"</span>)]
-    ])
-    <span class="keyword">await</span> update.message.reply_text(
-        <span class="string">"Choose your subscription plan:"</span>,
-        reply_markup=keyboard
-    )
-
-<span class="keyword">async def</span> <span class="function">handle_subscription</span>(update: Update, context):
-    query = update.callback_query
-    plan_type = query.data.split(<span class="string">"_"</span>)[1]
-    stage = plans[plan_type]
-    <span class="keyword">await</span> neonpay.send_payment(query.message.chat_id, stage)
-
-@neonpay.payment_handler(plans[<span class="string">"monthly"</span>])
-<span class="keyword">async def</span> <span class="function">activate_monthly</span>(payment_result):
-    user_id = payment_result.user_id
-    expiry = datetime.datetime.now() + datetime.timedelta(days=30)
-    <span class="comment"># Save subscription to database</span>
-    <span class="keyword">await</span> save_subscription(user_id, <span class="string">"monthly"</span>, expiry)
-    <span class="keyword">await</span> payment_result.message.reply_text(
-        <span class="string">"✅ Monthly subscription activated until "</span> + expiry.strftime(<span class="string">"%Y-%m-%d"</span>)
-    )
-
-application.add_handler(CommandHandler(<span class="string">"subscribe"</span>, subscribe_command))
-application.add_handler(CallbackQueryHandler(handle_subscription, pattern=<span class="string">r"sub_\w+"</span>))
-                        </div>
+}</div>
                     </div>
 
                     <div class="example-card">
                         <div class="example-header">
-                            <div class="example-title">Donation Bot</div>
-                            <div class="example-description">Flexible donations with pyTelegramBotAPI</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="example-title">Donation Bot</div>
+                                <div class="example-description">Flexible donations with pyTelegramBotAPI</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="example-title">Бот для пожертвований</div>
+                                <div class="example-description">Гибкие пожертвования с pyTelegramBotAPI</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="example-title">İanə botu</div>
+                                <div class="example-description">pyTelegramBotAPI ilə çevik ianələr</div>
+                            </div>
                             <div class="example-tags">
                                 <span class="tag">telebot</span>
                                 <span class="tag">Donations</span>
                             </div>
                         </div>
-                        <div class="code-block">
-<span class="keyword">import</span> telebot
+                        <div class="code-block"><span class="keyword">import</span> telebot
 <span class="keyword">from</span> telebot.types <span class="keyword">import</span> InlineKeyboardMarkup, InlineKeyboardButton
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
@@ -484,51 +557,14 @@ donations = {
     <span class="string">"small"</span>: neonpay.create_stage(
         title=<span class="string">"Small Donation"</span>,
         description=<span class="string">"Support our project with a small donation"</span>,
-        price=25
+        price=<span class="number">25</span>
     ),
     <span class="string">"medium"</span>: neonpay.create_stage(
         title=<span class="string">"Medium Donation"</span>,
         description=<span class="string">"Help us grow with a medium donation"</span>,
-        price=100
-    ),
-    <span class="string">"large"</span>: neonpay.create_stage(
-        title=<span class="string">"Large Donation"</span>,
-        description=<span class="string">"Make a big impact with a large donation"</span>,
-        price=500
+        price=<span class="number">100</span>
     )
-}
-
-@bot.message_handler(commands=[<span class="string">'donate'</span>])
-<span class="keyword">def</span> <span class="function">donate_command</span>(message):
-    keyboard = InlineKeyboardMarkup()
-    keyboard.row(
-        InlineKeyboardButton(<span class="string">"☕ Small (25 XTR)"</span>, callback_data=<span class="string">"donate_small"</span>),
-        InlineKeyboardButton(<span class="string">"🍕 Medium (100 XTR)"</span>, callback_data=<span class="string">"donate_medium"</span>)
-    )
-    keyboard.row(
-        InlineKeyboardButton(<span class="string">"🎁 Large (500 XTR)"</span>, callback_data=<span class="string">"donate_large"</span>)
-    )
-    bot.reply_to(message, <span class="string">"💝 Thank you for considering a donation!"</span>, reply_markup=keyboard)
-
-@bot.callback_query_handler(<span class="keyword">func</span>=<span class="keyword">lambda</span> call: call.data.startswith(<span class="string">'donate_'</span>))
-<span class="keyword">def</span> <span class="function">handle_donation</span>(call):
-    amount_type = call.data.split(<span class="string">'_'</span>)[1]
-    stage = donations[amount_type]
-    neonpay.send_payment_sync(call.message.chat.id, stage)
-
-@neonpay.payment_handler(donations[<span class="string">"small"</span>])
-<span class="keyword">async def</span> <span class="function">thank_small_donor</span>(payment_result):
-    <span class="keyword">await</span> payment_result.message.reply_text(
-        <span class="string">"☕ Thank you for your small donation! Every bit helps!"</span>
-    )
-
-@neonpay.on_payment
-<span class="keyword">async def</span> <span class="function">log_all_donations</span>(payment_result):
-    <span class="comment"># Log all donations to database/file</span>
-    <span class="keyword">print</span>(<span class="string">f"Donation received: {payment_result.amount} XTR from user {payment_result.user_id}"</span>)
-
-bot.infinity_polling()
-                        </div>
+}</div>
                     </div>
                 </div>
             </div>
@@ -537,49 +573,147 @@ bot.infinity_polling()
 
     <section class="use-cases">
         <div class="container">
-            <h2>Common Use Cases</h2>
+            <div class="lang-content active" data-lang="en">
+                <h2>Common Use Cases</h2>
+            </div>
+            <div class="lang-content" data-lang="ru">
+                <h2>Общие случаи использования</h2>
+            </div>
+            <div class="lang-content" data-lang="az">
+                <h2>Ümumi istifadə halları</h2>
+            </div>
             <div class="use-cases-grid">
                 <div class="use-case">
-                    <h3>🎯 Premium Features</h3>
-                    <p>Unlock advanced bot features, remove rate limits, or provide exclusive content to paying users.</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>🎯 Premium Features</h3>
+                        <p>Unlock advanced bot features, remove rate limits, or provide exclusive content to paying users.</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>🎯 Премиум функции</h3>
+                        <p>Разблокируйте расширенные функции бота, уберите ограничения или предоставьте эксклюзивный контент платящим пользователям.</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>🎯 Premium xüsusiyyətlər</h3>
+                        <p>Botun qabaqcıl xüsusiyyətlərini açın, məhdudiyyətləri aradan qaldırın və ya ödəniş edən istifadəçilərə eksklüziv məzmun təqdim edin.</p>
+                    </div>
                 </div>
                 <div class="use-case">
-                    <h3>📚 Digital Products</h3>
-                    <p>Sell e-books, courses, templates, or any digital content directly through your bot.</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>📚 Digital Products</h3>
+                        <p>Sell e-books, courses, templates, or any digital content directly through your bot.</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>📚 Цифровые продукты</h3>
+                        <p>Продавайте электронные книги, курсы, шаблоны или любой цифровой контент прямо через вашего бота.</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>📚 Rəqəmsal məhsullar</h3>
+                        <p>E-kitablar, kurslar, şablonlar və ya hər hansı rəqəmsal məzmunu birbaşa botunuz vasitəsilə satın.</p>
+                    </div>
                 </div>
                 <div class="use-case">
-                    <h3>💝 Donations</h3>
-                    <p>Accept donations to support your project, with flexible amounts and thank-you messages.</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>💝 Donations</h3>
+                        <p>Accept donations to support your project, with flexible amounts and thank-you messages.</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>💝 Пожертвования</h3>
+                        <p>Принимайте пожертвования для поддержки вашего проекта с гибкими суммами и благодарственными сообщениями.</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>💝 İanələr</h3>
+                        <p>Layihənizi dəstəkləmək üçün çevik məbləğlər və təşəkkür mesajları ilə ianələr qəbul edin.</p>
+                    </div>
                 </div>
                 <div class="use-case">
-                    <h3>📅 Subscriptions</h3>
-                    <p>Implement monthly or yearly subscriptions with automatic access management.</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>📅 Subscriptions</h3>
+                        <p>Implement monthly or yearly subscriptions with automatic access management.</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>📅 Подписки</h3>
+                        <p>Внедрите месячные или годовые подписки с автоматическим управлением доступом.</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>📅 Abunəliklər</h3>
+                        <p>Avtomatik giriş idarəetməsi ilə aylıq və ya illik abunəliklər tətbiq edin.</p>
+                    </div>
                 </div>
                 <div class="use-case">
-                    <h3>🎮 Game Items</h3>
-                    <p>Sell in-game items, power-ups, or virtual currency for Telegram-based games.</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>🎮 Game Items</h3>
+                        <p>Sell in-game items, power-ups, or virtual currency for Telegram-based games.</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>🎮 Игровые предметы</h3>
+                        <p>Продавайте внутриигровые предметы, усиления или виртуальную валюту для игр в Telegram.</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>🎮 Oyun əşyaları</h3>
+                        <p>Telegram əsaslı oyunlar üçün oyun daxili əşyalar, gücləndiricilər və ya virtual valyuta satın.</p>
+                    </div>
                 </div>
                 <div class="use-case">
-                    <h3>🔧 Services</h3>
-                    <p>Charge for bot services like file conversion, API access, or custom processing.</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>🔧 Services</h3>
+                        <p>Charge for bot services like file conversion, API access, or custom processing.</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>🔧 Услуги</h3>
+                        <p>Взимайте плату за услуги бота, такие как конвертация файлов, доступ к API или пользовательская обработка.</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>🔧 Xidmətlər</h3>
+                        <p>Fayl çevrilməsi, API girişi və ya xüsusi emal kimi bot xidmətləri üçün ödəniş alın.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <script>
-        // Mobile menu toggle
-        const mobileMenu = document.getElementById('mobileMenu');
-        const navLinks = document.getElementById('navLinks');
+        <!-- Updated script to properly load navbar and integrate with unified navigation system -->
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navbar-container').innerHTML = html;
+                
+                // Execute the script tags from navbar.html
+                const scripts = document.getElementById('navbar-container').querySelectorAll('script');
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.textContent = script.textContent;
+                    document.body.appendChild(newScript);
+                });
+            })
+            .catch(error => console.error('Error loading navbar:', error));
 
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        // Translation function for page content integration with navbar
+        window.applyTranslations = function(lang, translations) {
+            // Hide all language content
+            const allLangContent = document.querySelectorAll('.lang-content');
+            allLangContent.forEach(content => {
+                content.classList.remove('active');
+            });
 
-        // Close mobile menu when clicking on a link
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                navLinks.classList.remove('active');
+            // Show content for selected language
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => {
+                content.classList.add('active');
+            });
+
+            // Update HTML lang attribute
+            document.getElementById('html-root').setAttribute('lang', lang);
+            
+            // Save language preference
+            localStorage.setItem('preferred-language', lang);
+        };
+
+        // Load saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (window.applyTranslations) {
+                window.applyTranslations(savedLang, {});
             }
         });
     </script>

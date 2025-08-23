@@ -1,0 +1,330 @@
+<!-- Объединенная навигация с полной функциональностью из navigation.js -->
+<!-- Navigation Header Component -->
+<header>
+    <nav class="container">
+        <div class="nav-controls">
+            <a href="index.html" class="logo">
+                ⚡ NEONPAY
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" data-en="Home" data-ru="Главная" data-az="Ana səhifə">Home</a></li>
+                <li><a href="quick-start.html" data-en="Quick Start" data-ru="Быстрый старт" data-az="Sürətli başlanğıc">Quick Start</a></li>
+                <li><a href="api-docs.html" data-en="API Docs" data-ru="API документация" data-az="API sənədləri">API Docs</a></li>
+                <li><a href="examples.html" data-en="Examples" data-ru="Примеры" data-az="Nümunələr">Examples</a></li>
+                <li><a href="libraries.html" data-en="Libraries" data-ru="Библиотеки" data-az="Kitabxanalar">Libraries</a></li>
+            </ul>
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="az">AZ</button>
+            </div>
+        </div>
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+    </nav>
+</header>
+
+<style>
+    /* Navigation Styles */
+    :root {
+        --background: #ffffff;
+        --foreground: #1f2937;
+        --card: #f8fafc;
+        --card-foreground: #1f2937;
+        --primary: #6366f1;
+        --primary-foreground: #ffffff;
+        --secondary: #f8fafc;
+        --secondary-foreground: #1f2937;
+        --muted: #e5e7eb;
+        --muted-foreground: #6b7280;
+        --accent: #4ade80;
+        --accent-foreground: #1f2937;
+        --border: #d1d5db;
+        --radius: 0.5rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    header {
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links a {
+        color: var(--foreground);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: var(--primary);
+        background: var(--secondary);
+    }
+
+    .mobile-menu {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        transition: background 0.3s ease;
+    }
+
+    .mobile-menu:hover {
+        background: var(--secondary);
+    }
+
+    .nav-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .language-selector {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-left: 1rem;
+    }
+
+    .lang-btn {
+        background: none;
+        border: 1px solid var(--border);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+        .nav-controls {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            flex-direction: column;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            display: block;
+        }
+
+        .language-selector {
+            margin-left: 0;
+            margin-top: 1rem;
+        }
+    }
+</style>
+
+<script>
+    class Navigation {
+        constructor() {
+            this.pages = [
+                { href: "index.html", key: "home" },
+                { href: "quick-start.html", key: "quickStart" },
+                { href: "api-docs.html", key: "apiDocs" },
+                { href: "examples.html", key: "examples" },
+                { href: "libraries.html", key: "libraries" },
+            ];
+
+            this.translations = {
+                en: {
+                    home: "Home",
+                    quickStart: "Quick Start",
+                    apiDocs: "API Docs",
+                    examples: "Examples",
+                    libraries: "Libraries",
+                },
+                ru: {
+                    home: "Главная",
+                    quickStart: "Быстрый старт",
+                    apiDocs: "API документация",
+                    examples: "Примеры",
+                    libraries: "Библиотеки",
+                },
+                az: {
+                    home: "Ana səhifə",
+                    quickStart: "Sürətli başlanğıc",
+                    apiDocs: "API sənədləri",
+                    examples: "Nümunələr",
+                    libraries: "Kitabxanalar",
+                },
+            };
+
+            this.currentLang = localStorage.getItem('preferred-language') || 'en';
+            this.currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        }
+
+        init() {
+            this.setupEventListeners();
+            this.highlightCurrentPage();
+            this.loadSavedLanguage();
+        }
+
+        setupEventListeners() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navLinks = document.getElementById('navLinks');
+            const langBtns = document.querySelectorAll('.lang-btn');
+
+            // Mobile menu toggle
+            if (mobileMenu && navLinks) {
+                mobileMenu.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const nav = document.querySelector('nav');
+                if (nav && navLinks && !nav.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            const navLinkItems = document.querySelectorAll('.nav-links a');
+            navLinkItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+
+            // Language switching
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const lang = e.target.getAttribute('data-lang');
+                    this.setLanguage(lang);
+                });
+            });
+        }
+
+        setLanguage(lang) {
+            this.currentLang = lang;
+            
+            // Update active language button
+            const langBtns = document.querySelectorAll('.lang-btn');
+            langBtns.forEach(b => b.classList.remove('active'));
+            const activeLangBtn = document.querySelector(`[data-lang="${lang}"]`);
+            if (activeLangBtn) {
+                activeLangBtn.classList.add('active');
+            }
+            
+            // Update navigation text
+            this.updateNavText(lang);
+            
+            // Save language preference
+            localStorage.setItem('preferred-language', lang);
+            
+            // Trigger language change event for page content
+            if (window.applyTranslations) {
+                window.applyTranslations(lang, this.translations[lang]);
+            }
+        }
+
+        updateNavText(lang) {
+            const navItems = document.querySelectorAll('.nav-links a[data-' + lang + ']');
+            navItems.forEach(item => {
+                const text = item.getAttribute('data-' + lang);
+                if (text) {
+                    item.textContent = text;
+                }
+            });
+        }
+
+        highlightCurrentPage() {
+            const navItems = document.querySelectorAll('.nav-links a');
+            navItems.forEach(item => {
+                if (item.getAttribute('href') === this.currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        loadSavedLanguage() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+            if (savedLangBtn) {
+                const langBtns = document.querySelectorAll('.lang-btn');
+                langBtns.forEach(b => b.classList.remove('active'));
+                savedLangBtn.classList.add('active');
+                this.updateNavText(savedLang);
+            }
+        }
+    }
+
+    // Initialize navigation when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = new Navigation();
+        nav.init();
+    });
+</script>

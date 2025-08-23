@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supported Libraries - NEONPAY</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --background: #ffffff;
@@ -44,12 +45,13 @@
 
         /* Header */
         header {
-            background: var(--background);
+            background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         nav {
@@ -73,18 +75,22 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            transition: all 0.3s ease;
         }
 
         .nav-links a {
             color: var(--foreground);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
             color: var(--primary);
+            background: var(--secondary);
         }
 
         .mobile-menu {
@@ -93,6 +99,38 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .mobile-menu:hover {
+            background: var(--secondary);
+        }
+
+        /* Language selector */
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
         }
 
         /* Main Content */
@@ -175,27 +213,49 @@
             margin-right: 0.5rem;
         }
 
+        /* Improved code block styling with better formatting */
         .code-example {
-            background: #1f2937;
-            color: #f9fafb;
+            background: #1e293b;
+            color: #f1f5f9;
             padding: 1rem;
             border-radius: var(--radius);
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
             font-size: 0.8rem;
-            line-height: 1.4;
+            line-height: 1.6;
             overflow-x: auto;
+            white-space: pre;
+            tab-size: 4;
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .code-example::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
         .code-example .comment {
-            color: #9ca3af;
+            color: #64748b;
+            font-style: italic;
         }
 
         .code-example .keyword {
-            color: #8b5cf6;
+            color: #c084fc;
+            font-weight: 600;
         }
 
         .code-example .string {
-            color: #10b981;
+            color: #34d399;
+        }
+
+        .code-example .function {
+            color: #60a5fa;
+            font-weight: 500;
         }
 
         .installation-section {
@@ -231,13 +291,23 @@
         }
 
         .install-command {
-            background: #1f2937;
-            color: #f9fafb;
+            background: #1e293b;
+            color: #f1f5f9;
             padding: 0.75rem;
             border-radius: var(--radius);
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
             font-size: 0.9rem;
             margin: 0.5rem 0;
+            white-space: pre;
+        }
+
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
         }
 
         /* Mobile Responsive */
@@ -248,14 +318,23 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--background);
+                background: rgba(255, 255, 255, 0.98);
                 flex-direction: column;
                 padding: 1rem;
                 border-top: 1px solid var(--border);
+                backdrop-filter: blur(20px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
             }
 
             .nav-links.active {
                 display: flex;
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
 
             .mobile-menu {
@@ -273,199 +352,324 @@
             .installation-grid {
                 grid-template-columns: 1fr;
             }
+
+            .language-selector {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <a href="index.html" class="logo">
-                ⚡ NEONPAY
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="quick-start.html">Quick Start</a></li>
-                <li><a href="api-docs.html">API Docs</a></li>
-                <li><a href="examples.html">Examples</a></li>
-                <li><a href="libraries.html" class="active">Libraries</a></li>
-            </ul>
-            <button class="mobile-menu" id="mobileMenu">☰</button>
-        </nav>
-    </header>
+    <!-- Updated to use unified navbar from navbar.html -->
+    <div id="navbar-container"></div>
 
     <div class="container">
         <div class="main-content">
             <div class="content">
-                <h1>Supported Libraries</h1>
-                <p>NEONPAY works seamlessly with all major Telegram bot libraries through our adapter system.</p>
+                <!-- Updated multilingual content structure to match other pages -->
+                <div class="lang-content active" data-lang="en">
+                    <h1>Supported Libraries</h1>
+                    <p>NEONPAY works seamlessly with all major Telegram bot libraries through our adapter system.</p>
+                </div>
+                <div class="lang-content" data-lang="ru">
+                    <h1>Поддерживаемые библиотеки</h1>
+                    <p>NEONPAY работает без проблем со всеми основными библиотеками Telegram ботов через нашу систему адаптеров.</p>
+                </div>
+                <div class="lang-content" data-lang="az">
+                    <h1>Dəstəklənən kitabxanalar</h1>
+                    <p>NEONPAY adapter sistemimiz vasitəsilə bütün əsas Telegram bot kitabxanaları ilə problemsiz işləyir.</p>
+                </div>
 
                 <div class="libraries-grid">
                     <div class="library-card">
                         <div class="library-header">
                             <div class="library-name">Aiogram v3</div>
-                            <div class="library-description">Modern async Telegram Bot API framework</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="library-description">Modern async Telegram Bot API framework</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="library-description">Современный асинхронный фреймворк Telegram Bot API</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="library-description">Müasir asinxron Telegram Bot API freymvorku</div>
+                            </div>
                         </div>
                         <div class="library-content">
                             <ul class="library-features">
-                                <li>Full async/await support</li>
-                                <li>Type hints and modern Python features</li>
-                                <li>Built-in middleware system</li>
-                                <li>Webhook and polling support</li>
+                                <div class="lang-content active" data-lang="en">
+                                    <li>Full async/await support</li>
+                                    <li>Type hints and modern Python features</li>
+                                    <li>Built-in middleware system</li>
+                                    <li>Webhook and polling support</li>
+                                </div>
+                                <div class="lang-content" data-lang="ru">
+                                    <li>Полная поддержка async/await</li>
+                                    <li>Типизация и современные возможности Python</li>
+                                    <li>Встроенная система middleware</li>
+                                    <li>Поддержка webhook и polling</li>
+                                </div>
+                                <div class="lang-content" data-lang="az">
+                                    <li>Tam async/await dəstəyi</li>
+                                    <li>Tip göstəriciləri və müasir Python xüsusiyyətləri</li>
+                                    <li>Daxili middleware sistemi</li>
+                                    <li>Webhook və polling dəstəyi</li>
+                                </div>
                             </ul>
-                            <div class="code-example">
-<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
+                            <div class="code-example"><span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
 bot = Bot(<span class="string">"TOKEN"</span>)
 neonpay = NeonPay.create_for_aiogram(bot)
 
 stage = neonpay.create_stage(
-    title=<span class="string">"Premium"</span>, price=100
+    title=<span class="string">"Premium"</span>, price=<span class="number">100</span>
 )
 
 @neonpay.payment_handler(stage)
-<span class="keyword">async def</span> handle_payment(result):
+<span class="keyword">async def</span> <span class="function">handle_payment</span>(result):
     <span class="comment"># Handle successful payment</span>
-    <span class="keyword">pass</span>
-                            </div>
+    <span class="keyword">pass</span></div>
                         </div>
                     </div>
 
                     <div class="library-card">
                         <div class="library-header">
                             <div class="library-name">Pyrogram v2+</div>
-                            <div class="library-description">Elegant, modern Telegram MTProto API framework</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="library-description">Elegant, modern Telegram MTProto API framework</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="library-description">Элегантный, современный фреймворк Telegram MTProto API</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="library-description">Zərif, müasir Telegram MTProto API freymvorku</div>
+                            </div>
                         </div>
                         <div class="library-content">
                             <ul class="library-features">
-                                <li>MTProto and Bot API support</li>
-                                <li>Clean and intuitive API</li>
-                                <li>Excellent documentation</li>
-                                <li>User and bot account support</li>
+                                <div class="lang-content active" data-lang="en">
+                                    <li>MTProto and Bot API support</li>
+                                    <li>Clean and intuitive API</li>
+                                    <li>Excellent documentation</li>
+                                    <li>User and bot account support</li>
+                                </div>
+                                <div class="lang-content" data-lang="ru">
+                                    <li>Поддержка MTProto и Bot API</li>
+                                    <li>Чистый и интуитивный API</li>
+                                    <li>Отличная документация</li>
+                                    <li>Поддержка пользовательских и бот аккаунтов</li>
+                                </div>
+                                <div class="lang-content" data-lang="az">
+                                    <li>MTProto və Bot API dəstəyi</li>
+                                    <li>Təmiz və intuitiv API</li>
+                                    <li>Əla sənədləşdirmə</li>
+                                    <li>İstifadəçi və bot hesabı dəstəyi</li>
+                                </div>
                             </ul>
-                            <div class="code-example">
-<span class="keyword">from</span> pyrogram <span class="keyword">import</span> Client
+                            <div class="code-example"><span class="keyword">from</span> pyrogram <span class="keyword">import</span> Client
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
 app = Client(<span class="string">"bot"</span>, bot_token=<span class="string">"TOKEN"</span>)
 neonpay = NeonPay.create_for_pyrogram(app)
 
 stage = neonpay.create_stage(
-    title=<span class="string">"Premium"</span>, price=100
+    title=<span class="string">"Premium"</span>, price=<span class="number">100</span>
 )
 
 @neonpay.payment_handler(stage)
-<span class="keyword">async def</span> handle_payment(result):
+<span class="keyword">async def</span> <span class="function">handle_payment</span>(result):
     <span class="comment"># Handle successful payment</span>
-    <span class="keyword">pass</span>
-                            </div>
+    <span class="keyword">pass</span></div>
                         </div>
                     </div>
 
                     <div class="library-card">
                         <div class="library-header">
                             <div class="library-name">python-telegram-bot</div>
-                            <div class="library-description">Pure Python Telegram Bot API wrapper</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="library-description">Pure Python Telegram Bot API wrapper</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="library-description">Чистый Python обертка для Telegram Bot API</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="library-description">Təmiz Python Telegram Bot API wrapper</div>
+                            </div>
                         </div>
                         <div class="library-content">
                             <ul class="library-features">
-                                <li>Comprehensive Bot API coverage</li>
-                                <li>Excellent error handling</li>
-                                <li>Rich ecosystem of extensions</li>
-                                <li>Well-established and stable</li>
+                                <div class="lang-content active" data-lang="en">
+                                    <li>Comprehensive Bot API coverage</li>
+                                    <li>Excellent error handling</li>
+                                    <li>Rich ecosystem of extensions</li>
+                                    <li>Well-established and stable</li>
+                                </div>
+                                <div class="lang-content" data-lang="ru">
+                                    <li>Полное покрытие Bot API</li>
+                                    <li>Отличная обработка ошибок</li>
+                                    <li>Богатая экосистема расширений</li>
+                                    <li>Хорошо зарекомендовавший себя и стабильный</li>
+                                </div>
+                                <div class="lang-content" data-lang="az">
+                                    <li>Bot API-nin hərtərəfli əhatəsi</li>
+                                    <li>Əla xəta idarəetməsi</li>
+                                    <li>Zəngin genişləndirmə ekosistemi</li>
+                                    <li>Yaxşı qurulmuş və sabit</li>
+                                </div>
                             </ul>
-                            <div class="code-example">
-<span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application
+                            <div class="code-example"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
 app = Application.builder().token(<span class="string">"TOKEN"</span>).build()
 neonpay = NeonPay.create_for_ptb(app)
 
 stage = neonpay.create_stage(
-    title=<span class="string">"Premium"</span>, price=100
+    title=<span class="string">"Premium"</span>, price=<span class="number">100</span>
 )
 
 @neonpay.payment_handler(stage)
-<span class="keyword">async def</span> handle_payment(result):
+<span class="keyword">async def</span> <span class="function">handle_payment</span>(result):
     <span class="comment"># Handle successful payment</span>
-    <span class="keyword">pass</span>
-                            </div>
+    <span class="keyword">pass</span></div>
                         </div>
                     </div>
 
                     <div class="library-card">
                         <div class="library-header">
                             <div class="library-name">pyTelegramBotAPI</div>
-                            <div class="library-description">Simple and lightweight Telegram Bot API wrapper</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="library-description">Simple and lightweight Telegram Bot API wrapper</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="library-description">Простая и легкая обертка для Telegram Bot API</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="library-description">Sadə və yüngül Telegram Bot API wrapper</div>
+                            </div>
                         </div>
                         <div class="library-content">
                             <ul class="library-features">
-                                <li>Simple and easy to use</li>
-                                <li>Sync and async support</li>
-                                <li>Minimal dependencies</li>
-                                <li>Great for beginners</li>
+                                <div class="lang-content active" data-lang="en">
+                                    <li>Simple and easy to use</li>
+                                    <li>Sync and async support</li>
+                                    <li>Minimal dependencies</li>
+                                    <li>Great for beginners</li>
+                                </div>
+                                <div class="lang-content" data-lang="ru">
+                                    <li>Простой и легкий в использовании</li>
+                                    <li>Поддержка синхронного и асинхронного режимов</li>
+                                    <li>Минимальные зависимости</li>
+                                    <li>Отлично подходит для начинающих</li>
+                                </div>
+                                <div class="lang-content" data-lang="az">
+                                    <li>Sadə və istifadəsi asan</li>
+                                    <li>Sinxron və asinxron dəstək</li>
+                                    <li>Minimal asılılıqlar</li>
+                                    <li>Yeni başlayanlar üçün əla</li>
+                                </div>
                             </ul>
-                            <div class="code-example">
-<span class="keyword">import</span> telebot
+                            <div class="code-example"><span class="keyword">import</span> telebot
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
 bot = telebot.TeleBot(<span class="string">"TOKEN"</span>)
 neonpay = NeonPay.create_for_telebot(bot)
 
 stage = neonpay.create_stage(
-    title=<span class="string">"Premium"</span>, price=100
+    title=<span class="string">"Premium"</span>, price=<span class="number">100</span>
 )
 
 @neonpay.payment_handler(stage)
-<span class="keyword">async def</span> handle_payment(result):
+<span class="keyword">async def</span> <span class="function">handle_payment</span>(result):
     <span class="comment"># Handle successful payment</span>
-    <span class="keyword">pass</span>
-                            </div>
+    <span class="keyword">pass</span></div>
                         </div>
                     </div>
 
                     <div class="library-card">
                         <div class="library-header">
                             <div class="library-name">Raw Telegram Bot API</div>
-                            <div class="library-description">Direct HTTP requests to Telegram Bot API</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="library-description">Direct HTTP requests to Telegram Bot API</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="library-description">Прямые HTTP запросы к Telegram Bot API</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="library-description">Telegram Bot API-yə birbaşa HTTP sorğuları</div>
+                            </div>
                         </div>
                         <div class="library-content">
                             <ul class="library-features">
-                                <li>No external dependencies</li>
-                                <li>Full control over requests</li>
-                                <li>Webhook support included</li>
-                                <li>Perfect for microservices</li>
+                                <div class="lang-content active" data-lang="en">
+                                    <li>No external dependencies</li>
+                                    <li>Full control over requests</li>
+                                    <li>Webhook support included</li>
+                                    <li>Perfect for microservices</li>
+                                </div>
+                                <div class="lang-content" data-lang="ru">
+                                    <li>Без внешних зависимостей</li>
+                                    <li>Полный контроль над запросами</li>
+                                    <li>Включена поддержка webhook</li>
+                                    <li>Идеально для микросервисов</li>
+                                </div>
+                                <div class="lang-content" data-lang="az">
+                                    <li>Xarici asılılıqlar yoxdur</li>
+                                    <li>Sorğular üzərində tam nəzarət</li>
+                                    <li>Webhook dəstəyi daxildir</li>
+                                    <li>Mikroservislər üçün mükəmməl</li>
+                                </div>
                             </ul>
-                            <div class="code-example">
-<span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
+                            <div class="code-example"><span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
 neonpay = NeonPay.create_for_raw_api(<span class="string">"TOKEN"</span>)
 
 stage = neonpay.create_stage(
-    title=<span class="string">"Premium"</span>, price=100
+    title=<span class="string">"Premium"</span>, price=<span class="number">100</span>
 )
 
 @neonpay.payment_handler(stage)
-<span class="keyword">async def</span> handle_payment(result):
+<span class="keyword">async def</span> <span class="function">handle_payment</span>(result):
     <span class="comment"># Handle successful payment</span>
-    <span class="keyword">pass</span>
-                            </div>
+    <span class="keyword">pass</span></div>
                         </div>
                     </div>
 
                     <div class="library-card">
                         <div class="library-header">
                             <div class="library-name">Auto-Detection</div>
-                            <div class="library-description">Automatic library detection and adapter creation</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="library-description">Automatic library detection and adapter creation</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="library-description">Автоматическое определение библиотеки и создание адаптера</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="library-description">Avtomatik kitabxana aşkarlanması və adapter yaradılması</div>
+                            </div>
                         </div>
                         <div class="library-content">
                             <ul class="library-features">
-                                <li>Automatically detects your bot library</li>
-                                <li>No need to specify adapter type</li>
-                                <li>Works with any supported library</li>
-                                <li>Simplifies integration process</li>
+                                <div class="lang-content active" data-lang="en">
+                                    <li>Automatically detects your bot library</li>
+                                    <li>No need to specify adapter type</li>
+                                    <li>Works with any supported library</li>
+                                    <li>Simplifies integration process</li>
+                                </div>
+                                <div class="lang-content" data-lang="ru">
+                                    <li>Автоматически определяет вашу библиотеку бота</li>
+                                    <li>Не нужно указывать тип адаптера</li>
+                                    <li>Работает с любой поддерживаемой библиотекой</li>
+                                    <li>Упрощает процесс интеграции</li>
+                                </div>
+                                <div class="lang-content" data-lang="az">
+                                    <li>Bot kitabxananızı avtomatik aşkar edir</li>
+                                    <li>Adapter növünü göstərməyə ehtiyac yoxdur</li>
+                                    <li>İstənilən dəstəklənən kitabxana ilə işləyir</li>
+                                    <li>İnteqrasiya prosesini sadələşdirir</li>
+                                </div>
                             </ul>
-                            <div class="code-example">
-<span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
+                            <div class="code-example"><span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 
 <span class="comment"># Works with any bot instance</span>
 neonpay = NeonPay.create_auto(your_bot_instance)
@@ -474,9 +678,8 @@ neonpay = NeonPay.create_auto(your_bot_instance)
 neonpay = NeonPay.auto_detect()
 
 stage = neonpay.create_stage(
-    title=<span class="string">"Premium"</span>, price=100
-)
-                            </div>
+    title=<span class="string">"Premium"</span>, price=<span class="number">100</span>
+)</div>
                         </div>
                     </div>
                 </div>
@@ -486,41 +689,109 @@ stage = neonpay.create_stage(
 
     <section class="installation-section">
         <div class="container">
-            <h2>Installation & Setup</h2>
+            <div class="lang-content active" data-lang="en">
+                <h2>Installation & Setup</h2>
+            </div>
+            <div class="lang-content" data-lang="ru">
+                <h2>Установка и настройка</h2>
+            </div>
+            <div class="lang-content" data-lang="az">
+                <h2>Quraşdırma və tənzimləmə</h2>
+            </div>
             <div class="installation-grid">
                 <div class="installation-card">
-                    <h3>Basic Installation</h3>
-                    <p>Install NEONPAY with basic functionality:</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>Basic Installation</h3>
+                        <p>Install NEONPAY with basic functionality:</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>Базовая установка</h3>
+                        <p>Установите NEONPAY с базовой функциональностью:</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>Əsas quraşdırma</h3>
+                        <p>NEONPAY-ı əsas funksionallıqla quraşdırın:</p>
+                    </div>
                     <div class="install-command">pip install neonpay</div>
                 </div>
 
                 <div class="installation-card">
-                    <h3>With Aiogram</h3>
-                    <p>Install with Aiogram support:</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>With Aiogram</h3>
+                        <p>Install with Aiogram support:</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>С Aiogram</h3>
+                        <p>Установите с поддержкой Aiogram:</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>Aiogram ilə</h3>
+                        <p>Aiogram dəstəyi ilə quraşdırın:</p>
+                    </div>
                     <div class="install-command">pip install neonpay[aiogram]</div>
                 </div>
 
                 <div class="installation-card">
-                    <h3>With Pyrogram</h3>
-                    <p>Install with Pyrogram support:</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>With Pyrogram</h3>
+                        <p>Install with Pyrogram support:</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>С Pyrogram</h3>
+                        <p>Установите с поддержкой Pyrogram:</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>Pyrogram ilə</h3>
+                        <p>Pyrogram dəstəyi ilə quraşdırın:</p>
+                    </div>
                     <div class="install-command">pip install neonpay[pyrogram]</div>
                 </div>
 
                 <div class="installation-card">
-                    <h3>With python-telegram-bot</h3>
-                    <p>Install with PTB support:</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>With python-telegram-bot</h3>
+                        <p>Install with PTB support:</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>С python-telegram-bot</h3>
+                        <p>Установите с поддержкой PTB:</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>python-telegram-bot ilə</h3>
+                        <p>PTB dəstəyi ilə quraşdırın:</p>
+                    </div>
                     <div class="install-command">pip install neonpay[ptb]</div>
                 </div>
 
                 <div class="installation-card">
-                    <h3>With pyTelegramBotAPI</h3>
-                    <p>Install with telebot support:</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>With pyTelegramBotAPI</h3>
+                        <p>Install with telebot support:</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>С pyTelegramBotAPI</h3>
+                        <p>Установите с поддержкой telebot:</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>pyTelegramBotAPI ilə</h3>
+                        <p>telebot dəstəyi ilə quraşdırın:</p>
+                    </div>
                     <div class="install-command">pip install neonpay[telebot]</div>
                 </div>
 
                 <div class="installation-card">
-                    <h3>All Libraries</h3>
-                    <p>Install with support for all libraries:</p>
+                    <div class="lang-content active" data-lang="en">
+                        <h3>All Libraries</h3>
+                        <p>Install with support for all libraries:</p>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h3>Все библиотеки</h3>
+                        <p>Установите с поддержкой всех библиотек:</p>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h3>Bütün kitabxanalar</h3>
+                        <p>Bütün kitabxanalar üçün dəstəklə quraşdırın:</p>
+                    </div>
                     <div class="install-command">pip install neonpay[all]</div>
                 </div>
             </div>
@@ -528,18 +799,48 @@ stage = neonpay.create_stage(
     </section>
 
     <script>
-        // Mobile menu toggle
-        const mobileMenu = document.getElementById('mobileMenu');
-        const navLinks = document.getElementById('navLinks');
+        <!-- Updated script to properly load navbar and integrate with unified navigation system -->
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navbar-container').innerHTML = html;
+                
+                // Execute the script tags from navbar.html
+                const scripts = document.getElementById('navbar-container').querySelectorAll('script');
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.textContent = script.textContent;
+                    document.body.appendChild(newScript);
+                });
+            })
+            .catch(error => console.error('Error loading navbar:', error));
 
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        // Translation function for page content integration with navbar
+        window.applyTranslations = function(lang, translations) {
+            // Hide all language content
+            const allLangContent = document.querySelectorAll('.lang-content');
+            allLangContent.forEach(content => {
+                content.classList.remove('active');
+            });
 
-        // Close mobile menu when clicking on a link
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                navLinks.classList.remove('active');
+            // Show content for selected language
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => {
+                content.classList.add('active');
+            });
+
+            // Update HTML lang attribute
+            document.getElementById('html-root').setAttribute('lang', lang);
+            
+            // Save language preference
+            localStorage.setItem('preferred-language', lang);
+        };
+
+        // Load saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (window.applyTranslations) {
+                window.applyTranslations(savedLang, {});
             }
         });
     </script>
