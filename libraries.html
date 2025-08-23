@@ -361,8 +361,8 @@
     </style>
 </head>
 <body>
-    <!-- Updated to use unified navbar from navbar.html -->
-    <div id="navbar-container"></div>
+    <!-- Updated to use unified navbar with direct header element -->
+    <header id="navbar-container"></header>
 
     <div class="container">
         <div class="main-content">
@@ -798,23 +798,9 @@ stage = neonpay.create_stage(
         </div>
     </section>
 
+    <!-- Replaced fetch with direct navigation.js inclusion -->
+    <script src="navigation.js"></script>
     <script>
-        <!-- Updated script to properly load navbar and integrate with unified navigation system -->
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('navbar-container').innerHTML = html;
-                
-                // Execute the script tags from navbar.html
-                const scripts = document.getElementById('navbar-container').querySelectorAll('script');
-                scripts.forEach(script => {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = script.textContent;
-                    document.body.appendChild(newScript);
-                });
-            })
-            .catch(error => console.error('Error loading navbar:', error));
-
         // Translation function for page content integration with navbar
         window.applyTranslations = function(lang, translations) {
             // Hide all language content

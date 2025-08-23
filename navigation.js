@@ -35,7 +35,7 @@ class Navigation {
       },
     }
 
-    this.currentLang = localStorage.getItem("language") || "en"
+    this.currentLang = localStorage.getItem("preferred-language") || "en"
     this.currentPage = window.location.pathname.split("/").pop() || "index.html"
   }
 
@@ -69,8 +69,7 @@ class Navigation {
   }
 
   init() {
-    // Render navigation
-    const header = document.querySelector("header")
+    const header = document.querySelector("header") || document.getElementById("navbar-container")
     if (header) {
       header.innerHTML = this.render()
     }
@@ -78,7 +77,7 @@ class Navigation {
     // Setup event listeners
     this.setupEventListeners()
 
-    // Apply current language
+    // Apply current language to page content
     this.applyLanguage()
   }
 
@@ -111,27 +110,33 @@ class Navigation {
 
   setLanguage(lang) {
     this.currentLang = lang
-    localStorage.setItem("language", lang)
-    this.applyLanguage()
+    localStorage.setItem("preferred-language", lang)
 
-    // Re-render navigation
-    const header = document.querySelector("header")
+    // Re-render navigation with new language
+    const header = document.querySelector("header") || document.getElementById("navbar-container")
     if (header) {
       header.innerHTML = this.render()
       this.setupEventListeners()
     }
+
+    // Apply language to page content
+    this.applyLanguage()
   }
 
   applyLanguage() {
-    // This method will be overridden by each page to apply translations
     if (window.applyTranslations) {
       window.applyTranslations(this.currentLang, this.translations[this.currentLang])
     }
   }
 }
 
-// Initialize navigation when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
+function initializeNavigation() {
   const nav = new Navigation()
   nav.init()
-})
+}
+
+// Initialize navigation when DOM is loaded
+document.addEventListener("DOMContentLoaded", initializeNavigation)
+
+// Also expose for manual initialization after async loading
+window.initializeNavigation = initializeNavigation

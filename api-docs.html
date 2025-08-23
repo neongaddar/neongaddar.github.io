@@ -397,8 +397,8 @@
     </style>
 </head>
 <body>
-    <!-- Replace header with navbar container -->
-    <div id="navbar-container"></div>
+    <!-- Replace div with header element for navigation.js -->
+    <header id="navbar-container"></header>
 
     <div class="container">
         <div class="main-content">
@@ -1107,23 +1107,8 @@ neonpay.add_middleware(LoggingMiddleware())
     </div>
 
     <script>
-        <!-- Load navbar from external file -->
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('navbar-container').innerHTML = html;
-                
-                // Execute the script tags from navbar.html
-                const scripts = document.getElementById('navbar-container').querySelectorAll('script');
-                scripts.forEach(script => {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = script.textContent;
-                    document.body.appendChild(newScript);
-                });
-            })
-            .catch(error => console.error('Error loading navbar:', error));
-
-        // Function to apply translations based on language
+        <!-- Replace fetch with direct navigation.js inclusion -->
+        // Translation function for page content integration with navbar
         window.applyTranslations = function(lang, translations) {
             // Hide all language content
             const allLangContent = document.querySelectorAll('.lang-content');
@@ -1150,59 +1135,6 @@ neonpay.add_middleware(LoggingMiddleware())
             if (window.applyTranslations) {
                 window.applyTranslations(savedLang, {});
             }
-        });
-
-        const mobileMenu = document.getElementById('mobileMenu');
-        const navLinks = document.getElementById('navLinks');
-
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Auto-hide navigation when clicking on a link
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Hide navigation when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('nav')) {
-                navLinks.classList.remove('active');
-            }
-        });
-
-        const langButtons = document.querySelectorAll('.lang-btn');
-        const langContents = document.querySelectorAll('.lang-content');
-        const navLinksItems = document.querySelectorAll('.nav-links a');
-
-        function switchLanguage(lang) {
-            // Update active language button
-            langButtons.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-
-            // Update content visibility
-            langContents.forEach(content => {
-                content.classList.toggle('active', content.dataset.lang === lang);
-            });
-
-            // Update navigation text
-            navLinksItems.forEach(link => {
-                if (link.dataset[lang]) {
-                    link.textContent = link.dataset[lang];
-                }
-            });
-
-            // Update HTML lang attribute
-            document.getElementById('html-root').setAttribute('lang', lang === 'en' ? 'en' : lang === 'ru' ? 'ru' : 'az');
-        }
-
-        langButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                switchLanguage(btn.dataset.lang);
-            });
         });
 
         // Sidebar navigation
@@ -1242,5 +1174,7 @@ neonpay.add_middleware(LoggingMiddleware())
             });
         });
     </script>
+    <!-- Include navigation.js directly -->
+    <script src="navigation.js"></script>
 </body>
 </html>
