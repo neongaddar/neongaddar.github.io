@@ -639,6 +639,13 @@ stage = neonpay.create_stage(
                     newScript.textContent = script.textContent;
                     document.body.appendChild(newScript);
                 });
+
+                setTimeout(() => {
+                    const savedLang = localStorage.getItem('preferred-language') || 'en';
+                    if (window.applyTranslations) {
+                        window.applyTranslations(savedLang, {});
+                    }
+                }, 100);
             })
             .catch(error => console.error('Error loading navbar:', error));
 
@@ -662,14 +669,6 @@ stage = neonpay.create_stage(
             // Save language preference
             localStorage.setItem('preferred-language', lang);
         };
-
-        // Load saved language preference on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedLang = localStorage.getItem('preferred-language') || 'en';
-            if (window.applyTranslations) {
-                window.applyTranslations(savedLang, {});
-            }
-        });
     </script>
 </body>
 </html>
