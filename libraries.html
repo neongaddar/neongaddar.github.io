@@ -799,8 +799,24 @@ stage = neonpay.create_stage(
     </section>
 
     <script>
-        // Translation function for page content
-        window.applyTranslations = function(lang) {
+        <!-- Updated script to properly load navbar and integrate with unified navigation system -->
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navbar-container').innerHTML = html;
+                
+                // Execute the script tags from navbar.html
+                const scripts = document.getElementById('navbar-container').querySelectorAll('script');
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.textContent = script.textContent;
+                    document.body.appendChild(newScript);
+                });
+            })
+            .catch(error => console.error('Error loading navbar:', error));
+
+        // Translation function for page content integration with navbar
+        window.applyTranslations = function(lang, translations) {
             // Hide all language content
             const allLangContent = document.querySelectorAll('.lang-content');
             allLangContent.forEach(content => {
@@ -820,47 +836,13 @@ stage = neonpay.create_stage(
             localStorage.setItem('preferred-language', lang);
         };
 
-        // Listen for language changes from navbar
-        window.addEventListener('languageChanged', function(event) {
-            const lang = event.detail.language;
-            window.applyTranslations(lang);
+        // Load saved language preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            if (window.applyTranslations) {
+                window.applyTranslations(savedLang, {});
+            }
         });
-
-        // Load navbar and initialize language
-        function initializePage() {
-            fetch('navbar.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('navbar-container').innerHTML = html;
-                    
-                    // Execute the script tags from navbar.html
-                    const scripts = document.getElementById('navbar-container').querySelectorAll('script');
-                    scripts.forEach(script => {
-                        const newScript = document.createElement('script');
-                        newScript.textContent = script.textContent;
-                        document.body.appendChild(newScript);
-                    });
-
-                    // Wait for navbar to initialize, then apply saved language
-                    setTimeout(() => {
-                        const savedLang = localStorage.getItem('preferred-language') || 'en';
-                        window.applyTranslations(savedLang);
-                        
-                        // Sync navbar language if navigation is available
-                        if (window.navigation) {
-                            window.navigation.applyLanguage(savedLang);
-                        }
-                    }, 200);
-                })
-                .catch(error => console.error('Error loading navbar:', error));
-        }
-
-        // Initialize when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializePage);
-        } else {
-            initializePage();
-        }
     </script>
 </body>
 </html>

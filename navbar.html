@@ -1,4 +1,5 @@
-<!-- Объединенная навигация с полной функциональностью -->
+<!-- Объединенная навигация с полной функциональностью из navigation.js -->
+<!-- Navigation Header Component -->
 <header>
     <nav class="container">
         <div class="nav-controls">
@@ -23,6 +24,7 @@
 </header>
 
 <style>
+    /* Navigation Styles */
     :root {
         --background: #ffffff;
         --foreground: #1f2937;
@@ -39,143 +41,290 @@
         --border: #d1d5db;
         --radius: 0.5rem;
     }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    header {
-        background: rgba(255,255,255,0.95);
-        border-bottom: 1px solid var(--border);
-        position: sticky; top: 0; z-index: 100;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
     }
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
-    .logo { display: flex; align-items: center; gap: .5rem; font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; transition: all .3s ease; }
-    .nav-links a { color: var(--foreground); text-decoration: none; font-weight: 500; transition: all .3s ease; padding: .5rem 1rem; border-radius: .5rem; }
-    .nav-links a:hover, .nav-links a.active { color: var(--primary); background: var(--secondary); }
-    .mobile-menu { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: .5rem; border-radius: .5rem; transition: background .3s ease; }
-    .mobile-menu:hover { background: var(--secondary); }
-    .nav-controls { display: flex; align-items: center; gap: 1rem; }
-    .language-selector { display: flex; gap: .5rem; align-items: center; margin-left: 1rem; }
-    .lang-btn { background: none; border: 1px solid var(--border); padding: .25rem .5rem; border-radius: .25rem; cursor: pointer; font-size: .8rem; transition: all .3s ease; }
-    .lang-btn:hover, .lang-btn.active { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+
+    header {
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links a {
+        color: var(--foreground);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: var(--primary);
+        background: var(--secondary);
+    }
+
+    .mobile-menu {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        transition: background 0.3s ease;
+    }
+
+    .mobile-menu:hover {
+        background: var(--secondary);
+    }
+
+    .nav-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .language-selector {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-left: 1rem;
+    }
+
+    .lang-btn {
+        background: none;
+        border: 1px solid var(--border);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+    }
+
     @media (max-width: 768px) {
-        .nav-controls { flex-direction: column; gap: .5rem; }
-        .nav-links {
-            display: none; position: absolute; top: 100%; left: 0; right: 0;
-            background: rgba(255,255,255,0.98); flex-direction: column; padding: 1rem;
-            border-top: 1px solid var(--border); backdrop-filter: blur(20px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transform: translateY(-10px);
-            opacity: 0; visibility: hidden; transition: all .3s ease;
+        .nav-controls {
+            flex-direction: column;
+            gap: 0.5rem;
         }
-        .nav-links.active { display: flex; transform: translateY(0); opacity: 1; visibility: visible; }
-        .mobile-menu { display: block; }
-        .language-selector { margin-left: 0; margin-top: 1rem; }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            flex-direction: column;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            display: block;
+        }
+
+        .language-selector {
+            margin-left: 0;
+            margin-top: 1rem;
+        }
     }
 </style>
 
 <script>
-class Navigation {
-    constructor() {
-        this.currentLang = localStorage.getItem('preferred-language') || 'en';
-        this.currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    }
+    class Navigation {
+        constructor() {
+            this.pages = [
+                { href: "index.html", key: "home" },
+                { href: "quick-start.html", key: "quickStart" },
+                { href: "api-docs.html", key: "apiDocs" },
+                { href: "examples.html", key: "examples" },
+                { href: "libraries.html", key: "libraries" },
+            ];
 
-    init() {
-        this.setupEventListeners();
-        this.highlightCurrentPage();
-        this.loadSavedLanguage();
-    }
+            this.translations = {
+                en: {
+                    home: "Home",
+                    quickStart: "Quick Start",
+                    apiDocs: "API Docs",
+                    examples: "Examples",
+                    libraries: "Libraries",
+                },
+                ru: {
+                    home: "Главная",
+                    quickStart: "Быстрый старт",
+                    apiDocs: "API документация",
+                    examples: "Примеры",
+                    libraries: "Библиотеки",
+                },
+                az: {
+                    home: "Ana səhifə",
+                    quickStart: "Sürətli başlanğıc",
+                    apiDocs: "API sənədləri",
+                    examples: "Nümunələr",
+                    libraries: "Kitabxanalar",
+                },
+            };
 
-    setupEventListeners() {
-        const mobileMenu = document.getElementById('mobileMenu');
-        const navLinks = document.getElementById('navLinks');
-        const langBtns = document.querySelectorAll('.lang-btn');
+            this.currentLang = localStorage.getItem('preferred-language') || 'en';
+            this.currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        }
 
-        // Mobile menu toggle
-        if (mobileMenu && navLinks) {
-            mobileMenu.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+        init() {
+            this.setupEventListeners();
+            this.highlightCurrentPage();
+            this.loadSavedLanguage();
+        }
+
+        setupEventListeners() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navLinks = document.getElementById('navLinks');
+            const langBtns = document.querySelectorAll('.lang-btn');
+
+            // Mobile menu toggle
+            if (mobileMenu && navLinks) {
+                mobileMenu.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const nav = document.querySelector('nav');
+                if (nav && navLinks && !nav.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            const navLinkItems = document.querySelectorAll('.nav-links a');
+            navLinkItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+
+            // Language switching
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const lang = e.target.getAttribute('data-lang');
+                    this.setLanguage(lang);
+                });
             });
         }
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const nav = document.querySelector('nav');
-            if (nav && navLinks && !nav.contains(e.target)) {
-                navLinks.classList.remove('active');
+        setLanguage(lang) {
+            this.currentLang = lang;
+            
+            // Update active language button
+            const langBtns = document.querySelectorAll('.lang-btn');
+            langBtns.forEach(b => b.classList.remove('active'));
+            const activeLangBtn = document.querySelector(`[data-lang="${lang}"]`);
+            if (activeLangBtn) {
+                activeLangBtn.classList.add('active');
             }
-        });
+            
+            // Update navigation text
+            this.updateNavText(lang);
+            
+            // Save language preference
+            localStorage.setItem('preferred-language', lang);
+            
+            // Trigger language change event for page content
+            if (window.applyTranslations) {
+                window.applyTranslations(lang, this.translations[lang]);
+            }
+        }
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => navLinks && navLinks.classList.remove('active'));
-        });
-
-        // Language buttons
-        langBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const lang = e.currentTarget.getAttribute('data-lang');
-                this.setLanguage(lang);
+        updateNavText(lang) {
+            const navItems = document.querySelectorAll('.nav-links a[data-' + lang + ']');
+            navItems.forEach(item => {
+                const text = item.getAttribute('data-' + lang);
+                if (text) {
+                    item.textContent = text;
+                }
             });
-        });
-    }
+        }
 
-    setLanguage(lang) {
-        this.currentLang = lang;
+        highlightCurrentPage() {
+            const navItems = document.querySelectorAll('.nav-links a');
+            navItems.forEach(item => {
+                if (item.getAttribute('href') === this.currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        }
 
-        // Active button state
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        const activeLangBtn = document.querySelector(`[data-lang="${lang}"]`);
-        if (activeLangBtn) activeLangBtn.classList.add('active');
-
-        // Update nav text from data-*
-        this.updateNavText(lang);
-
-        // Persist
-        localStorage.setItem('preferred-language', lang);
-
-        // 🔔 Вернули событие и внешний хук
-        const languageChangeEvent = new CustomEvent('languageChanged', { detail: { language: lang } });
-        window.dispatchEvent(languageChangeEvent);
-        if (typeof window.applyTranslations === 'function') {
-            window.applyTranslations(lang);
+        loadSavedLanguage() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+            if (savedLangBtn) {
+                const langBtns = document.querySelectorAll('.lang-btn');
+                langBtns.forEach(b => b.classList.remove('active'));
+                savedLangBtn.classList.add('active');
+                this.updateNavText(savedLang);
+            }
         }
     }
 
-    updateNavText(lang) {
-        document.querySelectorAll(`.nav-links a[data-${lang}]`).forEach(item => {
-            const text = item.getAttribute(`data-${lang}`);
-            if (text) item.textContent = text;
-        });
-    }
-
-    highlightCurrentPage() {
-        document.querySelectorAll('.nav-links a').forEach(item => {
-            if (item.getAttribute('href') === this.currentPage) {
-                item.classList.add('active');
-            }
-        });
-    }
-
-    loadSavedLanguage() {
-        const savedLang = localStorage.getItem('preferred-language') || 'en';
-        this.setLanguage(savedLang);
-    }
-
-    getCurrentLanguage() {
-        return this.currentLang;
-    }
-
-    // ✅ Публичный метод, если вызываете извне: navigation.applyLanguage('ru')
-    applyLanguage(lang) {
-        this.setLanguage(lang);
-    }
-}
-
-let globalNavigation = null;
-document.addEventListener('DOMContentLoaded', () => {
-    globalNavigation = new Navigation();
-    globalNavigation.init();
-    window.navigation = globalNavigation;
-});
+    // Initialize navigation when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = new Navigation();
+        nav.init();
+    });
 </script>
