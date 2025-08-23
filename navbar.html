@@ -285,9 +285,13 @@
             // Save language preference
             localStorage.setItem('preferred-language', lang);
             
-            // Trigger language change event for page content
+            const languageChangeEvent = new CustomEvent('languageChanged', {
+                detail: { language: lang }
+            });
+            window.dispatchEvent(languageChangeEvent);
+            
             if (window.applyTranslations) {
-                window.applyTranslations(lang, this.translations[lang]);
+                window.applyTranslations(lang);
             }
         }
 
@@ -312,6 +316,7 @@
 
         loadSavedLanguage() {
             const savedLang = localStorage.getItem('preferred-language') || 'en';
+            this.currentLang = savedLang;
             const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
             if (savedLangBtn) {
                 const langBtns = document.querySelectorAll('.lang-btn');
@@ -320,11 +325,22 @@
                 this.updateNavText(savedLang);
             }
         }
+
+        getCurrentLanguage() {
+            return this.currentLang;
+        }
+
+        applyLanguage(lang) {
+            this.setLanguage(lang);
+        }
     }
 
-    // Initialize navigation when DOM is loaded
+    let globalNavigation = null;
+    
     document.addEventListener('DOMContentLoaded', function() {
-        const nav = new Navigation();
-        nav.init();
+        globalNavigation = new Navigation();
+        globalNavigation.init();
+        
+        window.navigation = globalNavigation;
     });
 </script>
