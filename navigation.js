@@ -35,7 +35,7 @@ class Navigation {
       },
     }
 
-    this.currentLang = localStorage.getItem("language") || "en"
+    this.currentLang = localStorage.getItem("preferred-language") || "en"
     this.currentPage = window.location.pathname.split("/").pop() || "index.html"
   }
 
@@ -111,7 +111,7 @@ class Navigation {
 
   setLanguage(lang) {
     this.currentLang = lang
-    localStorage.setItem("language", lang)
+    localStorage.setItem("preferred-language", lang)
     this.applyLanguage()
 
     // Re-render navigation
