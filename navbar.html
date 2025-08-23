@@ -1,5 +1,4 @@
-<!-- Объединенная навигация с полной функциональностью из navigation.js -->
-<!-- Navigation Header Component -->
+<!-- Объединенная навигация с полной функциональностью -->
 <header>
     <nav class="container">
         <div class="nav-controls">
@@ -147,7 +146,7 @@
             flex-direction: column;
             gap: 0.5rem;
         }
-        
+
         .nav-links {
             display: none;
             position: absolute;
@@ -187,38 +186,6 @@
 <script>
     class Navigation {
         constructor() {
-            this.pages = [
-                { href: "index.html", key: "home" },
-                { href: "quick-start.html", key: "quickStart" },
-                { href: "api-docs.html", key: "apiDocs" },
-                { href: "examples.html", key: "examples" },
-                { href: "libraries.html", key: "libraries" },
-            ];
-
-            this.translations = {
-                en: {
-                    home: "Home",
-                    quickStart: "Quick Start",
-                    apiDocs: "API Docs",
-                    examples: "Examples",
-                    libraries: "Libraries",
-                },
-                ru: {
-                    home: "Главная",
-                    quickStart: "Быстрый старт",
-                    apiDocs: "API документация",
-                    examples: "Примеры",
-                    libraries: "Библиотеки",
-                },
-                az: {
-                    home: "Ana səhifə",
-                    quickStart: "Sürətli başlanğıc",
-                    apiDocs: "API sənədləri",
-                    examples: "Nümunələr",
-                    libraries: "Kitabxanalar",
-                },
-            };
-
             this.currentLang = localStorage.getItem('preferred-language') || 'en';
             this.currentPage = window.location.pathname.split('/').pop() || 'index.html';
         }
@@ -270,7 +237,7 @@
 
         setLanguage(lang) {
             this.currentLang = lang;
-            
+
             // Update active language button
             const langBtns = document.querySelectorAll('.lang-btn');
             langBtns.forEach(b => b.classList.remove('active'));
@@ -278,21 +245,12 @@
             if (activeLangBtn) {
                 activeLangBtn.classList.add('active');
             }
-            
+
             // Update navigation text
             this.updateNavText(lang);
-            
+
             // Save language preference
             localStorage.setItem('preferred-language', lang);
-            
-            const languageChangeEvent = new CustomEvent('languageChanged', {
-                detail: { language: lang }
-            });
-            window.dispatchEvent(languageChangeEvent);
-            
-            if (window.applyTranslations) {
-                window.applyTranslations(lang);
-            }
         }
 
         updateNavText(lang) {
@@ -316,31 +274,19 @@
 
         loadSavedLanguage() {
             const savedLang = localStorage.getItem('preferred-language') || 'en';
-            this.currentLang = savedLang;
-            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
-            if (savedLangBtn) {
-                const langBtns = document.querySelectorAll('.lang-btn');
-                langBtns.forEach(b => b.classList.remove('active'));
-                savedLangBtn.classList.add('active');
-                this.updateNavText(savedLang);
-            }
+            this.setLanguage(savedLang); // <--- теперь правильно
         }
 
         getCurrentLanguage() {
             return this.currentLang;
         }
-
-        applyLanguage(lang) {
-            this.setLanguage(lang);
-        }
     }
 
     let globalNavigation = null;
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         globalNavigation = new Navigation();
         globalNavigation.init();
-        
         window.navigation = globalNavigation;
     });
 </script>
