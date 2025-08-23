@@ -45,7 +45,7 @@ class Navigation {
     return `
             <nav class="container">
                 <a href="index.html" class="logo">
-                    ⚡ NEONPAY
+                    ⚡ NEONPAY API
                 </a>
                 <ul class="nav-links" id="navLinks">
                     ${this.pages
