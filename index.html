@@ -410,8 +410,8 @@
     </style>
 </head>
 <body>
-    <!-- Load navigation from external file -->
-    <div id="navbar-container"></div>
+    <!-- Replace navbar container with direct header element for navigation.js -->
+    <header id="navbar-container"></header>
 
     <main>
         <section class="hero">
@@ -624,25 +624,9 @@ stage = neonpay.create_stage(
         </div>
     </footer>
 
-    <!-- Include navigation script and enhanced functionality -->
+    <!-- Include navigation script directly instead of fetching navbar.html -->
+    <script src="navigation.js"></script>
     <script>
-        // Load navbar from external file
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('navbar-container').innerHTML = html;
-                
-                // Execute the script tags from navbar.html
-                const scripts = document.getElementById('navbar-container').querySelectorAll('script');
-                scripts.forEach(script => {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = script.textContent;
-                    document.body.appendChild(newScript);
-                });
-            })
-            .catch(error => console.error('Error loading navbar:', error));
-
-        // Translation function for page content
         window.applyTranslations = function(lang, translations) {
             // Hide all language content
             const allLangContent = document.querySelectorAll('.lang-content');
@@ -663,9 +647,10 @@ stage = neonpay.create_stage(
             localStorage.setItem('preferred-language', lang);
         };
 
-        // Load saved language preference on page load
         document.addEventListener('DOMContentLoaded', function() {
             const savedLang = localStorage.getItem('preferred-language') || 'en';
+            
+            // Apply translations immediately for page content
             if (window.applyTranslations) {
                 window.applyTranslations(savedLang, {});
             }
