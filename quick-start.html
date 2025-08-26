@@ -5,22 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Start - ⚡ NEONPAY API</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --background: #ffffff;
             --foreground: #1f2937;
             --card: #f8fafc;
             --card-foreground: #1f2937;
-            --primary: #6366f1;
+            --primary: #006dad;
             --primary-foreground: #ffffff;
-            --secondary: #f8fafc;
+            --secondary: #f1f5f9;
             --secondary-foreground: #1f2937;
             --muted: #e5e7eb;
             --muted-foreground: #6b7280;
-            --accent: #4ade80;
+            --accent: #0ea5e9;
             --accent-foreground: #1f2937;
             --border: #d1d5db;
-            --radius: 0.5rem;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --radius: 0.375rem;
         }
 
         * {
@@ -30,89 +33,84 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background: var(--background);
             color: var(--foreground);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* Header styles (same as other pages) */
+        .top-banner {
+            background: var(--warning);
+            color: #000;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
         }
 
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
+        .header {
+            background: var(--background);
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        nav {
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 0.75rem 0;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
             color: var(--primary);
             text-decoration: none;
         }
 
-        .nav-links {
+        .logo i {
+            color: var(--accent);
+        }
+
+        .header-controls {
             display: flex;
-            gap: 2rem;
-            list-style: none;
-            transition: all 0.3s ease;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .nav-links a {
-            color: var(--foreground);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
+        .search-box {
+            position: relative;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--primary);
+        .search-input {
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             background: var(--secondary);
+            font-size: 0.875rem;
+            width: 300px;
         }
 
-        .mobile-menu {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            transition: background 0.3s ease;
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
         }
 
-        .mobile-menu:hover {
-            background: var(--secondary);
-        }
-
-        /* Language selector */
         .language-selector {
             display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            margin-left: 1rem;
+            gap: 0.25rem;
         }
 
         .lang-btn {
@@ -121,8 +119,8 @@
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
+            font-size: 0.75rem;
+            transition: all 0.2s;
         }
 
         .lang-btn:hover,
@@ -132,133 +130,167 @@
             border-color: var(--primary);
         }
 
-        /* Main Content */
-        .main-content {
+        .header-nav {
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            border-right: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .docs-layout {
             display: grid;
             grid-template-columns: 250px 1fr;
             gap: 2rem;
             padding: 2rem 0;
-            min-height: calc(100vh - 200px);
+            min-height: 600px;
         }
 
+        /* Sidebar */
         .sidebar {
             background: var(--card);
-            padding: 1.5rem;
-            border-radius: var(--radius);
             border: 1px solid var(--border);
+            border-radius: var(--radius);
             height: fit-content;
             position: sticky;
-            top: 100px;
+            top: 2rem;
         }
 
-        .sidebar h3 {
-            font-size: 1.1rem;
+        .sidebar-content {
+            padding: 1.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 1rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--primary);
+            color: var(--foreground);
         }
 
-        .sidebar ul {
+        .sidebar-nav {
             list-style: none;
         }
 
-        .sidebar li {
+        .sidebar-nav li {
             margin-bottom: 0.5rem;
         }
 
-        .sidebar a {
+        .sidebar-nav a {
             color: var(--muted-foreground);
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+            display: block;
+            padding: 0.25rem 0;
         }
 
-        .sidebar a:hover,
-        .sidebar a.active {
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
             color: var(--primary);
+            font-weight: 500;
         }
 
+        /* Content Area */
         .content {
             background: var(--background);
         }
 
-        .content h1 {
+        .page-title {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .content h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
             color: var(--foreground);
         }
 
-        .content h3 {
-            font-size: 1.3rem;
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
             font-weight: 600;
-            margin: 1.5rem 0 0.5rem 0;
+            margin-bottom: 1.5rem;
+            color: var(--foreground);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            scroll-margin-top: 2rem;
+        }
+
+        .subsection-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
             color: var(--foreground);
         }
 
         .content p {
             margin-bottom: 1rem;
             color: var(--muted-foreground);
+            line-height: 1.7;
         }
 
         .code-block {
             background: #1e293b;
             color: #f1f5f9;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--radius);
             overflow-x: auto;
             font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             line-height: 1.6;
-            border: 1px solid #334155;
-            position: relative;
-            white-space: pre;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
         }
 
-        .code-block::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-
-        .code-block .comment {
-            color: #94a3b8;
-            font-style: italic;
-        }
-
-        .code-block .keyword {
-            color: #c084fc;
-            font-weight: 600;
-        }
-
-        .code-block .string {
-            color: #34d399;
-        }
-
-        .code-block .function {
-            color: #60a5fa;
-        }
-
-        .code-block .number {
-            color: #fbbf24;
-        }
+        .code-block .comment { color: #94a3b8; }
+        .code-block .keyword { color: #c084fc; font-weight: 600; }
+        .code-block .string { color: #34d399; }
+        .code-block .function { color: #60a5fa; }
+        .code-block .number { color: #fbbf24; }
 
         .alert {
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             border-radius: var(--radius);
-            margin: 1rem 0;
+            margin: 1.5rem 0;
             border-left: 4px solid;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
         }
 
         .alert-info {
@@ -269,83 +301,107 @@
 
         .alert-warning {
             background: #fffbeb;
-            border-color: #f59e0b;
+            border-color: var(--warning);
             color: #92400e;
         }
 
-        .step {
+        .alert-icon {
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+        }
+
+        .step-card {
             background: var(--card);
-            padding: 1.5rem;
-            border-radius: var(--radius);
             border: 1px solid var(--border);
-            margin: 1rem 0;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
         }
 
         .step-number {
+            position: absolute;
+            top: -0.75rem;
+            left: 1.5rem;
             background: var(--primary);
             color: var(--primary-foreground);
-            width: 2rem;
-            height: 2rem;
+            width: 1.5rem;
+            height: 1.5rem;
             border-radius: 50%;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            margin-right: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .step-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+        }
+
+        .install-command {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
+            .search-input {
+                width: 200px;
+            }
+
+            .header-top {
                 flex-direction: column;
-                padding: 1rem;
-                border-top: 1px solid var(--border);
-                backdrop-filter: blur(20px);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transform: translateY(-10px);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
+                gap: 1rem;
             }
 
-            .nav-links.active {
-                display: flex;
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
+            .nav-links {
+                overflow-x: auto;
+                white-space: nowrap;
             }
 
-            .mobile-menu {
-                display: block;
-            }
-
-            .main-content {
+            .docs-layout {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
 
             .sidebar {
-                position: static;
                 order: 2;
+                position: static;
             }
 
-            .content h1 {
+            .page-title {
                 font-size: 2rem;
-            }
-
-            .language-selector {
-                margin-left: 0;
-                margin-top: 1rem;
             }
         }
 
-        /* Hidden content for different languages */
+        /* Language content visibility */
         .lang-content {
             display: none;
         }
@@ -356,102 +412,301 @@
     </style>
 </head>
 <body>
-    <header id="navbar-container"></header>
+    <div class="top-banner">
+        <strong>📦 NEONPAY 1.0.0 is now available!</strong> 
+        <a href="index.html#releases" style="color: #000; text-decoration: underline;">View release notes</a>
+    </div>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>NEONPAY</span>
+                </a>
+                
+                <div class="header-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search packages...">
+                    </div>
+                    
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                        <button class="lang-btn" data-lang="az">AZ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Project</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="quick-start.html" class="active">Quick Start</a></li>
+                    <li><a href="api-docs.html">API Docs</a></li>
+                    <li><a href="examples.html">Examples</a></li>
+                    <li><a href="libraries.html">Libraries</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <div class="container">
-        <div class="main-content">
+        <div class="docs-layout">
+            <!-- Sidebar -->
             <aside class="sidebar">
-                <!-- Multilingual sidebar -->
-                <div class="lang-content active" data-lang="en">
-                    <h3>Quick Start</h3>
-                    <ul>
-                        <li><a href="#installation" class="active">Installation</a></li>
-                        <li><a href="#basic-setup">Basic Setup</a></li>
-                        <li><a href="#first-payment">First Payment</a></li>
-                        <li><a href="#handling-payments">Handling Payments</a></li>
-                        <li><a href="#next-steps">Next Steps</a></li>
-                    </ul>
-                </div>
-                <div class="lang-content" data-lang="ru">
-                    <h3>Быстрый старт</h3>
-                    <ul>
-                        <li><a href="#installation" class="active">Установка</a></li>
-                        <li><a href="#basic-setup">Базовая настройка</a></li>
-                        <li><a href="#first-payment">Первый платеж</a></li>
-                        <li><a href="#handling-payments">Обработка платежей</a></li>
-                        <li><a href="#next-steps">Следующие шаги</a></li>
-                    </ul>
-                </div>
-                <div class="lang-content" data-lang="az">
-                    <h3>Sürətli başlanğıc</h3>
-                    <ul>
-                        <li><a href="#installation" class="active">Quraşdırma</a></li>
-                        <li><a href="#basic-setup">Əsas quraşdırma</a></li>
-                        <li><a href="#first-payment">İlk ödəniş</a></li>
-                        <li><a href="#handling-payments">Ödənişlərin idarə edilməsi</a></li>
-                        <li><a href="#next-steps">Növbəti addımlar</a></li>
-                    </ul>
+                <div class="sidebar-content">
+                    <div class="lang-content active" data-lang="en">
+                        <h3 class="sidebar-title">Quick Start Guide</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="#installation" class="active">Installation</a></li>
+                            <li><a href="#basic-setup">Basic Setup</a></li>
+                            <li><a href="#first-payment">First Payment</a></li>
+                            <li><a href="#handling-payments">Handling Payments</a></li>
+                            <li><a href="#next-steps">Next Steps</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lang-content" data-lang="ru">
+                        <h3 class="sidebar-title">Быстрый старт</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="#installation" class="active">Установка</a></li>
+                            <li><a href="#basic-setup">Базовая настройка</a></li>
+                            <li><a href="#first-payment">Первый платеж</a></li>
+                            <li><a href="#handling-payments">Обработка платежей</a></li>
+                            <li><a href="#next-steps">Следующие шаги</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lang-content" data-lang="az">
+                        <h3 class="sidebar-title">Sürətli başlanğıc</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="#installation" class="active">Quraşdırma</a></li>
+                            <li><a href="#basic-setup">Əsas quraşdırma</a></li>
+                            <li><a href="#first-payment">İlk ödəniş</a></li>
+                            <li><a href="#handling-payments">Ödənişlərin idarə edilməsi</a></li>
+                            <li><a href="#next-steps">Növbəti addımlar</a></li>
+                        </ul>
+                    </div>
                 </div>
             </aside>
 
+            <!-- Main Content -->
             <main class="content">
-                <!-- Multilingual main content -->
-                <!-- English Content -->
+                <!-- Page Header -->
                 <div class="lang-content active" data-lang="en">
-                    <h1>Quick Start Guide</h1>
-                    <p>Get NEONPAY up and running in your Telegram bot in just a few minutes.</p>
+                    <h1 class="page-title">Quick Start Guide</h1>
+                    <p class="page-subtitle">
+                        Get NEONPAY up and running in your Telegram bot in just a few minutes. 
+                        This guide will walk you through the basic setup and your first payment integration.
+                    </p>
+                </div>
 
-                    <section id="installation">
-                        <h2>Installation</h2>
-                        <p>Install NEONPAY using pip:</p>
-                        <div class="code-block">pip install neonpay</div>
+                <div class="lang-content" data-lang="ru">
+                    <h1 class="page-title">Руководство по быстрому старту</h1>
+                    <p class="page-subtitle">
+                        Запустите NEONPAY в вашем Telegram боте всего за несколько минут. 
+                        Это руководство проведет вас через базовую настройку и вашу первую интеграцию платежей.
+                    </p>
+                </div>
+
+                <div class="lang-content" data-lang="az">
+                    <h1 class="page-title">Sürətli Başlanğıc Bələdçisi</h1>
+                    <p class="page-subtitle">
+                        NEONPAY-i Telegram botunuzda cəmi bir neçə dəqiqə ərzində işə salın. 
+                        Bu bələdçi sizi əsas quraşdırma və ilk ödəniş inteqrasiyasından keçirəcək.
+                    </p>
+                </div>
+
+                <!-- Installation Section -->
+                <section id="installation" class="section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Installation</h2>
+                        <p>Install NEONPAY using pip package manager:</p>
+                        <div class="install-command">
+                            <span>pip install neonpay</span>
+                            <button class="copy-btn" onclick="copyToClipboard('pip install neonpay')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
                         
                         <div class="alert alert-info">
-                            <strong>Python Version:</strong> NEONPAY supports Python 3.9 and above.
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div>
+                                <strong>Python Version:</strong> NEONPAY requires Python 3.8 or higher. 
+                                Make sure you have a compatible version installed.
+                            </div>
                         </div>
-                    </section>
+                    </div>
 
-                    <section id="basic-setup">
-                        <h2>Basic Setup</h2>
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Установка</h2>
+                        <p>Установите NEONPAY с помощью менеджера пакетов pip:</p>
+                        <div class="install-command">
+                            <span>pip install neonpay</span>
+                            <button class="copy-btn" onclick="copyToClipboard('pip install neonpay')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div>
+                                <strong>Версия Python:</strong> NEONPAY требует Python 3.8 или выше. 
+                                Убедитесь, что у вас установлена совместимая версия.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Quraşdırma</h2>
+                        <p>NEONPAY-i pip paket meneceri istifadə edərək quraşdırın:</p>
+                        <div class="install-command">
+                            <span>pip install neonpay</span>
+                            <button class="copy-btn" onclick="copyToClipboard('pip install neonpay')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div>
+                                <strong>Python Versiyası:</strong> NEONPAY Python 3.8 və ya daha yuxarısını tələb edir. 
+                                Uyğun versiya quraşdırdığınıza əmin olun.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Basic Setup Section -->
+                <section id="basic-setup" class="section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Basic Setup</h2>
                         <p>NEONPAY works with all major Telegram bot libraries. Here's how to set it up:</p>
 
-                        <div class="step">
-                            <span class="step-number">1</span>
-                            <strong>Import and Initialize</strong>
-                            <div class="code-block"><span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Import and Initialize</h3>
+                            <p>Start by importing NEONPAY and your preferred bot library:</p>
+                            <div class="code-block">
+<span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
 <span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
 
+<span class="comment"># Initialize your bot</span>
 bot = Bot(<span class="string">"YOUR_BOT_TOKEN"</span>)
-neonpay = NeonPay.create_for_aiogram(bot)</div>
+
+<span class="comment"># Create NEONPAY instance</span>
+neonpay = NeonPay.create_for_aiogram(bot)
+                            </div>
                         </div>
 
-                        <div class="step">
-                            <span class="step-number">2</span>
-                            <strong>Create Payment Stage</strong>
-                            <div class="code-block">stage = neonpay.create_stage(
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Create Payment Stage</h3>
+                            <p>Define what users are paying for:</p>
+                            <div class="code-block">
+stage = neonpay.create_stage(
     title=<span class="string">"Premium Access"</span>,
     description=<span class="string">"Unlock all premium features"</span>,
     price=<span class="number">100</span>,  <span class="comment"># 100 Telegram Stars (XTR)</span>
     logo_url=<span class="string">"https://example.com/logo.png"</span>
-)</div>
+)
+                            </div>
                         </div>
-                    </section>
+                    </div>
 
-                    <section id="first-payment">
-                        <h2>Your First Payment</h2>
-                        <p>Create a simple payment handler:</p>
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Базовая настройка</h2>
+                        <p>NEONPAY работает со всеми основными библиотеками Telegram ботов. Вот как его настроить:</p>
 
-                        <div class="code-block"><span class="keyword">from</span> aiogram <span class="keyword">import</span> Router
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Импорт и инициализация</h3>
+                            <p>Начните с импорта NEONPAY и вашей предпочитаемой библиотеки для ботов:</p>
+                            <div class="code-block">
+<span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
+<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
+
+<span class="comment"># Инициализируйте ваш бот</span>
+bot = Bot(<span class="string">"YOUR_BOT_TOKEN"</span>)
+
+<span class="comment"># Создайте экземпляр NEONPAY</span>
+neonpay = NeonPay.create_for_aiogram(bot)
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Создание этапа платежа</h3>
+                            <p>Определите, за что пользователи платят:</p>
+                            <div class="code-block">
+stage = neonpay.create_stage(
+    title=<span class="string">"Премиум доступ"</span>,
+    description=<span class="string">"Разблокируйте все премиум функции"</span>,
+    price=<span class="number">100</span>,  <span class="comment"># 100 Telegram Stars (XTR)</span>
+    logo_url=<span class="string">"https://example.com/logo.png"</span>
+)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Əsas quraşdırma</h2>
+                        <p>NEONPAY bütün əsas Telegram bot kitabxanaları ilə işləyir. Onu necə quraşdırmaq lazımdır:</p>
+
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">İmport və İnisialisasiya</h3>
+                            <p>NEONPAY və üstünlük verdiyiniz bot kitabxanasını import etməklə başlayın:</p>
+                            <div class="code-block">
+<span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
+<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
+
+<span class="comment"># Botunuzu inisialisasiya edin</span>
+bot = Bot(<span class="string">"YOUR_BOT_TOKEN"</span>)
+
+<span class="comment"># NEONPAY nümunəsi yaradın</span>
+neonpay = NeonPay.create_for_aiogram(bot)
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Ödəniş Mərhələsi Yaradın</h3>
+                            <p>İstifadəçilərin nə üçün ödəniş etdiklərini müəyyənləşdirin:</p>
+                            <div class="code-block">
+stage = neonpay.create_stage(
+    title=<span class="string">"Premium Giriş"</span>,
+    description=<span class="string">"Bütün premium xüsusiyyətləri açın"</span>,
+    price=<span class="number">100</span>,  <span class="comment"># 100 Telegram Stars (XTR)</span>
+    logo_url=<span class="string">"https://example.com/logo.png"</span>
+)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- First Payment Section -->
+                <section id="first-payment" class="section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Your First Payment</h2>
+                        <p>Now let's create a simple command that triggers a payment and handle the result:</p>
+
+                        <div class="code-block">
+<span class="keyword">from</span> aiogram <span class="keyword">import</span> Router
 <span class="keyword">from</span> aiogram.types <span class="keyword">import</span> Message
 <span class="keyword">from</span> aiogram.filters <span class="keyword">import</span> Command
 
 router = Router()
 
+<span class="comment"># Command to trigger payment</span>
 @router.message(Command(<span class="string">"buy"</span>))
 <span class="keyword">async def</span> <span class="function">buy_premium</span>(message: Message):
     <span class="comment"># Send payment invoice</span>
     <span class="keyword">await</span> neonpay.send_payment(message.chat.id, stage)
 
+<span class="comment"># Handle successful payment</span>
 @neonpay.payment_handler(stage)
 <span class="keyword">async def</span> <span class="function">handle_premium_payment</span>(payment_result):
     <span class="comment"># User successfully paid - grant premium access</span>
@@ -460,232 +715,76 @@ router = Router()
         <span class="string">"🎉 Welcome to Premium! You now have access to all features."</span>
     )
     
-    <span class="comment"># Your logic here: save to database, update user status, etc.</span></div>
-                    </section>
-
-                    <section id="handling-payments">
-                        <h2>Handling Payments</h2>
-                        <p>NEONPAY provides several ways to handle payment results:</p>
-
-                        <h3>Using Decorators</h3>
-                        <div class="code-block">@neonpay.payment_handler(stage)
-<span class="keyword">async def</span> <span class="function">handle_payment</span>(payment_result):
-    <span class="comment"># Automatic handling for specific stage</span>
-    <span class="keyword">print</span>(<span class="string">f"Payment received: {payment_result.amount} XTR"</span>)</div>
-
-                        <h3>Using Callbacks</h3>
-                        <div class="code-block"><span class="keyword">async def</span> <span class="function">payment_callback</span>(payment_result):
-    <span class="comment"># Custom callback function</span>
-    <span class="keyword">await</span> send_premium_content(payment_result.user_id)
-
-stage = neonpay.create_stage(
-    title=<span class="string">"Premium Content"</span>,
-    price=<span class="number">50</span>,
-    callback=payment_callback
-)</div>
-
-                        <h3>Manual Handling</h3>
-                        <div class="code-block"><span class="comment"># Listen to all payments</span>
-@neonpay.on_payment
-<span class="keyword">async def</span> <span class="function">handle_any_payment</span>(payment_result):
-    stage_title = payment_result.stage.title
-    <span class="keyword">if</span> stage_title == <span class="string">"Premium Access"</span>:
-        <span class="comment"># Handle premium access</span>
-        <span class="keyword">pass</span>
-    <span class="keyword">elif</span> stage_title == <span class="string">"Digital Product"</span>:
-        <span class="comment"># Handle digital product</span>
-        <span class="keyword">pass</span></div>
-                    </section>
-
-                    <section id="next-steps">
-                        <h2>Next Steps</h2>
-                        <p>Now that you have basic payments working, explore more features:</p>
-
-                        <ul style="margin-left: 2rem; margin-bottom: 2rem;">
-                            <li><a href="api-docs.html">📚 Full API Documentation</a></li>
-                            <li><a href="examples.html">💡 More Examples</a></li>
-                            <li><a href="libraries.html">🔧 Other Library Integrations</a></li>
-                        </ul>
+    <span class="comment"># Your logic here: save to database, update user status, etc.</span>
+    <span class="comment"># save_premium_user(user_id)</span>
+                        </div>
 
                         <div class="alert alert-warning">
-                            <strong>Important:</strong> Make sure to test your payments in a development environment before going live. Use Telegram's test environment for testing.
+                            <i class="fas fa-exclamation-triangle alert-icon"></i>
+                            <div>
+                                <strong>Important:</strong> Don't forget to register your router with the dispatcher 
+                                and include the payment handler in your bot's event loop.
+                            </div>
                         </div>
-                    </section>
-                </div>
+                    </div>
 
-                <!-- Russian Content -->
-                <div class="lang-content" data-lang="ru">
-                    <h1>Руководство по быстрому старту</h1>
-                    <p>Запустите NEONPAY в вашем Telegram боте всего за несколько минут.</p>
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Ваш первый платеж</h2>
+                        <p>Теперь давайте создадим простую команду, которая запускает платеж и обрабатывает результат:</p>
 
-                    <section id="installation">
-                        <h2>Установка</h2>
-                        <p>Установите NEONPAY с помощью pip:</p>
-                        <div class="code-block">pip install neonpay</div>
-                        
-                        <div class="alert alert-info">
-                            <strong>Версия Python:</strong> NEONPAY поддерживает Python 3.9 и выше.
-                        </div>
-                    </section>
-
-                    <section id="basic-setup">
-                        <h2>Базовая настройка</h2>
-                        <p>NEONPAY работает со всеми основными библиотеками Telegram ботов. Вот как его настроить:</p>
-
-                        <div class="step">
-                            <span class="step-number">1</span>
-                            <strong>Импорт и инициализация</strong>
-                            <div class="code-block"><span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
-<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
-
-bot = Bot(<span class="string">"YOUR_BOT_TOKEN"</span>)
-neonpay = NeonPay.create_for_aiogram(bot)</div>
-                        </div>
-
-                        <div class="step">
-                            <span class="step-number">2</span>
-                            <strong>Создание этапа платежа</strong>
-                            <div class="code-block">stage = neonpay.create_stage(
-    title=<span class="string">"Премиум доступ"</span>,
-    description=<span class="string">"Разблокируйте все премиум функции"</span>,
-    price=<span class="number">100</span>,  <span class="comment"># 100 Telegram Stars (XTR)</span>
-    logo_url=<span class="string">"https://example.com/logo.png"</span>
-)</div>
-                        </div>
-                    </section>
-
-                    <section id="first-payment">
-                        <h2>Ваш первый платеж</h2>
-                        <p>Создайте простой обработчик платежей:</p>
-
-                        <div class="code-block"><span class="keyword">from</span> aiogram <span class="keyword">import</span> Router
+                        <div class="code-block">
+<span class="keyword">from</span> aiogram <span class="keyword">import</span> Router
 <span class="keyword">from</span> aiogram.types <span class="keyword">import</span> Message
 <span class="keyword">from</span> aiogram.filters <span class="keyword">import</span> Command
 
 router = Router()
 
+<span class="comment"># Команда для запуска платежа</span>
 @router.message(Command(<span class="string">"buy"</span>))
 <span class="keyword">async def</span> <span class="function">buy_premium</span>(message: Message):
     <span class="comment"># Отправить счет на оплату</span>
     <span class="keyword">await</span> neonpay.send_payment(message.chat.id, stage)
 
+<span class="comment"># Обработка успешного платежа</span>
 @neonpay.payment_handler(stage)
 <span class="keyword">async def</span> <span class="function">handle_premium_payment</span>(payment_result):
     <span class="comment"># Пользователь успешно заплатил - предоставить премиум доступ</span>
     user_id = payment_result.user_id
     <span class="keyword">await</span> payment_result.message.answer(
-        <span class="string">"🎉 Премиум активирован! Добро пожаловать в Премиум!"</span>
+        <span class="string">"🎉 Премиум активирован! Теперь у вас есть доступ ко всем функциям."</span>
     )
     
-    <span class="comment"># Ваша логика здесь: сохранить в базу данных, обновить статус пользователя и т.д.</span></div>
-                    </section>
-
-                    <section id="handling-payments">
-                        <h2>Обработка платежей</h2>
-                        <p>NEONPAY предоставляет несколько способов обработки результатов платежей:</p>
-
-                        <h3>Использование декораторов</h3>
-                        <div class="code-block">@neonpay.payment_handler(stage)
-<span class="keyword">async def</span> <span class="function">handle_payment</span>(payment_result):
-    <span class="comment"># Автоматическая обработка для конкретного этапа</span>
-    <span class="keyword">print</span>(<span class="string">f"Платеж получен: {payment_result.amount} XTR"</span>)</div>
-
-                        <h3>Использование колбэков</h3>
-                        <div class="code-block"><span class="keyword">async def</span> <span class="function">payment_callback</span>(payment_result):
-    <span class="comment"># Пользовательская функция колбэка</span>
-    <span class="keyword">await</span> send_premium_content(payment_result.user_id)
-
-stage = neonpay.create_stage(
-    title=<span class="string">"Премиум контент"</span>,
-    price=<span class="number">50</span>,
-    callback=payment_callback
-)</div>
-
-                        <h3>Ручная обработка</h3>
-                        <div class="code-block"><span class="comment"># Слушать все платежи</span>
-@neonpay.on_payment
-<span class="keyword">async def</span> <span class="function">handle_any_payment</span>(payment_result):
-    stage_title = payment_result.stage.title
-    <span class="keyword">if</span> stage_title == <span class="string">"Премиум доступ"</span>:
-        <span class="comment"># Обработать премиум доступ</span>
-        <span class="keyword">pass</span>
-    <span class="keyword">elif</span> stage_title == <span class="string">"Цифровой продукт"</span>:
-        <span class="comment"># Обработать цифровой продукт</span>
-        <span class="keyword">pass</span></div>
-                    </section>
-
-                    <section id="next-steps">
-                        <h2>Следующие шаги</h2>
-                        <p>Теперь, когда у вас работают базовые платежи, изучите больше функций:</p>
-
-                        <ul style="margin-left: 2rem; margin-bottom: 2rem;">
-                            <li><a href="api-docs.html">📚 Полная документация API</a></li>
-                            <li><a href="examples.html">💡 Больше примеров</a></li>
-                            <li><a href="libraries.html">🔧 Интеграции с другими библиотеками</a></li>
-                        </ul>
+    <span class="comment"># Ваша логика здесь: сохранить в базу данных, обновить статус пользователя и т.д.</span>
+    <span class="comment"># save_premium_user(user_id)</span>
+                        </div>
 
                         <div class="alert alert-warning">
-                            <strong>Важно:</strong> Обязательно протестируйте ваши платежи в среде разработки перед запуском. Используйте тестовую среду Telegram для тестирования.
+                            <i class="fas fa-exclamation-triangle alert-icon"></i>
+                            <div>
+                                <strong>Важно:</strong> Не забудьте зарегистрировать ваш роутер с диспетчером 
+                                и включить обработчик платежей в цикл событий вашего бота.
+                            </div>
                         </div>
-                    </section>
-                </div>
+                    </div>
 
-                <!-- Azerbaijani Content -->
-                <div class="lang-content" data-lang="az">
-                    <h1>Sürətli Başlanğıc Bələdçisi</h1>
-                    <p>NEONPAY-i Telegram botunuzda cəmi bir neçə dəqiqə ərzində işə salın.</p>
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">İlk Ödənişiniz</h2>
+                        <p>İndi gəlin ödəniş tetikleyen və nəticəni idarə edən sadə komanda yaradaq:</p>
 
-                    <section id="installation">
-                        <h2>Quraşdırma</h2>
-                        <p>NEONPAY-i pip istifadə edərək quraşdırın:</p>
-                        <div class="code-block">pip install neonpay</div>
-                        
-                        <div class="alert alert-info">
-                            <strong>Python Versiyası:</strong> NEONPAY Python 3.9 və yuxarısını dəstəkləyir.
-                        </div>
-                    </section>
-
-                    <section id="basic-setup">
-                        <h2>Əsas quraşdırma</h2>
-                        <p>NEONPAY bütün əsas Telegram bot kitabxanaları ilə işləyir. Onu necə quraşdırmaq lazımdır:</p>
-
-                        <div class="step">
-                            <span class="step-number">1</span>
-                            <strong>İmport və İnisialisasiya</strong>
-                            <div class="code-block"><span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
-<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
-
-bot = Bot(<span class="string">"YOUR_BOT_TOKEN"</span>)
-neonpay = NeonPay.create_for_aiogram(bot)</div>
-                        </div>
-
-                        <div class="step">
-                            <span class="step-number">2</span>
-                            <strong>Ödəniş Mərhələsi Yaradın</strong>
-                            <div class="code-block">stage = neonpay.create_stage(
-    title=<span class="string">"Premium Giriş"</span>,
-    description=<span class="string">"Bütün premium xüsusiyyətləri açın"</span>,
-    price=<span class="number">100</span>,  <span class="comment"># 100 Telegram Stars (XTR)</span>
-    logo_url=<span class="string">"https://example.com/logo.png"</span>
-)</div>
-                        </div>
-                    </section>
-
-                    <section id="first-payment">
-                        <h2>İlk Ödənişiniz</h2>
-                        <p>Sadə ödəniş idarəçisi yaradın:</p>
-
-                        <div class="code-block"><span class="keyword">from</span> aiogram <span class="keyword">import</span> Router
+                        <div class="code-block">
+<span class="keyword">from</span> aiogram <span class="keyword">import</span> Router
 <span class="keyword">from</span> aiogram.types <span class="keyword">import</span> Message
 <span class="keyword">from</span> aiogram.filters <span class="keyword">import</span> Command
 
 router = Router()
 
+<span class="comment"># Ödənişi tetikləmək üçün komanda</span>
 @router.message(Command(<span class="string">"buy"</span>))
 <span class="keyword">async def</span> <span class="function">buy_premium</span>(message: Message):
     <span class="comment"># Ödəniş fakturasını göndər</span>
     <span class="keyword">await</span> neonpay.send_payment(message.chat.id, stage)
 
+<span class="comment"># Uğurlu ödənişi idarə et</span>
 @neonpay.payment_handler(stage)
 <span class="keyword">async def</span> <span class="function">handle_premium_payment</span>(payment_result):
     <span class="comment"># İstifadəçi uğurla ödədi - premium giriş verin</span>
@@ -694,21 +793,120 @@ router = Router()
         <span class="string">"🎉 Premium-a xoş gəlmisiniz! İndi bütün xüsusiyyətlərə girişiniz var."</span>
     )
     
-    <span class="comment"># Sizin məntiqiniz burada: verilənlər bazasına saxlayın, istifadəçi statusunu yeniləyin və s.</span></div>
-                    </section>
+    <span class="comment"># Sizin məntiqiniz burada: verilənlər bazasına saxlayın, istifadəçi statusunu yeniləyin və s.</span>
+    <span class="comment"># save_premium_user(user_id)</span>
+                        </div>
 
-                    <section id="handling-payments">
-                        <h2>Ödənişlərin İdarə Edilməsi</h2>
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle alert-icon"></i>
+                            <div>
+                                <strong>Vacib:</strong> Router-i dispatcher ilə qeydiyyatdan keçirtməyi 
+                                və ödəniş idarəçisini botunuzun hadisə döngəsinə daxil etməyi unutmayın.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Handling Payments Section -->
+                <section id="handling-payments" class="section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Handling Payments</h2>
+                        <p>NEONPAY provides several ways to handle payment results:</p>
+
+                        <h3 class="subsection-title">Using Decorators (Recommended)</h3>
+                        <div class="code-block">
+@neonpay.payment_handler(stage)
+<span class="keyword">async def</span> <span class="function">handle_payment</span>(payment_result):
+    <span class="comment"># Automatic handling for specific stage</span>
+    <span class="keyword">print</span>(<span class="string">f"Payment received: {payment_result.amount} XTR"</span>)
+    <span class="keyword">print</span>(<span class="string">f"From user: {payment_result.user_id}"</span>)
+                        </div>
+
+                        <h3 class="subsection-title">Using Callbacks</h3>
+                        <div class="code-block">
+<span class="keyword">async def</span> <span class="function">payment_callback</span>(payment_result):
+    <span class="comment"># Custom callback function</span>
+    <span class="keyword">await</span> send_premium_content(payment_result.user_id)
+
+stage = neonpay.create_stage(
+    title=<span class="string">"Premium Content"</span>,
+    price=<span class="number">50</span>,
+    callback=payment_callback
+)
+                        </div>
+
+                        <h3 class="subsection-title">Manual Handling</h3>
+                        <div class="code-block">
+<span class="comment"># Listen to all payments</span>
+@neonpay.on_payment
+<span class="keyword">async def</span> <span class="function">handle_any_payment</span>(payment_result):
+    stage_title = payment_result.stage.title
+    <span class="keyword">if</span> stage_title == <span class="string">"Premium Access"</span>:
+        <span class="comment"># Handle premium access</span>
+        <span class="keyword">await</span> grant_premium_access(payment_result.user_id)
+    <span class="keyword">elif</span> stage_title == <span class="string">"Digital Product"</span>:
+        <span class="comment"># Handle digital product</span>
+        <span class="keyword">await</span> send_digital_product(payment_result.user_id)
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Обработка платежей</h2>
+                        <p>NEONPAY предоставляет несколько способов обработки результатов платежей:</p>
+
+                        <h3 class="subsection-title">Использование декораторов (Рекомендуется)</h3>
+                        <div class="code-block">
+@neonpay.payment_handler(stage)
+<span class="keyword">async def</span> <span class="function">handle_payment</span>(payment_result):
+    <span class="comment"># Автоматическая обработка для конкретного этапа</span>
+    <span class="keyword">print</span>(<span class="string">f"Платеж получен: {payment_result.amount} XTR"</span>)
+    <span class="keyword">print</span>(<span class="string">f"От пользователя: {payment_result.user_id}"</span>)
+                        </div>
+
+                        <h3 class="subsection-title">Использование колбэков</h3>
+                        <div class="code-block">
+<span class="keyword">async def</span> <span class="function">payment_callback</span>(payment_result):
+    <span class="comment"># Пользовательская функция колбэка</span>
+    <span class="keyword">await</span> send_premium_content(payment_result.user_id)
+
+stage = neonpay.create_stage(
+    title=<span class="string">"Премиум контент"</span>,
+    price=<span class="number">50</span>,
+    callback=payment_callback
+)
+                        </div>
+
+                        <h3 class="subsection-title">Ручная обработка</h3>
+                        <div class="code-block">
+<span class="comment"># Слушать все платежи</span>
+@neonpay.on_payment
+<span class="keyword">async def</span> <span class="function">handle_any_payment</span>(payment_result):
+    stage_title = payment_result.stage.title
+    <span class="keyword">if</span> stage_title == <span class="string">"Премиум доступ"</span>:
+        <span class="comment"># Обработать премиум доступ</span>
+        <span class="keyword">await</span> grant_premium_access(payment_result.user_id)
+    <span class="keyword">elif</span> stage_title == <span class="string">"Цифровой продукт"</span>:
+        <span class="comment"># Обработать цифровой продукт</span>
+        <span class="keyword">await</span> send_digital_product(payment_result.user_id)
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Ödənişlərin İdarə Edilməsi</h2>
                         <p>NEONPAY ödəniş nəticələrini idarə etmək üçün bir neçə yol təqdim edir:</p>
 
-                        <h3>Dekoratorlardan İstifadə</h3>
-                        <div class="code-block">@neonpay.payment_handler(stage)
+                        <h3 class="subsection-title">Dekoratorlardan İstifadə (Tövsiyə olunur)</h3>
+                        <div class="code-block">
+@neonpay.payment_handler(stage)
 <span class="keyword">async def</span> <span class="function">handle_payment</span>(payment_result):
     <span class="comment"># Xüsusi mərhələ üçün avtomatik idarəetmə</span>
-    <span class="keyword">print</span>(<span class="string">f"Ödəniş alındı: {payment_result.amount} XTR"</span>)</div>
+    <span class="keyword">print</span>(<span class="string">f"Ödəniş alındı: {payment_result.amount} XTR"</span>)
+    <span class="keyword">print</span>(<span class="string">f"İstifadəçidən: {payment_result.user_id}"</span>)
+                        </div>
 
-                        <h3>Callback-lardan İstifadə</h3>
-                        <div class="code-block"><span class="keyword">async def</span> <span class="function">payment_callback</span>(payment_result):
+                        <h3 class="subsection-title">Callback-lardan İstifadə</h3>
+                        <div class="code-block">
+<span class="keyword">async def</span> <span class="function">payment_callback</span>(payment_result):
     <span class="comment"># Fərdi callback funksiyası</span>
     <span class="keyword">await</span> send_premium_content(payment_result.user_id)
 
@@ -716,95 +914,197 @@ stage = neonpay.create_stage(
     title=<span class="string">"Premium Məzmun"</span>,
     price=<span class="number">50</span>,
     callback=payment_callback
-)</div>
+)
+                        </div>
 
-                        <h3>Əl ilə İdarəetmə</h3>
-                        <div class="code-block"><span class="comment"># Bütün ödənişləri dinlə</span>
+                        <h3 class="subsection-title">Əl ilə İdarəetmə</h3>
+                        <div class="code-block">
+<span class="comment"># Bütün ödənişləri dinlə</span>
 @neonpay.on_payment
 <span class="keyword">async def</span> <span class="function">handle_any_payment</span>(payment_result):
     stage_title = payment_result.stage.title
     <span class="keyword">if</span> stage_title == <span class="string">"Premium Giriş"</span>:
         <span class="comment"># Premium girişi idarə et</span>
-        <span class="keyword">pass</span>
+        <span class="keyword">await</span> grant_premium_access(payment_result.user_id)
     <span class="keyword">elif</span> stage_title == <span class="string">"Rəqəmsal Məhsul"</span>:
         <span class="comment"># Rəqəmsal məhsulu idarə et</span>
-        <span class="keyword">pass</span></div>
-                    </section>
-
-                    <section id="next-steps">
-                        <h2>Növbəti Addımlar</h2>
-                        <p>İndi əsas ödənişləriniz işləyir, daha çox xüsusiyyətləri araşdırın:</p>
-
-                        <ul style="margin-left: 2rem; margin-bottom: 2rem;">
-                            <li><a href="api-docs.html">📚 Tam API Sənədləşməsi</a></li>
-                            <li><a href="examples.html">💡 Daha Çox Nümunələr</a></li>
-                            <li><a href="libraries.html">🔧 Digər Kitabxana İnteqrasiyaları</a></li>
-                        </ul>
-
-                        <div class="alert alert-warning">
-                            <strong>Vacib:</strong> Canlı mühitə keçməzdən əvvəl ödənişlərinizi inkişaf mühitində test etdiyinizə əmin olun. Test üçün Telegram-ın test mühitindən istifadə edin.
+        <span class="keyword">await</span> send_digital_product(payment_result.user_id)
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
+
+                <!-- Next Steps Section -->
+                <section id="next-steps" class="section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Next Steps</h2>
+                        <p>Congratulations! You now have basic payments working in your bot. Here's what to explore next:</p>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                            <div class="step-card">
+                                <h3 class="step-title">📚 API Documentation</h3>
+                                <p>Explore the full API reference for advanced features and customization options.</p>
+                                <a href="api-docs.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    View API Docs →
+                                </a>
+                            </div>
+                            <div class="step-card">
+                                <h3 class="step-title">💡 Examples</h3>
+                                <p>Check out real-world examples and use cases for different types of bots.</p>
+                                <a href="examples.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    View Examples →
+                                </a>
+                            </div>
+                            <div class="step-card">
+                                <h3 class="step-title">🔧 Library Support</h3>
+                                <p>Learn how to use NEONPAY with other Python Telegram bot libraries.</p>
+                                <a href="libraries.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    View Libraries →
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div>
+                                <strong>Pro Tip:</strong> Always test your payments in Telegram's test environment 
+                                before deploying to production. You can use test bots and test Telegram Stars for this purpose.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Следующие шаги</h2>
+                        <p>Поздравляем! Теперь у вас работают базовые платежи в боте. Вот что стоит изучить дальше:</p>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                            <div class="step-card">
+                                <h3 class="step-title">📚 Документация API</h3>
+                                <p>Изучите полный справочник API для продвинутых функций и настроек.</p>
+                                <a href="api-docs.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    Посмотреть API документацию →
+                                </a>
+                            </div>
+                            <div class="step-card">
+                                <h3 class="step-title">💡 Примеры</h3>
+                                <p>Посмотрите примеры из реального мира и случаи использования для разных типов ботов.</p>
+                                <a href="examples.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    Посмотреть примеры →
+                                </a>
+                            </div>
+                            <div class="step-card">
+                                <h3 class="step-title">🔧 Поддержка библиотек</h3>
+                                <p>Узнайте, как использовать NEONPAY с другими Python библиотеками для Telegram ботов.</p>
+                                <a href="libraries.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    Посмотреть библиотеки →
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div>
+                                <strong>Совет профессионала:</strong> Всегда тестируйте ваши платежи в тестовой среде Telegram 
+                                перед развертыванием в продакшен. Для этого вы можете использовать тестовых ботов и тестовые Telegram Stars.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Növbəti Addımlar</h2>
+                        <p>Təbriklər! İndi botunuzda əsas ödənişlər işləyir. İrəli nə öyrənməli olduğunuz:</p>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                            <div class="step-card">
+                                <h3 class="step-title">📚 API Sənədləşməsi</h3>
+                                <p>Təkmil xüsusiyyətlər və fərdiləşdirmə seçimləri üçün tam API arayışını araşdırın.</p>
+                                <a href="api-docs.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    API Sənədlərini görün →
+                                </a>
+                            </div>
+                            <div class="step-card">
+                                <h3 class="step-title">💡 Nümunələr</h3>
+                                <p>Müxtəlif bot növləri üçün real dünya nümunələri və istifadə hallarına baxın.</p>
+                                <a href="examples.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    Nümunələri görün →
+                                </a>
+                            </div>
+                            <div class="step-card">
+                                <h3 class="step-title">🔧 Kitabxana Dəstəyi</h3>
+                                <p>NEONPAY-i digər Python Telegram bot kitabxanaları ilə necə istifadə etməyi öyrənin.</p>
+                                <a href="libraries.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">
+                                    Kitabxanaları görün →
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div>
+                                <strong>Pro Məsləhət:</strong> Prodaksiyaya yerləşdirməzdən əvvəl həmişə ödənişlərinizi Telegram-ın test mühitində 
+                                sınaqdan keçirin. Bunun üçün test botları və test Telegram Stars istifadə edə bilərsiniz.
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
 
-    <script src="navigation.js"></script>
     <script>
-        // Translation function for page content integration with navbar
-        window.applyTranslations = function(lang, translations) {
-            // Hide all language content
+        // Language switching
+        function applyTranslations(lang) {
             const allLangContent = document.querySelectorAll('.lang-content');
-            allLangContent.forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Show content for selected language
-            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
-            selectedLangContent.forEach(content => {
-                content.classList.add('active');
-            });
-
-            // Update HTML lang attribute
-            document.getElementById('html-root').setAttribute('lang', lang);
+            allLangContent.forEach(content => content.classList.remove('active'));
             
-            // Save language preference
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => content.classList.add('active'));
+            
+            document.getElementById('html-root').setAttribute('lang', lang);
             localStorage.setItem('preferred-language', lang);
-        };
+        }
 
-        // Load saved language preference on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedLang = localStorage.getItem('preferred-language') || 'en';
-            if (window.applyTranslations) {
-                window.applyTranslations(savedLang, {});
-            }
+        // Language buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                applyTranslations(e.target.dataset.lang);
+            });
         });
 
-        // Sidebar navigation
-        const sidebarLinks = document.querySelectorAll('.sidebar a');
-        const sections = document.querySelectorAll('section');
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target.closest('button');
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => btn.innerHTML = original, 1000);
+            });
+        }
 
-        // Update active link on scroll
-        window.addEventListener('scroll', () => {
+        // Sidebar navigation
+        function updateActiveSection() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar-nav a');
+            
             let current = '';
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
+                const sectionTop = section.offsetTop - 100;
                 if (window.pageYOffset >= sectionTop) {
                     current = section.getAttribute('id');
                 }
             });
 
-            sidebarLinks.forEach(link => {
+            navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${current}`) {
                     link.classList.add('active');
                 }
             });
-        });
+        }
 
-        // Smooth scrolling for sidebar links
-        sidebarLinks.forEach(link => {
+        // Smooth scrolling
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
@@ -816,6 +1116,23 @@ stage = neonpay.create_stage(
                     });
                 }
             });
+        });
+
+        // Update active section on scroll
+        window.addEventListener('scroll', updateActiveSection);
+
+        // Load saved language
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+            if (savedLangBtn) {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                savedLangBtn.classList.add('active');
+                applyTranslations(savedLang);
+            }
+            
+            // Set initial active section
+            updateActiveSection();
         });
     </script>
 </body>
