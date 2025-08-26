@@ -1,0 +1,319 @@
+/* Smart Search System Styles for NEONPAY Website */
+
+/* Search Container */
+.search-box {
+    position: relative;
+    z-index: 1000;
+}
+
+.search-input {
+    padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--secondary);
+    font-size: 0.875rem;
+    width: 300px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 109, 173, 0.1);
+    background: var(--background);
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+    z-index: 2;
+}
+
+/* Search Results Container */
+.search-results {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1001;
+    animation: searchResultsFadeIn 0.2s ease-out;
+}
+
+@keyframes searchResultsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Search Categories */
+.search-category {
+    border-bottom: 1px solid var(--border);
+}
+
+.search-category:last-child {
+    border-bottom: none;
+}
+
+.search-category-title {
+    padding: 0.75rem 1rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.5px;
+}
+
+/* Search Result Items */
+.search-result-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.search-result-item:hover,
+.search-result-item.active {
+    background: var(--secondary);
+    border-bottom-color: var(--border);
+}
+
+.search-result-item:hover .search-result-title,
+.search-result-item.active .search-result-title {
+    color: var(--primary);
+}
+
+.search-result-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+}
+
+.search-result-description {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    line-height: 1.4;
+    margin-bottom: 0.25rem;
+}
+
+.search-result-url {
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+}
+
+/* Highlight matched text */
+.search-result-item mark {
+    background: rgba(0, 109, 173, 0.15);
+    color: var(--primary);
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.2rem;
+    font-weight: 600;
+}
+
+/* No Results */
+.search-no-results {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.search-no-results-text {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Search Suggestions */
+.search-suggestions {
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--border);
+    background: var(--card);
+}
+
+.search-suggestions-title {
+    padding: 0 1rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-suggestions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.search-suggestion-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--foreground);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0.25rem;
+    margin: 0 0.5rem;
+}
+
+.search-suggestion-item:hover {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+.search-suggestion-item:before {
+    content: "🔍";
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+/* Loading State */
+.search-loading {
+    padding: 1rem;
+    text-align: center;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+.search-loading:before {
+    content: "";
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: searchSpinner 0.8s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes searchSpinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scrollbar Styling */
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: var(--card);
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .search-input {
+        width: 200px;
+    }
+    
+    .search-results {
+        left: -50px;
+        right: -50px;
+        max-height: 300px;
+    }
+    
+    .search-result-item {
+        padding: 1rem;
+    }
+    
+    .search-result-title {
+        font-size: 0.9rem;
+    }
+    
+    .search-result-description {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-input {
+        width: 180px;
+    }
+    
+    .search-results {
+        left: -75px;
+        right: -75px;
+    }
+}
+
+/* Dark Mode Support (if implemented) */
+@media (prefers-color-scheme: dark) {
+    .search-results {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Enhanced Focus States for Accessibility */
+.search-result-item:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+}
+
+.search-suggestion-item:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+}
+
+/* Search Result Icons by Category */
+.search-result-item[data-category="main"]:before {
+    content: "🏠";
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+.search-result-item[data-category="docs"]:before {
+    content: "📚";
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+.search-result-item[data-category="examples"]:before {
+    content: "💻";
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+.search-result-item[data-category="info"]:before {
+    content: "ℹ️";
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+/* Enhanced hover effects */
+.search-result-item:hover {
+    transform: translateX(2px);
+    box-shadow: -3px 0 0 var(--primary);
+}
+
+/* Smooth transitions */
+* {
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
