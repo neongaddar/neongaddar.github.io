@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - ⚡ NEONPAY API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #1f2937;
+            --card: #f8fafc;
+            --card-foreground: #1f2937;
+            --primary: #006dad;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #1f2937;
+            --muted: #e5e7eb;
+            --muted-foreground: #6b7280;
+            --accent: #0ea5e9;
+            --accent-foreground: #1f2937;
+            --border: #d1d5db;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --radius: 0.375rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.5;
+        }
+
+        /* Header styles (same as index.html) */
+        .top-banner {
+            background: var(--warning);
+            color: #000;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--secondary);
+            font-size: 0.875rem;
+            width: 300px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
+        }
+
+        .header-nav {
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            border-right: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--primary-foreground);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .about-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .about-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            padding: 3rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--foreground);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .section-content {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--muted-foreground);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--background);
+            box-shadow: 0 0 0 3px var(--border);
+        }
+
+        .timeline-date {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-description {
+            color: var(--muted-foreground);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary-foreground);
+        }
+
+        .team-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-bio {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .team-link {
+            color: var(--muted-foreground);
+            font-size: 1.25rem;
+            transition: color 0.2s;
+        }
+
+        .team-link:hover {
+            color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--muted-foreground);
+            font-weight: 500;
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .goal-card {
+            background: var(--card);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .goal-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .goal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .goal-description {
+            color: var(--muted-foreground);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .search-input {
+                width: 200px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .about-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+        }
+
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        <strong>📦 NEONPAY 1.0.0 is now available!</strong> 
+        <a href="index.html#releases" style="color: #000; text-decoration: underline;">View release notes</a>
+    </div>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>NEONPAY</span>
+                </a>
+                
+                <div class="header-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search packages...">
+                    </div>
+                    
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                        <button class="lang-btn" data-lang="az">AZ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Project</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="quick-start.html">Quick Start</a></li>
+                    <li><a href="api-docs.html">API Docs</a></li>
+                    <li><a href="examples.html">Examples</a></li>
+                    <li><a href="libraries.html">Libraries</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="about-hero">
+        <div class="container">
+            <div class="lang-content active" data-lang="en">
+                <h1 class="about-title">About NEONPAY</h1>
+                <p class="about-subtitle">
+                    Simplifying Telegram payment integration for developers worldwide. 
+                    Our mission is to make bot monetization accessible to everyone.
+                </p>
+            </div>
+            
+            <div class="lang-content" data-lang="ru">
+                <h1 class="about-title">О NEONPAY</h1>
+                <p class="about-subtitle">
+                    Упрощаем интеграцию платежей Telegram для разработчиков по всему миру. 
+                    Наша миссия - сделать монетизацию ботов доступной для всех.
+                </p>
+            </div>
+            
+            <div class="lang-content" data-lang="az">
+                <h1 class="about-title">NEONPAY haqqında</h1>
+                <p class="about-subtitle">
+                    Dünya üzrə tərtibatçılar üçün Telegram ödəniş inteqrasiyasını sadələşdiririk. 
+                    Missiyamız bot monetizasiyasını hər kəs üçün əlçatan etməkdir.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="about-content">
+            <!-- Project Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Downloads</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Bots Using NEONPAY</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Library Integrations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+
+            <!-- Mission Section -->
+            <div class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">
+                        <i class="fas fa-target section-icon"></i>
+                        Our Mission
+                    </h2>
+                    <div class="section-content">
+                        <p>
+                            At NEONPAY, we believe that monetizing Telegram bots should be as simple as creating them. 
+                            Before NEONPAY, developers had to deal with complex payment integrations, lengthy documentation, 
+                            and multiple API endpoints just to add a simple payment feature to their bots.
+                        </p>
+                        <br>
+                        <p>
+                            Our mission is to eliminate this complexity and provide a unified, simple API that works 
+                            across all major Python Telegram bot libraries. We want every developer, regardless of their 
+                            experience level, to be able to add payments to their bots with just 2-3 lines of code.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="ru">
+                    <h2 class="section-title">
+                        <i class="fas fa-target section-icon"></i>
+                        Наша миссия
+                    </h2>
+                    <div class="section-content">
+                        <p>
+                            В NEONPAY мы верим, что монетизация Telegram ботов должна быть такой же простой, как их создание. 
+                            До NEONPAY разработчикам приходилось иметь дело со сложными интеграциями платежей, длинной документацией 
+                            и множественными API endpoints только для добавления простой функции оплаты в их ботов.
+                        </p>
+                        <br>
+                        <p>
+                            Наша миссия - устранить эту сложность и предоставить единый, простой API, который работает 
+                            со всеми основными Python библиотеками для Telegram ботов. Мы хотим, чтобы каждый разработчик, 
+                            независимо от уровня опыта, мог добавить платежи в своих ботов всего 2-3 строками кода.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="az">
+                    <h2 class="section-title">
+                        <i class="fas fa-target section-icon"></i>
+                        Bizim missiyamız
+                    </h2>
+                    <div class="section-content">
+                        <p>
+                            NEONPAY-də biz inanırıq ki, Telegram botlarının monetizasiyası onları yaratmaq qədər sadə olmalıdır. 
+                            NEONPAY-dən əvvəl tərtibatçılar mürəkkəb ödəniş inteqrasiyaları, uzun sənədlər və çoxlu API 
+                            nöqtələri ilə məşğul olmaq məcburiyyətində idilər ki, sadəcə botlarına sadə ödəniş funksiyası əlavə etsinlər.
+                        </p>
+                        <br>
+                        <p>
+                            Bizim missiyamız bu mürəkkəbliyi aradan qaldırmaq və bütün əsas Python Telegram bot 
+                            kitabxanaları ilə işləyən vahid, sadə API təqdim etməkdir. Biz istəyirik ki, hər tərtibatçı, 
+                            təcrübə səviyyəsindən asılı olmayaraq, cəmi 2-3 kod sətri ilə botlarına ödənişlər əlavə edə bilsin.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals Section -->
+            <div class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">
+                        <i class="fas fa-bullseye section-icon"></i>
+                        Our Goals
+                    </h2>
+                    <div class="goals-grid">
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-code"></i></div>
+                            <h3 class="goal-title">Simplify Payment Integration</h3>
+                            <p class="goal-description">
+                                Reduce payment integration from hours to minutes with our intuitive API design.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-users"></i></div>
+                            <h3 class="goal-title">Support All Developers</h3>
+                            <p class="goal-description">
+                                From beginners to experts, provide tools that work for developers at every level.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h3 class="goal-title">Ensure Security</h3>
+                            <p class="goal-description">
+                                Built-in security measures and validation to protect both developers and users.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-rocket"></i></div>
+                            <h3 class="goal-title">Accelerate Innovation</h3>
+                            <p class="goal-description">
+                                Enable developers to focus on their bot's unique features instead of payment complexity.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="ru">
+                    <h2 class="section-title">
+                        <i class="fas fa-bullseye section-icon"></i>
+                        Наши цели
+                    </h2>
+                    <div class="goals-grid">
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-code"></i></div>
+                            <h3 class="goal-title">Упростить интеграцию платежей</h3>
+                            <p class="goal-description">
+                                Сократить интеграцию платежей с часов до минут с помощью нашего интуитивного API дизайна.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-users"></i></div>
+                            <h3 class="goal-title">Поддерживать всех разработчиков</h3>
+                            <p class="goal-description">
+                                От новичков до экспертов, предоставлять инструменты, которые работают для разработчиков любого уровня.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h3 class="goal-title">Обеспечить безопасность</h3>
+                            <p class="goal-description">
+                                Встроенные меры безопасности и валидация для защиты как разработчиков, так и пользователей.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-rocket"></i></div>
+                            <h3 class="goal-title">Ускорить инновации</h3>
+                            <p class="goal-description">
+                                Позволить разработчикам сосредоточиться на уникальных особенностях их ботов вместо сложности платежей.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="az">
+                    <h2 class="section-title">
+                        <i class="fas fa-bullseye section-icon"></i>
+                        Bizim məqsədlərimiz
+                    </h2>
+                    <div class="goals-grid">
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-code"></i></div>
+                            <h3 class="goal-title">Ödəniş İnteqrasiyasını Sadələşdirmək</h3>
+                            <p class="goal-description">
+                                Bizim intuitiv API dizaynı ilə ödəniş inteqrasiyasını saatlardan dəqiqələrə qədər azaltmaq.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-users"></i></div>
+                            <h3 class="goal-title">Bütün Tərtibatçıları Dəstəkləmək</h3>
+                            <p class="goal-description">
+                                Yeni başlayanlardan mütəxəssislərə qədər, hər səviyyədə tərtibatçılar üçün işləyən alətlər təqdim etmək.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h3 class="goal-title">Təhlükəsizlik Təmin Etmək</h3>
+                            <p class="goal-description">
+                                Həm tərtibatçıları, həm də istifadəçiləri qorumaq üçün daxili təhlükəsizlik tədbirləri və doğrulama.
+                            </p>
+                        </div>
+                        <div class="goal-card">
+                            <div class="goal-icon"><i class="fas fa-rocket"></i></div>
+                            <h3 class="goal-title">İnnovasiyanı Sürətləndirmək</h3>
+                            <p class="goal-description">
+                                Tərtibatçılara ödəniş mürəkkəbliyi əvəzinə botlarının unikal xüsusiyyətlərinə diqqət yetirməyə imkan vermək.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project History -->
+            <div class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">
+                        <i class="fas fa-history section-icon"></i>
+                        Project History
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">December 2024</div>
+                            <h3 class="timeline-title">NEONPAY 1.0.0 Release</h3>
+                            <p class="timeline-description">
+                                Official stable release with full support for all major Python Telegram bot libraries. 
+                                Production-ready with comprehensive documentation and examples.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">November 2024</div>
+                            <h3 class="timeline-title">Beta Testing Phase</h3>
+                            <p class="timeline-description">
+                                Extensive beta testing with 100+ developers. Feedback collection and bug fixes. 
+                                Performance optimizations and API refinements.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">October 2024</div>
+                            <h3 class="timeline-title">Multi-Library Support</h3>
+                            <p class="timeline-description">
+                                Added support for Pyrogram, python-telegram-bot, and pyTelegramBotAPI. 
+                                Unified API design across all libraries.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">September 2024</div>
+                            <h3 class="timeline-title">Aiogram Integration</h3>
+                            <p class="timeline-description">
+                                Initial release with Aiogram support. Core payment processing functionality 
+                                and Telegram Stars integration.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">August 2024</div>
+                            <h3 class="timeline-title">Project Inception</h3>
+                            <p class="timeline-description">
+                                Project started by Abbas Taghiyev after struggling with complex payment integrations 
+                                in multiple bot projects. Initial research and development phase.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="ru">
+                    <h2 class="section-title">
+                        <i class="fas fa-history section-icon"></i>
+                        История проекта
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Декабрь 2024</div>
+                            <h3 class="timeline-title">Релиз NEONPAY 1.0.0</h3>
+                            <p class="timeline-description">
+                                Официальный стабильный релиз с полной поддержкой всех основных Python Telegram bot библиотек. 
+                                Готов для продакшена с исчерпывающей документацией и примерами.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Ноябрь 2024</div>
+                            <h3 class="timeline-title">Фаза бета-тестирования</h3>
+                            <p class="timeline-description">
+                                Обширное бета-тестирование с 100+ разработчиками. Сбор отзывов и исправление багов. 
+                                Оптимизация производительности и улучшение API.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Октябрь 2024</div>
+                            <h3 class="timeline-title">Поддержка нескольких библиотек</h3>
+                            <p class="timeline-description">
+                                Добавлена поддержка Pyrogram, python-telegram-bot и pyTelegramBotAPI. 
+                                Унифицированный дизайн API для всех библиотек.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Сентябрь 2024</div>
+                            <h3 class="timeline-title">Интеграция с Aiogram</h3>
+                            <p class="timeline-description">
+                                Первый релиз с поддержкой Aiogram. Основная функциональность обработки платежей 
+                                и интеграция с Telegram Stars.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Август 2024</div>
+                            <h3 class="timeline-title">Зарождение проекта</h3>
+                            <p class="timeline-description">
+                                Проект начат Аббасом Тагиевым после борьбы со сложными интеграциями платежей 
+                                в нескольких проектах ботов. Начальная фаза исследований и разработки.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="az">
+                    <h2 class="section-title">
+                        <i class="fas fa-history section-icon"></i>
+                        Layihə tarixi
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Dekabr 2024</div>
+                            <h3 class="timeline-title">NEONPAY 1.0.0 Buraxılışı</h3>
+                            <p class="timeline-description">
+                                Bütün əsas Python Telegram bot kitabxanalarının tam dəstəyi ilə rəsmi sabit buraxılış. 
+                                Hərtərəfli sənədlər və nümunələrlə prodaksiya üçün hazırdır.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Noyabr 2024</div>
+                            <h3 class="timeline-title">Beta Test Mərhələsi</h3>
+                            <p class="timeline-description">
+                                100+ tərtibatçı ilə geniş beta test. Geri əlaqə toplanması və səhv düzəltmələri. 
+                                Performans optimallaşdırması və API təkmilləşdirmələri.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Oktyabr 2024</div>
+                            <h3 class="timeline-title">Çox-Kitabxana Dəstəyi</h3>
+                            <p class="timeline-description">
+                                Pyrogram, python-telegram-bot və pyTelegramBotAPI dəstəyi əlavə edildi. 
+                                Bütün kitabxanalar üçün vahid API dizaynı.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Sentyabr 2024</div>
+                            <h3 class="timeline-title">Aiogram İnteqrasiyası</h3>
+                            <p class="timeline-description">
+                                Aiogram dəstəyi ilə ilk buraxılış. Əsas ödəniş emal funksionallığı 
+                                və Telegram Stars inteqrasiyası.
+                            </p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Avqust 2024</div>
+                            <h3 class="timeline-title">Layihənin Başlanğıcı</h3>
+                            <p class="timeline-description">
+                                Layihə Abbas Tağıyev tərəfindən bir neçə bot layihəsində mürəkkəb ödəniş 
+                                inteqrasiyaları ilə mübarizə apardıqdan sonra başladı. İlkin araşdırma və inkişaf mərhələsi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">
+                        <i class="fas fa-users section-icon"></i>
+                        Our Team
+                    </h2>
+                    <div class="team-grid">
+                        <div class="team-card">
+                            <div class="team-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="team-name">Abbas Taghiyev</h3>
+                            <div class="team-role">Founder & Lead Developer</div>
+                            <p class="team-bio">
+                                Passionate Python developer with 5+ years of experience in Telegram bot development. 
+                                Created NEONPAY to solve the payment integration complexity he faced in his own projects.
+                            </p>
+                            <div class="team-links">
+                                <a href="https://github.com/Abbasxan" class="team-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://t.me/abbasxan" class="team-link">
+                                    <i class="fab fa-telegram"></i>
+                                </a>
+                                <a href="mailto:abbas@neonpay.dev" class="team-link">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="ru">
+                    <h2 class="section-title">
+                        <i class="fas fa-users section-icon"></i>
+                        Наша команда
+                    </h2>
+                    <div class="team-grid">
+                        <div class="team-card">
+                            <div class="team-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="team-name">Аббас Тагиев</h3>
+                            <div class="team-role">Основатель и ведущий разработчик</div>
+                            <p class="team-bio">
+                                Увлеченный Python разработчик с 5+ летним опытом разработки Telegram ботов. 
+                                Создал NEONPAY для решения сложности интеграции платежей, с которой столкнулся в своих проектах.
+                            </p>
+                            <div class="team-links">
+                                <a href="https://github.com/Abbasxan" class="team-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://t.me/abbasxan" class="team-link">
+                                    <i class="fab fa-telegram"></i>
+                                </a>
+                                <a href="mailto:abbas@neonpay.dev" class="team-link">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="az">
+                    <h2 class="section-title">
+                        <i class="fas fa-users section-icon"></i>
+                        Bizim komanda
+                    </h2>
+                    <div class="team-grid">
+                        <div class="team-card">
+                            <div class="team-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="team-name">Abbas Tağıyev</h3>
+                            <div class="team-role">Təsisçi və Aparıcı Tərtibatçı</div>
+                            <p class="team-bio">
+                                Telegram bot tərtibatında 5+ il təcrübəsi olan ehtiraslı Python tərtibatçı. 
+                                NEONPAY-i öz layihələrində üzləşdiyi ödəniş inteqrasiya mürəkkəbliyini həll etmək üçün yaradıb.
+                            </p>
+                            <div class="team-links">
+                                <a href="https://github.com/Abbasxan" class="team-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://t.me/abbasxan" class="team-link">
+                                    <i class="fab fa-telegram"></i>
+                                </a>
+                                <a href="mailto:abbas@neonpay.dev" class="team-link">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language switching
+        function applyTranslations(lang) {
+            const allLangContent = document.querySelectorAll('.lang-content');
+            allLangContent.forEach(content => content.classList.remove('active'));
+            
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => content.classList.add('active'));
+            
+            document.getElementById('html-root').setAttribute('lang', lang);
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Language buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                applyTranslations(e.target.dataset.lang);
+            });
+        });
+
+        // Load saved language
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+            if (savedLangBtn) {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                savedLangBtn.classList.add('active');
+                applyTranslations(savedLang);
+            }
+        });
+    </script>
+</body>
+</html>
