@@ -5,22 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚡ NEONPAY API - Simple Telegram Bot Payments</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --background: #ffffff;
             --foreground: #1f2937;
             --card: #f8fafc;
             --card-foreground: #1f2937;
-            --primary: #6366f1;
+            --primary: #006dad;
             --primary-foreground: #ffffff;
-            --secondary: #f8fafc;
+            --secondary: #f1f5f9;
             --secondary-foreground: #1f2937;
             --muted: #e5e7eb;
             --muted-foreground: #6b7280;
-            --accent: #4ade80;
+            --accent: #0ea5e9;
             --accent-foreground: #1f2937;
             --border: #d1d5db;
-            --radius: 0.5rem;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --radius: 0.375rem;
         }
 
         * {
@@ -30,115 +33,84 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background: var(--background);
             color: var(--foreground);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* PyPI-style Header */
+        .top-banner {
+            background: var(--warning);
+            color: #000;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
         }
 
-        /* Improved header with modern navigation */
-        header {
-            background: rgba(255, 255, 255, 0.95);
+        .header {
+            background: var(--background);
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        nav {
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 0.75rem 0;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
             color: var(--primary);
             text-decoration: none;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            transition: all 0.3s ease;
+        .logo i {
+            color: var(--accent);
         }
 
-        .nav-links a {
-            color: var(--foreground);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-            background: var(--secondary);
-        }
-
-        .mobile-menu {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            transition: background 0.3s ease;
-        }
-
-        .mobile-menu:hover {
-            background: var(--secondary);
-        }
-
-
-        .nav-controls {
+        .header-controls {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .language-selector {
-            background: var(--card);
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 0.5rem;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background: var(--secondary);
+            font-size: 0.875rem;
+            width: 300px;
         }
 
-        .language-selector:hover {
-            border-color: var(--primary);
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
         }
 
-        .language-selector:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
-        }
-
-        /* Language selector */
         .language-selector {
             display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            margin-left: 1rem;
+            gap: 0.25rem;
         }
 
         .lang-btn {
@@ -147,8 +119,8 @@
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
+            font-size: 0.75rem;
+            transition: all 0.2s;
         }
 
         .lang-btn:hover,
@@ -158,248 +130,337 @@
             border-color: var(--primary);
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 4rem 0;
-            text-align: center;
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--background) 100%);
+        .header-nav {
+            border-top: 1px solid var(--border);
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--muted-foreground);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-buttons {
+        .nav-links {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            list-style: none;
         }
 
-        .btn {
+        .nav-links li {
+            border-right: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            display: block;
             padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
+            color: var(--foreground);
             text-decoration: none;
+            font-size: 0.875rem;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: background 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            min-height: 600px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar-section {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--foreground);
+        }
+
+        .install-command {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: none;
             border: none;
+            color: #e2e8f0;
             cursor: pointer;
-            display: inline-flex;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .version-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .version-badge {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            padding: 0.125rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            list-style: none;
+        }
+
+        .project-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: var(--primary-foreground);
+        .project-links a:hover {
+            text-decoration: underline;
         }
 
-        .btn-primary:hover {
-            background: #5855eb;
-            transform: translateY(-2px);
+        .meta-info {
+            font-size: 0.875rem;
         }
 
-        .btn-secondary {
-            background: var(--card);
-            color: var(--card-foreground);
+        .meta-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-label {
+            font-weight: 500;
+            color: var(--foreground);
+        }
+
+        .meta-value {
+            color: var(--muted-foreground);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background: var(--secondary);
+            color: var(--foreground);
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
             border: 1px solid var(--border);
         }
 
-        .btn-secondary:hover {
-            background: var(--muted);
+        /* Content Area */
+        .content {
+            background: var(--background);
         }
 
-        /* Features Section */
-        .features {
-            padding: 4rem 0;
-        }
-
-        .features h2 {
-            text-align: center;
+        .project-title {
             font-size: 2.5rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .project-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .content-section {
             margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
         }
 
         .feature-card {
             background: var(--card);
-            padding: 2rem;
-            border-radius: var(--radius);
             border: 1px solid var(--border);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: border-color 0.2s;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
         }
 
         .feature-icon {
-            width: 3rem;
-            height: 3rem;
-            background: var(--primary);
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
             margin-bottom: 1rem;
-            font-size: 1.5rem;
-            color: var(--primary-foreground);
         }
 
-        .feature-card h3 {
-            font-size: 1.25rem;
+        .feature-title {
+            font-size: 1.125rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        /* Improved code example with better formatting */
+        .feature-description {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
         .code-example {
-            background: var(--secondary);
-            padding: 4rem 0;
-        }
-
-        .code-example h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
-
-        .code-block {
             background: #1e293b;
             color: #f1f5f9;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--radius);
             overflow-x: auto;
             font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             line-height: 1.6;
-            border: 1px solid #334155;
-            position: relative;
+            margin: 1rem 0;
         }
 
-        .code-block::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
+        .code-example .comment { color: #94a3b8; }
+        .code-example .keyword { color: #c084fc; font-weight: 600; }
+        .code-example .string { color: #34d399; }
+        .code-example .function { color: #60a5fa; }
+        .code-example .number { color: #fbbf24; }
 
-        .code-block .comment {
-            color: #94a3b8;
-            font-style: italic;
-        }
-
-        .code-block .keyword {
-            color: #c084fc;
-            font-weight: 600;
-        }
-
-        .code-block .string {
-            color: #34d399;
-        }
-
-        .code-block .function {
-            color: #60a5fa;
-        }
-
-        .code-block .number {
-            color: #fbbf24;
-        }
-
-        /* Footer */
-        footer {
+        .releases-section {
             background: var(--card);
-            border-top: 1px solid var(--border);
-            padding: 2rem 0;
-            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
         }
 
-        /* Enhanced mobile responsive design */
+        .release-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .release-item:last-child {
+            border-bottom: none;
+        }
+
+        .release-icon {
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 0.125rem;
+        }
+
+        .release-icon.current {
+            background: var(--accent);
+        }
+
+        .release-info {
+            flex: 1;
+        }
+
+        .release-version {
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .release-date {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .nav-controls {
-                flex-direction: column;
-                gap: 0.5rem;
+            .search-input {
+                width: 200px;
             }
-            
+
+            .header-top {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
             .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                flex-direction: column;
-                padding: 1rem;
-                border-top: 1px solid var(--border);
-                backdrop-filter: blur(20px);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transform: translateY(-10px);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
+                overflow-x: auto;
+                white-space: nowrap;
             }
 
-            .nav-links.active {
-                display: flex;
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
 
-            .mobile-menu {
-                display: block;
+            .sidebar {
+                order: 2;
+                position: static;
             }
 
-            .hero h1 {
+            .project-title {
                 font-size: 2rem;
             }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .language-selector {
-                margin-left: 0;
-                margin-top: 1rem;
-            }
         }
 
-        /* Hidden content for different languages */
+        /* Language content visibility */
         .lang-content {
             display: none;
         }
@@ -410,181 +471,178 @@
     </style>
 </head>
 <body>
-    <!-- Replace navbar container with direct header element for navigation.js -->
-    <header id="navbar-container"></header>
+    <div class="top-banner">
+        <strong>📦 NEONPAY 1.0.0 is now available!</strong> 
+        <a href="#releases" style="color: #000; text-decoration: underline;">View release notes</a>
+    </div>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <!-- English Content -->
-                <div class="lang-content active" data-lang="en">
-                    <h1>Simple Telegram Bot Payments</h1>
-                    <p>Integrate Telegram Stars payments into your bot with just a few lines of code. Support for all major Telegram bot libraries.</p>
-                    <div class="cta-buttons">
-                        <a href="quick-start.html" class="btn btn-primary">Get Started</a>
-                        <a href="examples.html" class="btn btn-secondary">View Examples</a>
+    <header class="header">
+        <div class="header-container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>NEONPAY</span>
+                </a>
+                
+                <div class="header-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search packages...">
                     </div>
-                </div>
-
-                <!-- Russian Content -->
-                <div class="lang-content" data-lang="ru">
-                    <h1>Простые платежи для Telegram ботов</h1>
-                    <p>Интегрируйте платежи Telegram Stars в ваш бот всего несколькими строками кода. Поддержка всех основных библиотек для Telegram ботов.</p>
-                    <div class="cta-buttons">
-                        <a href="quick-start.html" class="btn btn-primary">Начать</a>
-                        <a href="examples.html" class="btn btn-secondary">Посмотреть примеры</a>
-                    </div>
-                </div>
-
-                <!-- Azerbaijani Content -->
-                <div class="lang-content" data-lang="az">
-                    <h1>Sadə Telegram Bot Ödənişləri</h1>
-                    <p>Telegram Stars ödənişlərini botunuza cəmi bir neçə kod sətri ilə inteqrasiya edin. Bütün əsas Telegram bot kitabxanalarına dəstək.</p>
-                    <div class="cta-buttons">
-                        <a href="quick-start.html" class="btn btn-primary">Başla</a>
-                        <a href="examples.html" class="btn btn-secondary">Nümunələrə bax</a>
+                    
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                        <button class="lang-btn" data-lang="az">AZ</button>
                     </div>
                 </div>
             </div>
-        </section>
+            
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Project</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="quick-start.html">Quick Start</a></li>
+                    <li><a href="api-docs.html">API Docs</a></li>
+                    <li><a href="examples.html">Examples</a></li>
+                    <li><a href="libraries.html">Libraries</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-        <section class="features">
-            <div class="container">
-                <!-- English Content -->
+    <div class="container">
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Install Command -->
+                <div class="sidebar-section">
+                    <div class="install-command">
+                        <span>pip install neonpay</span>
+                        <button class="copy-btn" onclick="copyToClipboard('pip install neonpay')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Version Info -->
+                <div class="sidebar-section">
+                    <div class="version-info">
+                        <span class="version-badge">1.0.0</span>
+                        <span class="release-date">Latest version</span>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--muted-foreground);">
+                        Released: Dec 15, 2024
+                    </div>
+                </div>
+
+                <!-- Project Links -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Project links</h3>
+                    <ul class="project-links">
+                        <li><a href="https://github.com/Abbasxan/neonpay"><i class="fab fa-github"></i> Homepage</a></li>
+                        <li><a href="https://github.com/Abbasxan/neonpay/releases"><i class="fas fa-download"></i> Download</a></li>
+                        <li><a href="https://t.me/neonpay_support"><i class="fab fa-telegram"></i> Community</a></li>
+                        <li><a href="api-docs.html"><i class="fas fa-book"></i> Documentation</a></li>
+                        <li><a href="https://github.com/Abbasxan/neonpay"><i class="fas fa-code"></i> Source</a></li>
+                        <li><a href="https://github.com/Abbasxan/neonpay/issues"><i class="fas fa-bug"></i> Issue Tracker</a></li>
+                    </ul>
+                </div>
+
+                <!-- Meta Information -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Meta</h3>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <span class="meta-label">License:</span> 
+                            <span class="meta-value">MIT License</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Author:</span> 
+                            <span class="meta-value">Abbas Taghiyev</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Requires:</span> 
+                            <span class="meta-value">Python >=3.8</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tags">
+                        <span class="tag">telegram</span>
+                        <span class="tag">payments</span>
+                        <span class="tag">bot</span>
+                        <span class="tag">api</span>
+                        <span class="tag">stars</span>
+                        <span class="tag">library</span>
+                    </div>
+                </div>
+
+                <!-- Classifiers -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Classifiers</h3>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <span class="meta-label">Development Status:</span><br>
+                            <span class="meta-value">5 - Production/Stable</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Intended Audience:</span><br>
+                            <span class="meta-value">Developers</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Topic:</span><br>
+                            <span class="meta-value">Software Development :: Libraries</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="content">
+                <!-- Project Header -->
                 <div class="lang-content active" data-lang="en">
-                    <h2>Why Choose NEONPAY?</h2>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">🚀</div>
-                            <h3>Easy Integration</h3>
-                            <p>Add payments to your bot in just 2-3 lines of code. No complex setup required.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🔧</div>
-                            <h3>Multi-Library Support</h3>
-                            <p>Works with Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI, and raw API.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">⭐</div>
-                            <h3>Telegram Stars</h3>
-                            <p>Native support for Telegram Stars (XTR) payments with automatic handling.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🎨</div>
-                            <h3>Customizable</h3>
-                            <p>Add custom logos, descriptions, and pricing for your products and services.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🔒</div>
-                            <h3>Secure</h3>
-                            <p>Built-in validation and error handling for secure payment processing.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📱</div>
-                            <h3>Modern</h3>
-                            <p>Clean, modern API design with full type hints and comprehensive documentation.</p>
-                        </div>
-                    </div>
+                    <h1 class="project-title">NEONPAY API</h1>
+                    <p class="project-subtitle">
+                        Simple and elegant Telegram Stars payment integration for Python bots. 
+                        Add payments to your bot with just 2-3 lines of code.
+                    </p>
                 </div>
 
-                <!-- Russian Content -->
                 <div class="lang-content" data-lang="ru">
-                    <h2>Почему выбирают NEONPAY?</h2>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">🚀</div>
-                            <h3>Простая интеграция</h3>
-                            <p>Добавьте платежи в ваш бот всего 2-3 строками кода. Сложная настройка не требуется.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🔧</div>
-                            <h3>Поддержка библиотек</h3>
-                            <p>Работает с Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI и raw API.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">⭐</div>
-                            <h3>Telegram Stars</h3>
-                            <p>Встроенная поддержка платежей Telegram Stars (XTR) с автоматической обработкой.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🎨</div>
-                            <h3>Настраиваемый</h3>
-                            <p>Добавляйте собственные логотипы, описания и цены для ваших продуктов и услуг.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🔒</div>
-                            <h3>Безопасный</h3>
-                            <p>Встроенная валидация и обработка ошибок для безопасной обработки платежей.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📱</div>
-                            <h3>Современный</h3>
-                            <p>Чистый, современный дизайн API с полными подсказками типов и исчерпывающей документацией.</p>
-                        </div>
-                    </div>
+                    <h1 class="project-title">NEONPAY API</h1>
+                    <p class="project-subtitle">
+                        Простая и элегантная интеграция платежей Telegram Stars для Python ботов. 
+                        Добавьте платежи в ваш бот всего 2-3 строками кода.
+                    </p>
                 </div>
 
-                <!-- Azerbaijani Content -->
                 <div class="lang-content" data-lang="az">
-                    <h2>Niyə NEONPAY seçirik?</h2>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">🚀</div>
-                            <h3>Asan İnteqrasiya</h3>
-                            <p>Botunuza cəmi 2-3 kod sətri ilə ödənişlər əlavə edin. Mürəkkəb quraşdırma tələb olunmur.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🔧</div>
-                            <h3>Çox Kitabxana Dəstəyi</h3>
-                            <p>Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI və raw API ilə işləyir.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">⭐</div>
-                            <h3>Telegram Stars</h3>
-                            <p>Avtomatik idarəetmə ilə Telegram Stars (XTR) ödənişlərinə yerli dəstək.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🎨</div>
-                            <h3>Fərdiləşdirilə bilən</h3>
-                            <p>Məhsul və xidmətləriniz üçün fərdi loqolar, təsvirlər və qiymətlər əlavə edin.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🔒</div>
-                            <h3>Təhlükəsiz</h3>
-                            <p>Təhlükəsiz ödəniş emalı üçün daxili doğrulama və xəta idarəetməsi.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📱</div>
-                            <h3>Müasir</h3>
-                            <p>Tam tip göstəriciləri və hərtərəfli sənədləşmə ilə təmiz, müasir API dizaynı.</p>
-                        </div>
+                    <h1 class="project-title">NEONPAY API</h1>
+                    <p class="project-subtitle">
+                        Python botları üçün sadə və zərif Telegram Stars ödəniş inteqrasiyası. 
+                        Cəmi 2-3 kod sətri ilə botunuza ödənişlər əlavə edin.
+                    </p>
+                </div>
+
+                <!-- Quick Example -->
+                <div class="content-section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Quick Example</h2>
                     </div>
-                </div>
-            </div>
-        </section>
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Быстрый пример</h2>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Sürətli nümunə</h2>
+                    </div>
 
-        <section class="code-example">
-            <div class="container">
-                <!-- English Content -->
-                <div class="lang-content active" data-lang="en">
-                    <h2>Get Started in Minutes</h2>
-                </div>
-                <!-- Russian Content -->
-                <div class="lang-content" data-lang="ru">
-                    <h2>Начните за несколько минут</h2>
-                </div>
-                <!-- Azerbaijani Content -->
-                <div class="lang-content" data-lang="az">
-                    <h2>Dəqiqələr ərzində başlayın</h2>
-                </div>
-
-                <div class="code-block">
+                    <div class="code-example">
 <span class="comment"># Install NEONPAY</span>
 pip install neonpay
 
 <span class="comment"># Simple payment example</span>
 <span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
-<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot, Dispatcher
+<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
 
 bot = Bot(<span class="string">"YOUR_BOT_TOKEN"</span>)
 neonpay = NeonPay.create_for_aiogram(bot)
@@ -593,66 +651,185 @@ neonpay = NeonPay.create_for_aiogram(bot)
 stage = neonpay.create_stage(
     title=<span class="string">"Premium Access"</span>,
     description=<span class="string">"Unlock all premium features"</span>,
-    price=<span class="number">100</span>,  <span class="comment"># 100 XTR</span>
+    price=<span class="number">100</span>,  <span class="comment"># 100 XTR (Telegram Stars)</span>
     logo_url=<span class="string">"https://example.com/logo.png"</span>
 )
 
 <span class="comment"># Handle payment</span>
 @neonpay.payment_handler(stage)
 <span class="keyword">async def</span> <span class="function">handle_premium_payment</span>(payment_result):
-    <span class="comment"># Your logic here - user gets premium access</span>
     <span class="keyword">await</span> payment_result.message.answer(<span class="string">"Welcome to Premium! 🎉"</span>)
+                    </div>
                 </div>
-            </div>
-        </section>
-    </main>
 
-    <footer>
-        <div class="container">
-            <!-- English Content -->
-            <div class="lang-content active" data-lang="en">
-                <p>&copy; 2024 NEONPAY. Made with ❤️ for Telegram bot developers.</p>
-            </div>
-            <!-- Russian Content -->
-            <div class="lang-content" data-lang="ru">
-                <p>&copy; 2024 NEONPAY. Сделано с ❤️ для разработчиков Telegram ботов.</p>
-            </div>
-            <!-- Azerbaijani Content -->
-            <div class="lang-content" data-lang="az">
-                <p>&copy; 2024 NEONPAY. Telegram bot tərtibatçıları üçün ❤️ ilə hazırlanmışdır.</p>
-            </div>
+                <!-- Key Features -->
+                <div class="content-section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Key Features</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                                <h3 class="feature-title">Easy Integration</h3>
+                                <p class="feature-description">Add payments to your bot in just 2-3 lines of code. No complex setup required.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                                <h3 class="feature-title">Multi-Library Support</h3>
+                                <p class="feature-description">Works with Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI, and raw API.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                                <h3 class="feature-title">Telegram Stars</h3>
+                                <p class="feature-description">Native support for Telegram Stars (XTR) payments with automatic handling.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="feature-title">Secure</h3>
+                                <p class="feature-description">Built-in validation and error handling for secure payment processing.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Ключевые особенности</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                                <h3 class="feature-title">Простая интеграция</h3>
+                                <p class="feature-description">Добавьте платежи в ваш бот всего 2-3 строками кода. Сложная настройка не требуется.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                                <h3 class="feature-title">Поддержка библиотек</h3>
+                                <p class="feature-description">Работает с Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI и raw API.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                                <h3 class="feature-title">Telegram Stars</h3>
+                                <p class="feature-description">Встроенная поддержка платежей Telegram Stars (XTR) с автоматической обработкой.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="feature-title">Безопасный</h3>
+                                <p class="feature-description">Встроенная валидация и обработка ошибок для безопасной обработки платежей.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Əsas xüsusiyyətlər</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                                <h3 class="feature-title">Asan İnteqrasiya</h3>
+                                <p class="feature-description">Botunuza cəmi 2-3 kod sətri ilə ödənişlər əlavə edin. Mürəkkəb quraşdırma tələb olunmur.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                                <h3 class="feature-title">Çox Kitabxana Dəstəyi</h3>
+                                <p class="feature-description">Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI və raw API ilə işləyir.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                                <h3 class="feature-title">Telegram Stars</h3>
+                                <p class="feature-description">Avtomatik idarəetmə ilə Telegram Stars (XTR) ödənişlərinə yerli dəstək.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="feature-title">Təhlükəsiz</h3>
+                                <p class="feature-description">Təhlükəsiz ödəniş emalı üçün daxili doğrulama və xəta idarəetməsi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Release History -->
+                <div class="content-section" id="releases">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Release History</h2>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">История релизов</h2>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Buraxılış tarixi</h2>
+                    </div>
+
+                    <div class="releases-section">
+                        <div class="release-item">
+                            <div class="release-icon current"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">1.0.0</a>
+                                <div class="release-date">Dec 15, 2024</div>
+                            </div>
+                        </div>
+                        <div class="release-item">
+                            <div class="release-icon"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">0.9.5</a>
+                                <div class="release-date">Dec 1, 2024</div>
+                            </div>
+                        </div>
+                        <div class="release-item">
+                            <div class="release-icon"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">0.9.0</a>
+                                <div class="release-date">Nov 15, 2024</div>
+                            </div>
+                        </div>
+                        <div class="release-item">
+                            <div class="release-icon"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">0.8.5</a>
+                                <div class="release-date">Oct 28, 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
-    </footer>
+    </div>
 
-    <!-- Include navigation script directly instead of fetching navbar.html -->
-    <script src="navigation.js"></script>
     <script>
-        window.applyTranslations = function(lang, translations) {
-            // Hide all language content
+        // Language switching
+        function applyTranslations(lang) {
             const allLangContent = document.querySelectorAll('.lang-content');
-            allLangContent.forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Show content for selected language
-            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
-            selectedLangContent.forEach(content => {
-                content.classList.add('active');
-            });
-
-            // Update HTML lang attribute
-            document.getElementById('html-root').setAttribute('lang', lang);
+            allLangContent.forEach(content => content.classList.remove('active'));
             
-            // Save language preference
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => content.classList.add('active'));
+            
+            document.getElementById('html-root').setAttribute('lang', lang);
             localStorage.setItem('preferred-language', lang);
-        };
+        }
 
+        // Language buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                applyTranslations(e.target.dataset.lang);
+            });
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => btn.innerHTML = original, 1000);
+            });
+        }
+
+        // Load saved language
         document.addEventListener('DOMContentLoaded', function() {
             const savedLang = localStorage.getItem('preferred-language') || 'en';
-            
-            // Apply translations immediately for page content
-            if (window.applyTranslations) {
-                window.applyTranslations(savedLang, {});
+            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+            if (savedLangBtn) {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                savedLangBtn.classList.add('active');
+                applyTranslations(savedLang);
             }
         });
     </script>
