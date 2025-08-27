@@ -1,0 +1,7 @@
+site_name: NEONPAY API Docs
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Guide: guide.md
+  - API: api.md
