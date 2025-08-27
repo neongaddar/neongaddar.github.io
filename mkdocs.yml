@@ -1,7 +1,16 @@
-site_name: NEONPAY API Docs
+site_name: NEONPAY API
+site_url: https://neongaddar.github.io/docs/
 theme:
   name: material
+  language: ru
+  features:
+    - navigation.top
+    - navigation.expand
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
 nav:
-  - Home: index.md
-  - Guide: guide.md
+  - Главная: index.md
+  - Руководство: guide.md
   - API: api.md
