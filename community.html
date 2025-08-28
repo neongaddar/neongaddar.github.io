@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - ⚡ NEONPAY API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="search-styles.css">
+    <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #1f2937;
+            --card: #f8fafc;
+            --card-foreground: #1f2937;
+            --primary: #006dad;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #1f2937;
+            --muted: #e5e7eb;
+            --muted-foreground: #6b7280;
+            --accent: #0ea5e9;
+            --accent-foreground: #1f2937;
+            --border: #d1d5db;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --radius: 0.375rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.5;
+        }
+
+        /* Header styles (consistent with other pages) */
+        .top-banner {
+            background: var(--warning);
+            color: #000;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--secondary);
+            font-size: 0.875rem;
+            width: 300px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
+        }
+
+        .header-nav {
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            border-right: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Community Hero */
+        .community-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--primary-foreground);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Community Sections */
+        .community-content {
+            padding: 4rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Community Channels */
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .channel-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .channel-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .channel-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .channel-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .channel-description {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .channel-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .channel-members {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .channel-activity {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: var(--background);
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--foreground);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: var(--secondary);
+        }
+
+        .faq-question.active {
+            background: var(--secondary);
+        }
+
+        .faq-icon {
+            font-size: 0.875rem;
+            transition: transform 0.2s;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            color: var(--muted-foreground);
+            line-height: 1.6;
+        }
+
+        /* Hall of Fame */
+        .hall-of-fame {
+            background: var(--secondary);
+            padding: 4rem 0;
+            border-radius: var(--radius);
+        }
+
+        .projects-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .project-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-foreground);
+        }
+
+        .project-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .project-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+        }
+
+        .project-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 0.75rem;
+            }
+
+            .search-input {
+                width: 200px;
+                font-size: 0.8rem;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0.5rem 0;
+            }
+
+            .nav-links {
+                overflow-x: auto;
+                white-space: nowrap;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-links a {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: max-content;
+            }
+
+            .community-hero {
+                padding: 3rem 0;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .hero-stat-number {
+                font-size: 2rem;
+            }
+
+            .channels-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .channel-card {
+                padding: 1.5rem;
+            }
+
+            .projects-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .project-card {
+                padding: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 0 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-input {
+                width: 150px;
+                padding: 0.4rem 0.5rem 0.4rem 2rem;
+                font-size: 0.75rem;
+            }
+
+            .search-icon {
+                left: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .lang-btn {
+                padding: 0.2rem 0.4rem;
+                font-size: 0.7rem;
+                min-height: 36px;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .channel-card {
+                padding: 1rem;
+            }
+
+            .channel-icon {
+                font-size: 2rem;
+            }
+
+            .channel-name {
+                font-size: 1rem;
+            }
+
+            .channel-description {
+                font-size: 0.85rem;
+            }
+
+            .faq-question {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .faq-answer.active {
+                padding: 0 1rem 1rem;
+            }
+
+            .project-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            /* Touch-friendly improvements */
+            .nav-links a,
+            .lang-btn,
+            .faq-question {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .faq-question {
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .header-container {
+                padding: 0 0.5rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .search-input {
+                width: 120px;
+                font-size: 0.7rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .container {
+                padding: 0 0.25rem;
+            }
+        }
+
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        <strong>📦 NEONPAY 1.0.0 is now available!</strong> 
+        <a href="index.html#releases" style="color: #000; text-decoration: underline;">View release notes</a>
+    </div>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>NEONPAY</span>
+                </a>
+                
+                <div class="header-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search documentation...">
+                    </div>
+                    
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                        <button class="lang-btn" data-lang="az">AZ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Project</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="quick-start.html">Quick Start</a></li>
+                    <li><a href="api-docs.html">API Docs</a></li>
+                    <li><a href="examples.html">Examples</a></li>
+                    <li><a href="libraries.html">Libraries</a></li>
+                    <li><a href="community.html" class="active">Community</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Community Hero -->
+    <section class="community-hero">
+        <div class="container">
+            <div class="lang-content active" data-lang="en">
+                <h1 class="hero-title">Join Our Community</h1>
+                <p class="hero-subtitle">Connect with developers, share knowledge, and build amazing Telegram bots together</p>
+            </div>
+            
+            <div class="lang-content" data-lang="ru">
+                <h1 class="hero-title">Присоединяйтесь к нашему сообществу</h1>
+                <p class="hero-subtitle">Общайтесь с разработчиками, делитесь знаниями и создавайте потрясающих Telegram ботов вместе</p>
+            </div>
+            
+            <div class="lang-content" data-lang="az">
+                <h1 class="hero-title">Bizim icmamıza qoşulun</h1>
+                <p class="hero-subtitle">Tərtibatçılarla əlaqə qurun, bilikləri paylaşın və birlikdə möhtəşəm Telegram botları yaradın</p>
+            </div>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">2,500+</span>
+                    <div class="lang-content active" data-lang="en">
+                        <span class="hero-stat-label">Active Developers</span>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <span class="hero-stat-label">Активных разработчиков</span>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <span class="hero-stat-label">Aktiv tərtibatçılar</span>
+                    </div>
+                </div>
+                
+                <div class="hero-stat">
+                    <span class="hero-stat-number">500+</span>
+                    <div class="lang-content active" data-lang="en">
+                        <span class="hero-stat-label">Bots Created</span>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <span class="hero-stat-label">Создано ботов</span>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <span class="hero-stat-label">Yaradılmış botlar</span>
+                    </div>
+                </div>
+                
+                <div class="hero-stat">
+                    <span class="hero-stat-number">24/7</span>
+                    <div class="lang-content active" data-lang="en">
+                        <span class="hero-stat-label">Community Support</span>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <span class="hero-stat-label">Поддержка сообщества</span>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <span class="hero-stat-label">İcma dəstəyi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Content -->
+    <div class="community-content">
+        <div class="container">
+            <!-- Community Channels -->
+            <section class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">Community Channels</h2>
+                    <p class="section-subtitle">Join our active community across different platforms and get help, share ideas, and collaborate with fellow developers.</p>
+                </div>
+                
+                <div class="lang-content" data-lang="ru">
+                    <h2 class="section-title">Каналы сообщества</h2>
+                    <p class="section-subtitle">Присоединяйтесь к нашему активному сообществу на разных платформах, получайте помощь, делитесь идеями и сотрудничайте с коллегами-разработчиками.</p>
+                </div>
+                
+                <div class="lang-content" data-lang="az">
+                    <h2 class="section-title">İcma kanalları</h2>
+                    <p class="section-subtitle">Müxtəlif platformalarda aktiv icmamıza qoşulun və kömək alın, ideya paylaşın və həmkar tərtibatçılarla əməkdaşlıq edin.</p>
+                </div>
+
+                <div class="channels-grid">
+                    <a href="https://t.me/neonpay_support" class="channel-card" target="_blank">
+                        <div class="channel-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="lang-content active" data-lang="en">
+                            <div class="channel-name">Telegram Support</div>
+                            <div class="channel-description">Get instant help and support from our team and community members</div>
+                        </div>
+                        <div class="lang-content" data-lang="ru">
+                            <div class="channel-name">Поддержка Telegram</div>
+                            <div class="channel-description">Получите мгновенную помощь и поддержку от нашей команды и участников сообщества</div>
+                        </div>
+                        <div class="lang-content" data-lang="az">
+                            <div class="channel-name">Telegram Dəstək</div>
+                            <div class="channel-description">Komandamızdan və icma üzvlərindən ani kömək və dəstək alın</div>
+                        </div>
+                        <div class="channel-meta">
+                            <div class="channel-members">
+                                <i class="fas fa-users"></i>
+                                <span>1,200+ members</span>
+                            </div>
+                            <div class="channel-activity">
+                                <div class="activity-dot"></div>
+                                <span>Active now</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/Abbasxan/neonpay/discussions" class="channel-card" target="_blank">
+                        <div class="channel-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="lang-content active" data-lang="en">
+                            <div class="channel-name">GitHub Discussions</div>
+                            <div class="channel-description">Technical discussions, feature requests, and development updates</div>
+                        </div>
+                        <div class="lang-content" data-lang="ru">
+                            <div class="channel-name">Обсуждения GitHub</div>
+                            <div class="channel-description">Технические дискуссии, запросы функций и обновления разработки</div>
+                        </div>
+                        <div class="lang-content" data-lang="az">
+                            <div class="channel-name">GitHub Müzakirələri</div>
+                            <div class="channel-description">Texniki müzakirələr, xüsusiyyət sorğuları və inkişaf yeniləmələri</div>
+                        </div>
+                        <div class="channel-meta">
+                            <div class="channel-members">
+                                <i class="fas fa-comments"></i>
+                                <span>300+ topics</span>
+                            </div>
+                            <div class="channel-activity">
+                                <div class="activity-dot"></div>
+                                <span>Updated daily</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="channel-card">
+                        <div class="channel-icon">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <div class="lang-content active" data-lang="en">
+                            <div class="channel-name">Discord Server</div>
+                            <div class="channel-description">Real-time chat, voice channels, and community events</div>
+                        </div>
+                        <div class="lang-content" data-lang="ru">
+                            <div class="channel-name">Сервер Discord</div>
+                            <div class="channel-description">Чат в реальном времени, голосовые каналы и мероприятия сообщества</div>
+                        </div>
+                        <div class="lang-content" data-lang="az">
+                            <div class="channel-name">Discord Serveri</div>
+                            <div class="channel-description">Real vaxt çat, səs kanalları və icma tədbirləri</div>
+                        </div>
+                        <div class="channel-meta">
+                            <div class="channel-members">
+                                <i class="fas fa-users"></i>
+                                <span>Coming Soon</span>
+                            </div>
+                            <div class="channel-activity">
+                                <div style="width: 8px; height: 8px; background: var(--warning); border-radius: 50%;"></div>
+                                <span>In development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="section">
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle">Find answers to common questions about NEONPAY and bot development.</p>
+                </div>
+                
+                <div class="lang-content" data-lang="ru">
+                    <h2 class="section-title">Часто задаваемые вопросы</h2>
+                    <p class="section-subtitle">Найдите ответы на общие вопросы о NEONPAY и разработке ботов.</p>
+                </div>
+                
+                <div class="lang-content" data-lang="az">
+                    <h2 class="section-title">Tez-tez verilən suallar</h2>
+                    <p class="section-subtitle">NEONPAY və bot tərtibatı haqqında ümumi suallara cavab tapın.</p>
+                </div>
+
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <div class="lang-content active" data-lang="en">
+                                <span>How do I get started with NEONPAY?</span>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <span>Как начать работу с NEONPAY?</span>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <span>NEONPAY ilə necə başlamaq olar?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="lang-content active" data-lang="en">
+                                <p>Simply install NEONPAY using <code>pip install neonpay</code> and follow our Quick Start guide. You can have payments working in your bot within minutes!</p>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <p>Просто установите NEONPAY используя <code>pip install neonpay</code> и следуйте нашему руководству быстрого старта. Платежи в вашем боте заработают за несколько минут!</p>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <p><code>pip install neonpay</code> istifadə edərək sadəcə NEONPAY quraşdırın və Sürətli Başlanğıc təlimatımızı izləyin. Bir neçə dəqiqə ərzində botunuzda ödənişlər işləyəcək!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <div class="lang-content active" data-lang="en">
+                                <span>Which Telegram bot libraries are supported?</span>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <span>Какие библиотеки Telegram ботов поддерживаются?</span>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <span>Hansı Telegram bot kitabxanaları dəstəklənir?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="lang-content active" data-lang="en">
+                                <p>NEONPAY supports all major Python Telegram bot libraries: Aiogram v3, Pyrogram, python-telegram-bot, pyTelegramBotAPI, and raw Bot API. Check our Libraries page for detailed examples.</p>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <p>NEONPAY поддерживает все основные Python библиотеки для Telegram ботов: Aiogram v3, Pyrogram, python-telegram-bot, pyTelegramBotAPI и raw Bot API. Посмотрите нашу страницу Библиотек для подробных примеров.</p>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <p>NEONPAY bütün əsas Python Telegram bot kitabxanalarını dəstəkləyir: Aiogram v3, Pyrogram, python-telegram-bot, pyTelegramBotAPI və raw Bot API. Ətraflı nümunələr üçün Kitabxanalar səhifəmizə baxın.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <div class="lang-content active" data-lang="en">
+                                <span>Is NEONPAY free to use?</span>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <span>Бесплатен ли NEONPAY для использования?</span>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <span>NEONPAY istifadəsi pulsuzdurmu?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="lang-content active" data-lang="en">
+                                <p>Yes! NEONPAY is completely free and open-source under the MIT license. You can use it in personal and commercial projects without any restrictions.</p>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <p>Да! NEONPAY полностью бесплатный и с открытым исходным кодом под лицензией MIT. Вы можете использовать его в личных и коммерческих проектах без ограничений.</p>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <p>Bəli! NEONPAY MIT lisenziyası altında tamamilə pulsuz və açıq mənbəlidir. Heç bir məhdudiyyət olmadan şəxsi və kommersiya layihələrində istifadə edə bilərsiniz.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <div class="lang-content active" data-lang="en">
+                                <span>How do Telegram Stars payments work?</span>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <span>Как работают платежи Telegram Stars?</span>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <span>Telegram Stars ödənişləri necə işləyir?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="lang-content active" data-lang="en">
+                                <p>Telegram Stars (XTR) is Telegram's native payment currency. Users purchase Stars from Telegram and can spend them in bots. NEONPAY handles all the complexity of payment processing for you.</p>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <p>Telegram Stars (XTR) - это встроенная валюта платежей Telegram. Пользователи покупают Stars у Telegram и могут тратить их в ботах. NEONPAY берет на себя всю сложность обработки платежей.</p>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <p>Telegram Stars (XTR) Telegram-ın yerli ödəniş valyutasıdır. İstifadəçilər Stars-ı Telegram-dan alır və botlarda xərcləyə bilərlər. NEONPAY sizin üçün ödəniş emalının bütün mürəkkəbliyini idarə edir.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <div class="lang-content active" data-lang="en">
+                                <span>Can I migrate from other payment systems?</span>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <span>Могу ли я мигрировать с других платежных систем?</span>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <span>Digər ödəniş sistemlərindən köçə bilərəmmi?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="lang-content active" data-lang="en">
+                                <p>Absolutely! NEONPAY is designed to be easy to integrate alongside existing payment systems. You can gradually migrate or run both systems in parallel.</p>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <p>Конечно! NEONPAY разработан для легкой интеграции наряду с существующими платежными системами. Вы можете постепенно мигрировать или запускать обе системы параллельно.</p>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <p>Əlbəttə! NEONPAY mövcud ödəniş sistemləri ilə yanaşı asan inteqrasiya üçün dizayn edilmişdir. Tədricən köçə və ya hər iki sistemi paralel işlədə bilərsiniz.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hall of Fame -->
+            <section class="section hall-of-fame">
+                <div class="container">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Hall of Fame</h2>
+                        <p class="section-subtitle">Showcasing amazing projects built with NEONPAY by our community members.</p>
+                    </div>
+                    
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Зал славы</h2>
+                        <p class="section-subtitle">Демонстрируем потрясающие проекты, созданные с NEONPAY участниками нашего сообщества.</p>
+                    </div>
+                    
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Şöhrət zalı</h2>
+                        <p class="section-subtitle">İcma üzvlərimiz tərəfindən NEONPAY ilə yaradılmış möhtəşəm layihələri nümayiş etdiririk.</p>
+                    </div>
+
+                    <div class="projects-showcase">
+                        <div class="project-card">
+                            <div class="project-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="project-name">PremiumBot</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="project-description">AI-powered assistant with premium features unlocked via NEONPAY</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="project-description">ИИ-ассистент с премиум-функциями, разблокированными через NEONPAY</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="project-description">NEONPAY vasitəsilə açılmış premium xüsusiyyətli AI köməkçi</div>
+                            </div>
+                            <div class="project-stats">
+                                <div class="project-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>10K+ users</span>
+                                </div>
+                                <div class="project-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9 rating</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-avatar">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="project-name">DigitalStore</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="project-description">Complete e-commerce solution for selling digital products</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="project-description">Полное решение электронной коммерции для продажи цифровых продуктов</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="project-description">Rəqəmsal məhsul satışı üçün tam e-ticarət həlli</div>
+                            </div>
+                            <div class="project-stats">
+                                <div class="project-stat">
+                                    <i class="fas fa-download"></i>
+                                    <span>5K+ sales</span>
+                                </div>
+                                <div class="project-stat">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Growing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-avatar">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="project-name">LearnBot</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="project-description">Educational platform with paid courses and certifications</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="project-description">Образовательная платформа с платными курсами и сертификатами</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="project-description">Ödənişli kurslar və sertifikatlar olan təhsil platforması</div>
+                            </div>
+                            <div class="project-stats">
+                                <div class="project-stat">
+                                    <i class="fas fa-book"></i>
+                                    <span>50+ courses</span>
+                                </div>
+                                <div class="project-stat">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>1K+ certified</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-avatar">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="project-name">DonationBot</div>
+                            <div class="lang-content active" data-lang="en">
+                                <div class="project-description">Streamlined donation platform for content creators</div>
+                            </div>
+                            <div class="lang-content" data-lang="ru">
+                                <div class="project-description">Упрощенная платформа пожертвований для создателей контента</div>
+                            </div>
+                            <div class="lang-content" data-lang="az">
+                                <div class="project-description">Kontent yaradıcıları üçün sadələşdirilmiş ianə platforması</div>
+                            </div>
+                            <div class="project-stats">
+                                <div class="project-stat">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                    <span>$50K+ raised</span>
+                                </div>
+                                <div class="project-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>200+ creators</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="search-engine.js"></script>
+    <script src="navigation.js"></script>
+    <script>
+        // FAQ Toggle functionality
+        function toggleFAQ(element) {
+            const isActive = element.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+                q.nextElementSibling.classList.remove('active');
+            });
+            
+            // If this item wasn't active, open it
+            if (!isActive) {
+                element.classList.add('active');
+                element.nextElementSibling.classList.add('active');
+            }
+        }
+
+        // Language switching
+        function applyTranslations(lang) {
+            const allLangContent = document.querySelectorAll('.lang-content');
+            allLangContent.forEach(content => content.classList.remove('active'));
+            
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => content.classList.add('active'));
+            
+            document.getElementById('html-root').setAttribute('lang', lang);
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Language buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                applyTranslations(e.target.dataset.lang);
+            });
+        });
+
+        // Load saved language
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+            if (savedLangBtn) {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                savedLangBtn.classList.add('active');
+                applyTranslations(savedLang);
+            }
+        });
+    </script>
+</body>
+</html>
