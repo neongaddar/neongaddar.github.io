@@ -432,8 +432,6 @@
             overflow-x: auto;
             white-space: pre;
             tab-size: 4;
-            max-height: 500px;
-            overflow-y: auto;
         }
 
         .editor-content::-webkit-scrollbar {
@@ -495,6 +493,10 @@
             border-right: 1px solid #30363d;
             user-select: none;
             min-width: 3rem;
+            /* Добавляю стили для правильного отображения номеров строк */
+            white-space: pre-line;
+            vertical-align: top;
+            display: inline-block;
         }
 
         .editor-with-numbers {
