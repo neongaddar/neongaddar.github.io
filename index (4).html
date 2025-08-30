@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ NEONPAY API - Simple Telegram Bot Payments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="search-styles.css">
+    <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #1f2937;
+            --card: #f8fafc;
+            --card-foreground: #1f2937;
+            --primary: #006dad;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #1f2937;
+            --muted: #e5e7eb;
+            --muted-foreground: #6b7280;
+            --accent: #0ea5e9;
+            --accent-foreground: #1f2937;
+            --border: #d1d5db;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --radius: 0.375rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.5;
+        }
+
+        /* PyPI-style Header */
+        .top-banner {
+            background: var(--warning);
+            color: #000;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--secondary);
+            font-size: 0.875rem;
+            width: 300px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border-color: var(--primary);
+        }
+
+        .header-nav {
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            border-right: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            min-height: 600px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar-section {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--foreground);
+        }
+
+        .install-command {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .version-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .version-badge {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            padding: 0.125rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            list-style: none;
+        }
+
+        .project-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        .meta-info {
+            font-size: 0.875rem;
+        }
+
+        .meta-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-label {
+            font-weight: 500;
+            color: var(--foreground);
+        }
+
+        .meta-value {
+            color: var(--muted-foreground);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background: var(--secondary);
+            color: var(--foreground);
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Content Area */
+        .content {
+            background: var(--background);
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .project-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--foreground);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        /* Python Editor Style Code Blocks */
+        .code-editor {
+            background: #0d1117;
+            color: #f0f6fc;
+            border-radius: var(--radius);
+            overflow: hidden;
+            font-family: 'Fira Code', 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .editor-header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .editor-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .editor-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27ca3f; }
+
+        .editor-filename {
+            color: #7c3aed;
+            margin-left: 0.5rem;
+            font-weight: 500;
+        }
+
+        .editor-content {
+            padding: 1.5rem;
+            overflow-x: auto;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        .editor-content::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .editor-content::-webkit-scrollbar-track {
+            background: #21262d;
+        }
+
+        .editor-content::-webkit-scrollbar-thumb {
+            background: #484f58;
+            border-radius: 4px;
+        }
+
+        /* Enhanced Syntax Highlighting */
+        .code-editor .comment { 
+            color: #7c3aed; 
+            font-style: italic; 
+        }
+        .code-editor .keyword { 
+            color: #ff7b72; 
+            font-weight: 600; 
+        }
+        .code-editor .string { 
+            color: #a5d6ff; 
+        }
+        .code-editor .function { 
+            color: #d2a8ff; 
+            font-weight: 500;
+        }
+        .code-editor .number { 
+            color: #79c0ff; 
+        }
+        .code-editor .method { 
+            color: #ffa657; 
+        }
+        .code-editor .decorator { 
+            color: #f85149; 
+        }
+        .code-editor .class { 
+            color: #7ee787; 
+            font-weight: 600;
+        }
+        .code-editor .import { 
+            color: #ff7b72; 
+        }
+
+        /* Line Numbers */
+        .line-numbers {
+            background: #0d1117;
+            color: #6e7681;
+            padding: 1.5rem 0.75rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            text-align: right;
+            border-right: 1px solid #30363d;
+            user-select: none;
+            min-width: 3rem;
+            white-space: pre-line;
+            vertical-align: top;
+            display: inline-block;
+        }
+
+        .editor-with-numbers {
+            display: flex;
+        }
+
+        /* Улучшенные стили прокрутки */
+        .code-editor {
+            background: #0d1117;
+            color: #f0f6fc;
+            border-radius: var(--radius);
+            overflow: hidden;
+            font-family: 'Fira Code', 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        /* Legacy code-example for backward compatibility */
+        .code-example {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        .code-example .comment { color: #94a3b8; }
+        .code-example .keyword { color: #c084fc; font-weight: 600; }
+        .code-example .string { color: #34d399; }
+        .code-example .function { color: #60a5fa; }
+        .code-example .number { color: #fbbf24; }
+
+        .releases-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .release-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .release-item:last-child {
+            border-bottom: none;
+        }
+
+        .release-icon {
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 0.125rem;
+        }
+
+        .release-icon.current {
+            background: var(--accent);
+        }
+
+        .release-info {
+            flex: 1;
+        }
+
+        .release-version {
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .release-date {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .search-input {
+                width: 200px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .sidebar {
+                order: 2;
+                position: static;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            /* Исправление отображения кода на мобильных устройствах */
+            .editor-content {
+                font-size: 0.75rem;
+                padding: 1rem;
+                max-width: 100%;
+                overflow-x: auto;
+                white-space: pre;
+                width: 100%;
+                min-width: 0;
+                box-sizing: border-box;
+            }
+            
+            .code-editor {
+                margin: 0.5rem 0;
+                font-size: 0.75rem;
+                max-width: 100vw;
+                overflow: hidden;
+            }
+        }
+
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        <strong>📦 NEONPAY 1.0.0 is now available!</strong> 
+        <a href="#releases" style="color: #000; text-decoration: underline;">View release notes</a>
+    </div>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>NEONPAY</span>
+                </a>
+                
+                <div class="header-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search documentation...">
+                    </div>
+                    
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                        <button class="lang-btn" data-lang="az">AZ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Project</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="quick-start.html">Quick Start</a></li>
+                    <li><a href="api-docs.html">API Docs</a></li>
+                    <li><a href="examples.html">Examples</a></li>
+                    <li><a href="libraries.html">Libraries</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Install Command -->
+                <div class="sidebar-section">
+                    <div class="install-command">
+                        <span>pip install neonpay</span>
+                        <button class="copy-btn" onclick="copyToClipboard('pip install neonpay')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Version Info -->
+                <div class="sidebar-section">
+                    <div class="version-info">
+                        <span class="version-badge">1.0.0</span>
+                        <span class="release-date">Latest version</span>
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--muted-foreground);">
+                        Released: Dec 15, 2024
+                    </div>
+                </div>
+
+                <!-- Project Links -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Project links</h3>
+                    <ul class="project-links">
+                        <li><a href="https://github.com/Abbasxan/neonpay"><i class="fab fa-github"></i> Homepage</a></li>
+                        <li><a href="https://github.com/Abbasxan/neonpay/releases"><i class="fas fa-download"></i> Download</a></li>
+                        <li><a href="https://t.me/neonpay_support"><i class="fab fa-telegram"></i> Community</a></li>
+                        <li><a href="api-docs.html"><i class="fas fa-book"></i> Documentation</a></li>
+                        <li><a href="https://github.com/Abbasxan/neonpay"><i class="fas fa-code"></i> Source</a></li>
+                        <li><a href="https://github.com/Abbasxan/neonpay/issues"><i class="fas fa-bug"></i> Issue Tracker</a></li>
+                    </ul>
+                </div>
+
+                <!-- Meta Information -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Meta</h3>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <span class="meta-label">License:</span> 
+                            <span class="meta-value">MIT License</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Author:</span> 
+                            <span class="meta-value">Abbas Sultanov</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Requires:</span> 
+                            <span class="meta-value">Python >=3.8</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tags">
+                        <span class="tag">telegram</span>
+                        <span class="tag">payments</span>
+                        <span class="tag">bot</span>
+                        <span class="tag">api</span>
+                        <span class="tag">stars</span>
+                        <span class="tag">library</span>
+                    </div>
+                </div>
+
+                <!-- Classifiers -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Classifiers</h3>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <span class="meta-label">Development Status:</span><br>
+                            <span class="meta-value">5 - Production/Stable</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Intended Audience:</span><br>
+                            <span class="meta-value">Developers</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Topic:</span><br>
+                            <span class="meta-value">Software Development :: Libraries</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="content">
+                <!-- Project Header -->
+                <div class="lang-content active" data-lang="en">
+                    <h1 class="project-title">NEONPAY API</h1>
+                    <p class="project-subtitle">
+                        Simple and elegant Telegram Stars payment integration for Python bots. 
+                        Add payments to your bot with just 2-3 lines of code.
+                    </p>
+                </div>
+
+                <div class="lang-content" data-lang="ru">
+                    <h1 class="project-title">NEONPAY API</h1>
+                    <p class="project-subtitle">
+                        Простая и элегантная интеграция платежей Telegram Stars для Python ботов. 
+                        Добавьте платежи в ваш бот всего 2-3 строками кода.
+                    </p>
+                </div>
+
+                <div class="lang-content" data-lang="az">
+                    <h1 class="project-title">NEONPAY API</h1>
+                    <p class="project-subtitle">
+                        Python botları üçün sadə və zərif Telegram Stars ödəniş inteqrasiyası. 
+                        Cəmi 2-3 kod sətri ilə botunuza ödənişlər əlavə edin.
+                    </p>
+                </div>
+
+                <!-- Quick Example -->
+                <div class="content-section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Quick Example</h2>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Быстрый пример</h2>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Sürətli nümunə</h2>
+                    </div>
+
+                    <div class="code-editor">
+                        <div class="editor-header">
+                            <div class="editor-dots">
+                                <div class="editor-dot dot-red"></div>
+                                <div class="editor-dot dot-yellow"></div>
+                                <div class="editor-dot dot-green"></div>
+                            </div>
+                            <div class="editor-filename">quick_example.py</div>
+                        </div>
+                        
+                        <div class="editor-content"><span class="comment"># Install NEONPAY</span>
+<span class="comment"># pip install neonpay</span>
+
+<span class="comment"># Simple payment example</span>
+<span class="import">from</span> neonpay <span class="import">import</span> <span class="class">NeonPay</span>
+<span class="import">from</span> aiogram <span class="import">import</span> <span class="class">Bot</span>
+
+bot = <span class="class">Bot</span>(<span class="string">"YOUR_BOT_TOKEN"</span>)
+neonpay = <span class="class">NeonPay</span>.<span class="method">create_for_aiogram</span>(bot)
+
+<span class="comment"># Create payment stage</span>
+stage = neonpay.<span class="method">create_stage</span>(
+    title=<span class="string">"Premium Access"</span>,
+    description=<span class="string">"Unlock all premium features"</span>,
+    price=<span class="number">100</span>,  <span class="comment"># 100 XTR (Telegram Stars)</span>
+    logo_url=<span class="string">"https://example.com/logo.png"</span>
+)
+
+<span class="comment"># Handle payment</span>
+<span class="decorator">@neonpay.payment_handler</span>(stage)
+<span class="keyword">async def</span> <span class="function">handle_premium_payment</span>(payment_result):
+    <span class="keyword">await</span> payment_result.message.<span class="method">answer</span>(<span class="string">"Welcome to Premium! 🎉"</span>)</div>
+                    </div>
+                </div>
+
+                <!-- Key Features -->
+                <div class="content-section">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Key Features</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                                <h3 class="feature-title">Easy Integration</h3>
+                                <p class="feature-description">Add payments to your bot in just 2-3 lines of code. No complex setup required.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                                <h3 class="feature-title">Multi-Library Support</h3>
+                                <p class="feature-description">Works with Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI, and raw API.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                                <h3 class="feature-title">Telegram Stars</h3>
+                                <p class="feature-description">Native support for Telegram Stars (XTR) payments with automatic handling.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="feature-title">Secure</h3>
+                                <p class="feature-description">Built-in validation and error handling for secure payment processing.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">Ключевые особенности</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                                <h3 class="feature-title">Простая интеграция</h3>
+                                <p class="feature-description">Добавьте платежи в ваш бот всего 2-3 строками кода. Сложная настройка не требуется.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                                <h3 class="feature-title">Поддержка библиотек</h3>
+                                <p class="feature-description">Работает с Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI и raw API.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                                <h3 class="feature-title">Telegram Stars</h3>
+                                <p class="feature-description">Встроенная поддержка платежей Telegram Stars (XTR) с автоматической обработкой.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="feature-title">Безопасный</h3>
+                                <p class="feature-description">Встроенная валидация и обработка ошибок для безопасной обработки платежей.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Əsas xüsusiyyətlər</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+                                <h3 class="feature-title">Asan İnteqrasiya</h3>
+                                <p class="feature-description">Botunuza cəmi 2-3 kod sətri ilə ödənişlər əlavə edin. Mürəkkəb quraşdırma tələb olunmur.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                                <h3 class="feature-title">Çox Kitabxana Dəstəyi</h3>
+                                <p class="feature-description">Aiogram, Pyrogram, python-telegram-bot, pyTelegramBotAPI və raw API ilə işləyir.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                                <h3 class="feature-title">Telegram Stars</h3>
+                                <p class="feature-description">Avtomatik idarəetmə ilə Telegram Stars (XTR) ödənişlərinə yerli dəstək.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="feature-title">Təhlükəsiz</h3>
+                                <p class="feature-description">Təhlükəsiz ödəniş emalı üçün daxili doğrulama və xəta idarəetməsi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Release History -->
+                <div class="content-section" id="releases">
+                    <div class="lang-content active" data-lang="en">
+                        <h2 class="section-title">Release History</h2>
+                    </div>
+                    <div class="lang-content" data-lang="ru">
+                        <h2 class="section-title">История релизов</h2>
+                    </div>
+                    <div class="lang-content" data-lang="az">
+                        <h2 class="section-title">Buraxılış tarixi</h2>
+                    </div>
+
+                    <div class="releases-section">
+                        <div class="release-item">
+                            <div class="release-icon current"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">1.0.0</a>
+                                <div class="release-date">Dec 15, 2024</div>
+                            </div>
+                        </div>
+                        <div class="release-item">
+                            <div class="release-icon"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">0.9.5</a>
+                                <div class="release-date">Dec 1, 2024</div>
+                            </div>
+                        </div>
+                        <div class="release-item">
+                            <div class="release-icon"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">0.9.0</a>
+                                <div class="release-date">Nov 15, 2024</div>
+                            </div>
+                        </div>
+                        <div class="release-item">
+                            <div class="release-icon"></div>
+                            <div class="release-info">
+                                <a href="#" class="release-version">0.8.5</a>
+                                <div class="release-date">Oct 28, 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="search-engine.js"></script>
+    <script src="navigation.js"></script>
+    <script>
+        // Language switching
+        function applyTranslations(lang) {
+            const allLangContent = document.querySelectorAll('.lang-content');
+            allLangContent.forEach(content => content.classList.remove('active'));
+            
+            const selectedLangContent = document.querySelectorAll(`[data-lang="${lang}"]`);
+            selectedLangContent.forEach(content => content.classList.add('active'));
+            
+            document.getElementById('html-root').setAttribute('lang', lang);
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Language buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                applyTranslations(e.target.dataset.lang);
+            });
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => btn.innerHTML = original, 1000);
+            });
+        }
+
+        // Load saved language
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const savedLangBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+            if (savedLangBtn) {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                savedLangBtn.classList.add('active');
+                applyTranslations(savedLang);
+            }
+        });
+    </script>
+</body>
+</html>
