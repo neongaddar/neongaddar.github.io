@@ -432,6 +432,20 @@
             border-radius: 4px;
         }
 
+        .editor-content::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .editor-content::-webkit-scrollbar-track {
+            background: #21262d;
+        }
+
+        .editor-content::-webkit-scrollbar-thumb {
+            background: #484f58;
+            border-radius: 4px;
+        }
+
         /* Enhanced Syntax Highlighting */
         .code-editor .comment { 
             color: #7c3aed; 
@@ -484,6 +498,19 @@
 
         .editor-with-numbers {
             display: flex;
+        }
+
+        /* Улучшенные стили прокрутки */
+        .code-editor {
+            background: #0d1117;
+            color: #f0f6fc;
+            border-radius: var(--radius);
+            overflow: hidden;
+            font-family: 'Fira Code', 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            position: relative;
+            margin: 1rem 0;
         }
 
         /* Legacy code-example for backward compatibility */
@@ -579,6 +606,10 @@
 
             .project-title {
                 font-size: 2rem;
+            }
+
+            .editor-content {
+                font-size: 0.8rem;
             }
         }
 
