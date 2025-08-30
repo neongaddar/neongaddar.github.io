@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚡ NEONPAY API - Simple Telegram Bot Payments</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="search-styles.css">
     <style>
@@ -366,6 +367,126 @@
             font-size: 0.875rem;
         }
 
+        /* Python Editor Style Code Blocks */
+        .code-editor {
+            background: #0d1117;
+            color: #f0f6fc;
+            border-radius: var(--radius);
+            overflow: hidden;
+            font-family: 'Fira Code', 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .editor-header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .editor-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .editor-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27ca3f; }
+
+        .editor-filename {
+            color: #7c3aed;
+            margin-left: 0.5rem;
+            font-weight: 500;
+        }
+
+        .editor-content {
+            padding: 1.5rem;
+            overflow-x: auto;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        .editor-content::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .editor-content::-webkit-scrollbar-track {
+            background: #21262d;
+        }
+
+        .editor-content::-webkit-scrollbar-thumb {
+            background: #484f58;
+            border-radius: 4px;
+        }
+
+        /* Enhanced Syntax Highlighting */
+        .code-editor .comment { 
+            color: #7c3aed; 
+            font-style: italic; 
+        }
+        .code-editor .keyword { 
+            color: #ff7b72; 
+            font-weight: 600; 
+        }
+        .code-editor .string { 
+            color: #a5d6ff; 
+        }
+        .code-editor .function { 
+            color: #d2a8ff; 
+            font-weight: 500;
+        }
+        .code-editor .number { 
+            color: #79c0ff; 
+        }
+        .code-editor .method { 
+            color: #ffa657; 
+        }
+        .code-editor .decorator { 
+            color: #f85149; 
+        }
+        .code-editor .class { 
+            color: #7ee787; 
+            font-weight: 600;
+        }
+        .code-editor .import { 
+            color: #ff7b72; 
+        }
+
+        /* Line Numbers */
+        .line-numbers {
+            background: #0d1117;
+            color: #6e7681;
+            padding: 1.5rem 0.75rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            text-align: right;
+            border-right: 1px solid #30363d;
+            user-select: none;
+            min-width: 3rem;
+            white-space: pre-line;
+            vertical-align: top;
+            display: inline-block;
+        }
+
+        .editor-with-numbers {
+            display: flex;
+        }
+
+        /* Legacy code-example for backward compatibility */
         .code-example {
             background: #1e293b;
             color: #f1f5f9;
@@ -637,19 +758,50 @@
                         <h2 class="section-title">Sürətli nümunə</h2>
                     </div>
 
-                    <div class="code-example">
-<span class="comment"># Install NEONPAY</span>
-pip install neonpay
+                    <div class="code-editor">
+                        <div class="editor-header">
+                            <div class="editor-dots">
+                                <div class="editor-dot dot-red"></div>
+                                <div class="editor-dot dot-yellow"></div>
+                                <div class="editor-dot dot-green"></div>
+                            </div>
+                            <div class="editor-filename">quick_example.py</div>
+                        </div>
+                        
+                        <div class="editor-with-numbers">
+                            <div class="line-numbers">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</div>
+                            <div class="editor-content"><span class="comment"># Install NEONPAY</span>
+<span class="comment"># pip install neonpay</span>
 
 <span class="comment"># Simple payment example</span>
-<span class="keyword">from</span> neonpay <span class="keyword">import</span> NeonPay
-<span class="keyword">from</span> aiogram <span class="keyword">import</span> Bot
+<span class="import">from</span> neonpay <span class="import">import</span> <span class="class">NeonPay</span>
+<span class="import">from</span> aiogram <span class="import">import</span> <span class="class">Bot</span>
 
-bot = Bot(<span class="string">"YOUR_BOT_TOKEN"</span>)
-neonpay = NeonPay.create_for_aiogram(bot)
+bot = <span class="class">Bot</span>(<span class="string">"YOUR_BOT_TOKEN"</span>)
+neonpay = <span class="class">NeonPay</span>.<span class="method">create_for_aiogram</span>(bot)
 
 <span class="comment"># Create payment stage</span>
-stage = neonpay.create_stage(
+stage = neonpay.<span class="method">create_stage</span>(
     title=<span class="string">"Premium Access"</span>,
     description=<span class="string">"Unlock all premium features"</span>,
     price=<span class="number">100</span>,  <span class="comment"># 100 XTR (Telegram Stars)</span>
@@ -657,9 +809,10 @@ stage = neonpay.create_stage(
 )
 
 <span class="comment"># Handle payment</span>
-@neonpay.payment_handler(stage)
+<span class="decorator">@neonpay.payment_handler</span>(stage)
 <span class="keyword">async def</span> <span class="function">handle_premium_payment</span>(payment_result):
-    <span class="keyword">await</span> payment_result.message.answer(<span class="string">"Welcome to Premium! 🎉"</span>)
+    <span class="keyword">await</span> payment_result.message.<span class="method">answer</span>(<span class="string">"Welcome to Premium! 🎉"</span>)</div>
+                        </div>
                     </div>
                 </div>
 
